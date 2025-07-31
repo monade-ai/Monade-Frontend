@@ -1,0 +1,320 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom cosmic animations */
+@keyframes cosmic-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes cosmic-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes cosmic-rotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes cosmic-drift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(10px, -5px) scale(1.1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-5px, 10px) scale(0.9);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(-10px, -10px) scale(1.05);
+    opacity: 0.4;
+  }
+}
+
+@keyframes cosmic-twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 0 25px rgba(255, 140, 0, 0.4);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Cosmic background classes */
+.cosmic-background {
+  background:
+    /* Starfield effect */
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 165, 0, 0.6), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 140, 0, 0.8), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(255, 69, 0, 0.7), transparent),
+    /* Cosmic nebula effects */
+    radial-gradient(circle at 20% 80%, rgba(255, 69, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 165, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 60% 60%, rgba(255, 100, 0, 0.1) 0%, transparent 40%),
+    /* Base gradient */
+    linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(25, 25, 25, 0.9) 100%);
+  background-repeat: repeat;
+  background-size: 200px 100px, 200px 100px, 200px 100px, 200px 100px, 200px 100px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+}
+
+.cosmic-ring-1 {
+  background: radial-gradient(circle at center, transparent 30%, rgba(255, 165, 0, 0.1) 40%, transparent 70%);
+  animation: cosmic-rotate 20s linear infinite;
+}
+
+.cosmic-ring-2 {
+  background: radial-gradient(circle at center, transparent 40%, rgba(255, 140, 0, 0.08) 50%, transparent 80%);
+  animation: cosmic-rotate 30s linear infinite reverse;
+}
+
+.cosmic-ring-3 {
+  background: radial-gradient(circle at center, transparent 50%, rgba(255, 69, 0, 0.06) 60%, transparent 90%);
+  animation: cosmic-rotate 40s linear infinite;
+}
+
+.cosmic-pulse {
+  animation: cosmic-pulse 6s ease-in-out infinite;
+}
+
+.cosmic-particle {
+  animation: cosmic-twinkle 3s ease-in-out infinite;
+}
+
+.cosmic-glow {
+  animation: cosmic-glow 4s ease-in-out infinite;
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #606060;
+}
+
+/* Stack Animation Styles */
+.stack-container {
+  height: 400px;
+  width: 100%;
+  perspective: 1000px;
+}
+
+.stack-layers {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: -12px;
+}
+
+.stack-layer {
+  position: relative;
+  margin-bottom: -12px;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.stack-layer:nth-child(1) { z-index: 4; }
+.stack-layer:nth-child(2) { z-index: 3; }
+.stack-layer:nth-child(3) { z-index: 2; }
+.stack-layer:nth-child(4) { z-index: 1; }
+
+.stack-layer.animate-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Layer-specific animations with staggered delays */
+.layer-1.animate-in {
+  animation: stackLayerIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}
+
+.layer-2.animate-in {
+  animation: stackLayerIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+.layer-3.animate-in {
+  animation: stackLayerIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+}
+
+.layer-4.animate-in {
+  animation: stackLayerIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s forwards;
+}
+
+@keyframes stackLayerIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) rotateX(15deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+/* Stack layer hover effects */
+.stack-layer:hover {
+  transform: translateY(-4px) scale(1.02);
+  z-index: 10;
+}
+
+.stack-layer:hover > div {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 212, 191, 0.2);
+}
+
+/* Base platform animation */
+.stack-base {
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .stack-layer > div {
+    width: 240px;
+    height: 16px;
+  }
+
+  .stack-layer > div > .absolute {
+    right: -120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stack-container {
+    height: 300px;
+  }
+
+  .stack-layer > div {
+    width: 200px;
+    height: 14px;
+  }
+
+  .stack-layer > div > .absolute {
+    position: static;
+    margin-top: 8px;
+    text-align: center;
+    right: auto;
+    transform: none;
+  }
+
+  .stack-layers {
+    gap: 8px;
+  }
+
+  .stack-layer {
+    margin-bottom: -4px;
+  }
+}

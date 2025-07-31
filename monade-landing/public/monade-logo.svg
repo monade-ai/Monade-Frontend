@@ -1,0 +1,28 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lemon body -->
+  <path d="M60 20C75 20 90 35 90 55C90 75 75 95 60 95C45 95 30 75 30 55C30 35 45 20 60 20Z" fill="#F5D916" stroke="#2D3748" stroke-width="3"/>
+  
+  <!-- Lemon texture dots -->
+  <circle cx="50" cy="40" r="2" fill="#E2B808" opacity="0.6"/>
+  <circle cx="70" cy="45" r="2" fill="#E2B808" opacity="0.6"/>
+  <circle cx="55" cy="60" r="2" fill="#E2B808" opacity="0.6"/>
+  <circle cx="65" cy="70" r="2" fill="#E2B808" opacity="0.6"/>
+  
+  <!-- Leaf -->
+  <path d="M60 20C60 20 65 10 75 15C80 17 78 25 75 25C70 25 65 20 60 20Z" fill="#8FBC8F" stroke="#2D3748" stroke-width="2"/>
+  
+  <!-- Headphones -->
+  <path d="M35 45C30 45 25 50 25 55C25 60 30 65 35 65" fill="none" stroke="#2D3748" stroke-width="4" stroke-linecap="round"/>
+  <path d="M85 45C90 45 95 50 95 55C95 60 90 65 85 65" fill="none" stroke="#2D3748" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="30" cy="55" r="8" fill="#4A5568" stroke="#2D3748" stroke-width="2"/>
+  <circle cx="90" cy="55" r="8" fill="#4A5568" stroke="#2D3748" stroke-width="2"/>
+  
+  <!-- Face -->
+  <path d="M50 50C50 48 52 46 54 46C56 46 58 48 58 50" fill="none" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+  <path d="M62 50C62 48 64 46 66 46C68 46 70 48 70 50" fill="none" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+  <path d="M52 65C56 68 64 68 68 65" fill="none" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Microphone -->
+  <rect x="68" y="70" width="4" height="12" rx="2" fill="#2D3748"/>
+  <circle cx="70" cy="85" r="3" fill="#2D3748"/>
+</svg>
