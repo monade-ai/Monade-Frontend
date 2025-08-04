@@ -176,9 +176,9 @@ export default function PhoneUI({ isOpen, onClose }: PhoneUIProps) {
                 <div className="bg-gray-100 rounded-lg p-4">
                   <h4 className="text-black font-medium mb-2">Try asking:</h4>
                   <ul className="text-gray-600 text-sm space-y-1">
-                    <li>• "What services do you offer?"</li>
-                    <li>• "How can AI help my business?"</li>
-                    <li>• "Tell me about voice agents"</li>
+                    <li>• 'What services do you offer?'</li>
+                    <li>• 'How can AI help my business?'</li>
+                    <li>• 'Tell me about voice agents'</li>
                   </ul>
                 </div>
               </div>

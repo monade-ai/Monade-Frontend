@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function Home() {
   const [showPhoneUI, setShowPhoneUI] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -52,7 +53,7 @@ export default function Home() {
       <nav className="relative z-10 flex items-center justify-between px-6 py-6 lg:px-12 backdrop-blur-sm">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 flex items-center justify-center">
-            <img src="/monade-logo.svg" alt="Monade" className="w-10 h-10" />
+            <Image src="/monade-logo.svg" alt="Monade" width={40} height={40} />
           </div>
           <span className="text-xl font-semibold tracking-tight">monade.ai</span>
         </div>
@@ -794,6 +795,162 @@ export default function Home() {
           <div className="relative flex items-center justify-center">
             {/* 3D Stack Animation */}
             <StackAnimation />
+          </div>
+        </div>
+      </section>
+
+      {/* Check out how our agents help you Section */}
+      <section className="py-20 px-6 relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Section Title */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Check out how our <span className="text-orange-500">agents</span> help you
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Discover the powerful ways our AI agents transform your business operations and customer interactions
+            </p>
+          </div>
+
+          {/* Content Grid */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Sales Agent Card */}
+            <div
+              className={`bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer ${
+                expandedCard && expandedCard !== 'sales' ? 'opacity-30 scale-95' : 'hover:scale-105'
+              }`}
+              onClick={() => setExpandedCard(expandedCard === 'sales' ? null : 'sales')}
+            >
+              <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Sales Agent</h3>
+              <p className="text-gray-300">
+                Automated outbound sales calls with intelligent lead qualification and conversion optimization.
+              </p>
+            </div>
+
+            {/* Customer Support Card */}
+            <div
+              className={`bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer ${
+                expandedCard && expandedCard !== 'support' ? 'opacity-30 scale-95' : 'hover:scale-105'
+              }`}
+              onClick={() => setExpandedCard(expandedCard === 'support' ? null : 'support')}
+            >
+              <div className="w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Customer Support</h3>
+              <p className="text-gray-300">
+                24/7 intelligent customer service with instant issue resolution and seamless escalation.
+              </p>
+            </div>
+
+            {/* Real Estate Agent Card */}
+            <div
+              className={`bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer ${
+                expandedCard && expandedCard !== 'realestate' ? 'opacity-30 scale-95' : 'hover:scale-105'
+              }`}
+              onClick={() => setExpandedCard(expandedCard === 'realestate' ? null : 'realestate')}
+            >
+              <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Real Estate Agent</h3>
+              <p className="text-gray-300">
+                Property inquiries, scheduling viewings, and lead nurturing with personalized conversations.
+              </p>
+            </div>
+
+            {/* Logistics Support Card */}
+            <div
+              className={`bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer ${
+                expandedCard && expandedCard !== 'logistics' ? 'opacity-30 scale-95' : 'hover:scale-105'
+              }`}
+              onClick={() => setExpandedCard(expandedCard === 'logistics' ? null : 'logistics')}
+            >
+              <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Logistics Support</h3>
+              <p className="text-gray-300">
+                Package tracking, delivery updates, and shipment coordination with real-time status updates.
+              </p>
+            </div>
+          </div>
+
+          {/* Expanded Logistics Card */}
+          {expandedCard === 'logistics' && (
+            <div className="mt-8 max-w-4xl mx-auto">
+              <div className="bg-gray-800/70 backdrop-blur-sm border border-gray-600 rounded-xl p-8 animate-fadeIn">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-semibold text-white">Automated Freight Status Calling</h3>
+                  <button
+                    onClick={() => setExpandedCard(null)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <p className="text-gray-300 text-lg mb-6">Real-time Shipment Tracking</p>
+
+                {/* Audio Player */}
+                <div className="bg-gray-900/50 rounded-lg p-6 border border-gray-600">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M9 9a3 3 0 000 6h6a3 3 0 000-6H9z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-white font-medium mb-2">Sample Logistics Call</h4>
+                      <audio
+                        controls
+                        className="w-full"
+                        style={{
+                          filter: 'invert(1) hue-rotate(180deg)',
+                          borderRadius: '8px'
+                        }}
+                      >
+                        <source src="/audio/logistics-sample.wav" type="audio/wav" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 text-gray-400 text-sm">
+                    <p>Listen to how our AI agent handles freight status inquiries with professional, real-time updates.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* CTA Button */}
+          <div className="text-center mt-12">
+            <button
+              onClick={() => setShowPhoneUI(true)}
+              className="bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-lg transition-all duration-300 flex items-center space-x-3 text-lg font-medium mx-auto hover:scale-105"
+            >
+              <span>Experience It Yourself</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
