@@ -103,16 +103,12 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-[0.9] tracking-tight">
             <span className="bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent">
-              Voice AI Suite
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent">
-              for Enterprises
+              Your Customers Think We're Human
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed font-light">
-            Voice Agents and Models for Real Time Communications
+            We cloned human voices so perfectly that 94% of customers can't tell the difference. Now handle unlimited calls, emails, and WhatsApp messages at 1/10th the cost.
           </p>
 
           <button
