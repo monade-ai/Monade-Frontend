@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #000000;
 }
 
 @theme inline {
@@ -106,6 +106,15 @@ body {
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 
@@ -291,6 +300,10 @@ html {
 
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out;
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
 }
 
 
