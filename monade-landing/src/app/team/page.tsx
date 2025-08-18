@@ -34,7 +34,7 @@ export default function TeamPage() {
             <Image src="/team/Screenshot%202025-08-18%20141219.png" alt="Aaditya Rangarajan" width={200} height={200} />
             <p>Aaditya Rangarajan</p>
             <div className="social-links">
-              <a href="hhttps://www.linkedin.com/in/aaditya2200/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |{" "}
+              <a href="https://www.linkedin.com/in/aaditya2200/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |{" "}
               <a href="https://x.com/ADR_ad22" target="_blank" rel="noopener noreferrer">Twitter</a>
             </div>
           </div>
