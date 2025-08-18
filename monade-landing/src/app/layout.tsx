@@ -38,19 +38,22 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased font-sans`}
       >
-<header style={{ backgroundColor: "#000", padding: "1rem", textAlign: "center" }}>
+<div style={{ display: "flex", alignItems: "center", gap: "1rem", position: "absolute", top: "20px", left: "250px", zIndex: 1000 }}>
   <Link 
     href="/" 
     style={{ 
       color: "#fff", 
       textDecoration: "none", 
       fontSize: "1.2rem", 
-      fontWeight: "bold" 
+      fontWeight: "bold", 
+      backgroundColor: "#000", 
+      padding: "0.5rem 1rem", 
+      borderRadius: "5px" 
     }}
   >
     Home
   </Link>
-</header>
+</div>
         {children}
       </body>
     </html>
