@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,8 +38,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased font-sans`}
       >
-<header style={{ backgroundColor: "#000", padding: "1rem", textAlign: "center", display: "flex", justifyContent: "center", gap: "2rem" }}>
-  <a 
+<header style={{ backgroundColor: "#000", padding: "1rem", textAlign: "center" }}>
+  <Link 
     href="/" 
     style={{ 
       color: "#fff", 
@@ -48,40 +49,7 @@ export default function RootLayout({
     }}
   >
     Home
-  </a>
-  <a 
-    href="/about" 
-    style={{ 
-      color: "#fff", 
-      textDecoration: "none", 
-      fontSize: "1.2rem", 
-      fontWeight: "bold" 
-    }}
-  >
-    About
-  </a>
-  <a 
-    href="/team" 
-    style={{ 
-      color: "#fff", 
-      textDecoration: "none", 
-      fontSize: "1.2rem", 
-      fontWeight: "bold" 
-    }}
-  >
-    Team
-  </a>
-  <a 
-    href="/pricing" 
-    style={{ 
-      color: "#fff", 
-      textDecoration: "none", 
-      fontSize: "1.2rem", 
-      fontWeight: "bold" 
-    }}
-  >
-    Pricing
-  </a>
+  </Link>
 </header>
         {children}
       </body>
