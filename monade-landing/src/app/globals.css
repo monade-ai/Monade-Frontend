@@ -346,3 +346,49 @@ html {
     margin-bottom: -4px;
   }
 }
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 3rem; /* 48px */
+  }
+
+  h2 {
+    font-size: 2.25rem; /* 36px */
+  }
+
+  h3 {
+    font-size: 1.5rem; /* 24px */
+  }
+
+  p {
+    font-size: 1rem; /* 16px */
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .language-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-step {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .workflow-step .absolute {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 1rem;
+  }
+
+  .industries-marquee {
+    width: 100%;
+  }
+}

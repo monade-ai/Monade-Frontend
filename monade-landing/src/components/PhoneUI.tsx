@@ -29,18 +29,50 @@ export default function PhoneUI({ isOpen, onClose }: PhoneUIProps) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const handleCall = () => {
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [lastCallTime, setLastCallTime] = useState<number | null>(null);
+  const RATE_LIMIT_MS = 30000; // 30 seconds
+
+  const handleCall = async () => {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('Please enter a valid email address');
+      return;
+    }
+    if (!phoneNumber) {
+      alert('Please enter a phone number');
+      return;
+    }
+    if (lastCallTime && Date.now() - lastCallTime < RATE_LIMIT_MS) {
+      alert('Please wait before making another call');
+      return;
+    }
     setIsConnecting(true);
-    // Simulate connection delay
-    setTimeout(() => {
-      setIsConnecting(false);
+    try {
+      const res = await fetch('/api/proxy-call', {
+        cache: 'no-store',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          phone_number: phoneNumber
+        })
+      });
+      if (!res.ok) throw new Error('Call failed');
+      setLastCallTime(Date.now());
       setIsConnected(true);
-      // Simulate agent speaking
       setTimeout(() => {
         setIsSpeaking(true);
         setTimeout(() => setIsSpeaking(false), 3000);
       }, 1000);
-    }, 2000);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to initiate call');
+    } finally {
+      setIsConnecting(false);
+    }
   };
 
   const handleHangup = () => {
@@ -87,7 +119,7 @@ export default function PhoneUI({ isOpen, onClose }: PhoneUIProps) {
             <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-black rounded-full"></div>
 
             {/* Call Interface */}
-            <div className="flex flex-col h-full pt-12 pb-8">
+            <div className="flex flex-col h-full pt-6 pb-8">
               {/* Close Button */}
               <div className="absolute top-4 right-4 z-10">
                 <button
@@ -122,7 +154,7 @@ export default function PhoneUI({ isOpen, onClose }: PhoneUIProps) {
               </div>
 
               {/* Contact Card */}
-              <div className="flex-1 flex flex-col items-center justify-center px-6">
+              <div className="flex-1 flex flex-col items-center justify-start px-6 mt-0">
                 {/* Avatar */}
                 <div className={`w-32 h-32 rounded-full bg-orange-500 flex items-center justify-center mb-6 transition-all duration-300 ${
                   isSpeaking ? 'animate-pulse scale-110' : ''
@@ -139,6 +171,28 @@ export default function PhoneUI({ isOpen, onClose }: PhoneUIProps) {
                     {isConnected ? (isSpeaking ? 'Speaking...' : 'Listening...') : 'Ready to help'}
                   </p>
                 </div>
+              </div>
+
+              {/* Email Input */}
+              <div className="px-6 mb-4">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter email address"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                />
+              </div>
+
+              {/* Phone Number Input */}
+              <div className="px-6 mb-4">
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter phone number"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                />
               </div>
 
               {/* Call Controls */}
@@ -160,7 +214,7 @@ export default function PhoneUI({ isOpen, onClose }: PhoneUIProps) {
                     className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition-colors"
                   >
                     <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.7l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.1-.7-.28-.79-.73-1.68-1.36-2.66-1.85-.33-.16-.56-.51-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/>
+                      <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11-.53-.29.7l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.1-.7-.28-.79-.73-1.68-1.36-2.66-1.85-.33-.16-.56-.51-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/>
                     </svg>
                   </button>
                 )}

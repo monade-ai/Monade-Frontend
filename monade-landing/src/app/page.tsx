@@ -112,7 +112,9 @@ export default function Home() {
         <div className="hidden md:flex items-center justify-center space-x-8 text-gray-200">
           <a href="#" className="text-lg font-medium hover:text-white transition-colors">Products</a>
           <a href="#industries" className="text-lg font-medium hover:text-white transition-colors">Industries</a>
-          <a href="#" className="text-lg font-medium hover:text-white transition-colors">Pricing</a>
+          <a href="/pricing" className="text-lg font-medium hover:text-white transition-colors">Pricing</a>
+          <a href="/about" className="text-lg font-medium hover:text-white transition-colors">About</a>
+          <a href="/team" className="text-lg font-medium hover:text-white transition-colors">Team</a>
         </div>
           <div className="flex items-center space-x-3">
             <button

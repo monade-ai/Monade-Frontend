@@ -1,0 +1,92 @@
+.about-container {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.about-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.about-hero p {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.about-services {
+  margin-bottom: 3rem;
+}
+
+.about-services h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #fff;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.about-services ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-services li {
+  background: rgba(255, 255, 255, 0.05);
+  margin: 0.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+}
+
+.about-team {
+  text-align: center;
+}
+
+.about-team h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #fff;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+.team-member {
+  text-align: center;
+  margin-top: -20px;
+}
+
+.team-member img {
+  width: 260px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.team-member p {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
