@@ -99,15 +99,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white cosmic-background">
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-900/50 via-black to-orange-900/50 opacity-50"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] bg-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
 
       {/* Navigation */}
       <nav className="relative z-10 flex items-center justify-between px-6 py-6 lg:px-12 backdrop-blur-sm">
-        <div className="flex items-center space-x-3">
+        <div className="hidden md:flex items-center space-x-3">
           <div className="w-10 h-10 flex items-center justify-center">
-            <Image src="/whatsapp-logo.jpg" alt="Monade" width={40} height={40} />
+            <Image src="/whatsapp-logo.jpg" alt="Monade AI Voice Agent WhatsApp Integration" width={40} height={40} />
           </div>
-          <span className="text-xl font-semibold tracking-tight">monade.ai</span>
+          <span className="text-white font-bold text-xl ml-2">monade.ai</span>
         </div>
         <div className="hidden md:flex items-center justify-center space-x-8 text-gray-200">
           <a href="#" className="text-lg font-medium hover:text-white transition-colors">Products</a>
@@ -116,7 +116,7 @@ export default function Home() {
           <a href="/about" className="text-lg font-medium hover:text-white transition-colors">About</a>
           <a href="/team" className="text-lg font-medium hover:text-white transition-colors">Team</a>
         </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 ml-auto">
             <button
               onClick={() => setShowPhoneUI(true)}
               className="border border-gray-600/50 px-4 py-2 rounded-lg hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-200 flex items-center space-x-2 text-sm font-medium backdrop-blur-sm shimmer"
@@ -126,7 +126,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
-            <button className="border border-gray-600/50 px-4 py-2 rounded-lg hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-200 flex items-center space-x-2 text-sm font-medium backdrop-blur-sm">
+            <button className="hidden md:flex border border-gray-600/50 px-4 py-2 rounded-lg hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-200 items-center space-x-2 text-sm font-medium backdrop-blur-sm">
               <span>Log In</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -137,9 +137,86 @@ export default function Home() {
 
       {/* Hero Section */}
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[90vh] px-6 text-center">
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              "name": "Monade AI Voice Agent",
+              "description": "Monade AI Voice Agent offers conversational AI solutions for automated customer service, sales, logistics, and real estate. Our AI virtual assistants enhance efficiency, reduce costs, and provide 24/7 support.",
+              "serviceType": "AI Voice Assistant",
+              "provider": {
+                "@type": "Organization",
+                "name": "Monade AI Voice Agent"
+              },
+              "areaServed": {
+                "@type": "Place",
+                "name": "Global"
+              },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Monade AI Voice Agent Solutions",
+                "itemListElement": [
+                  {
+                    "@type": "OfferCatalog",
+                    "name": "Customer Service Automation",
+                    "itemListElement": [
+                      {
+                        "@type": "Offer",
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "24/7 AI Customer Support"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "OfferCatalog",
+                    "name": "Sales Enhancement",
+                    "itemListElement": [
+                      {
+                        "@type": "Offer",
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "AI Lead Qualification"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "OfferCatalog",
+                    "name": "Logistics Optimization",
+                    "itemListElement": [
+                      {
+                        "@type": "Offer",
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "AI Shipment Tracking"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "OfferCatalog",
+                    "name": "Real Estate Efficiency",
+                    "itemListElement": [
+                      {
+                        "@type": "Offer",
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "AI Property Inquiry Handling"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          `}
+        </script>
         <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
           <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-            Monade
+            Monade AI Voice Agent
           </span>
           <br />
           Your Customers Think
@@ -147,8 +224,8 @@ export default function Home() {
           We’re Human
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
-          Automate your customer interactions with voice agents that sound remarkably human.
-          Handle calls, qualify leads, and provide support 24/7 at a fraction of the cost.
+          Automate your customer interactions with our advanced AI voice agents that sound remarkably human.
+          Monade provides intelligent conversational AI solutions to handle calls, qualify leads, and provide 24/7 support at a fraction of the cost, enhancing business efficiency and customer experience.
         </p>
         <div className="flex items-center justify-center space-x-4">
           <button
@@ -188,17 +265,18 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-white via-teal-100 to-white bg-clip-text text-transparent">
-                Lifelike Voices for Every Use Case
+                Monade AI Voice Agent: Lifelike Voices for Every Use Case
               </span>
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-              Select a use case to see the available voices in 50 global languages.
+              Explore how Monade's advanced conversational AI delivers lifelike voices across various applications. Select a use case below to experience our AI virtual assistant capabilities in multiple global languages.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Use Cases Column */}
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 lg:col-span-2">Key Features of Monade AI Voice Agent</h2>
               {useCases.map((useCase) => (
                 <div
                   key={useCase.id}
@@ -423,20 +501,20 @@ export default function Home() {
               <div className="absolute left-0 top-0 flex items-center justify-center w-18 h-18 rounded-full bg-orange-500/20 border border-orange-400/30">
                 <span className="text-2xl font-bold text-orange-300">2</span>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">Monade Understands the Who, What, and When.</h3>
+              <h3 className="text-3xl font-bold text-white mb-4">Monade AI Understands the Who, What, and When with Advanced NLP.</h3>
               <div className="bg-black rounded-lg p-6 border border-gray-700/50">
                 <ul className="space-y-2 text-lg text-gray-300 list-disc list-inside">
-                  <li>Fetches the client’s last visit notes from CRM</li>
-                  <li>Knows “tomorrow” is Tuesday at 10 AM</li>
-                  <li>Checks if brochure was sent previously</li>
-                  <li>Identifies preferred channel as WhatsApp</li>
-                  <li>Prepares tone-matched messaging</li>
+                  <li>Fetches the client’s last visit notes from CRM, ensuring contextual understanding.</li>
+                  <li>Accurately interprets temporal cues like “tomorrow” as Tuesday at 10 AM.</li>
+                  <li>Verifies if the brochure was sent previously, preventing redundant actions.</li>
+                  <li>Identifies preferred communication channels, such as WhatsApp, for seamless interaction.</li>
+                  <li>Prepares tone-matched messaging, ensuring brand consistency and personalized communication.</li>
                 </ul>
                 <div className="flex justify-center space-x-4 mt-6">
-                  <span className="bg-teal-500/20 text-teal-300 px-3 py-1 rounded-full text-sm">Context</span>
-                  <span className="bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-sm">Memory</span>
-                  <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm">Tone</span>
-                  <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-sm">Intent Match</span>
+                  <span className="bg-teal-500/20 text-teal-300 px-3 py-1 rounded-full text-sm">Contextual Understanding</span>
+                  <span className="bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-sm">Memory & CRM Integration</span>
+                  <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm">Tone Matching</span>
+                  <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-sm">Intent Recognition</span>
                 </div>
               </div>
             </div>
@@ -446,7 +524,7 @@ export default function Home() {
               <div className="absolute left-0 top-0 flex items-center justify-center w-18 h-18 rounded-full bg-orange-500/20 border border-orange-400/30">
                 <span className="text-2xl font-bold text-orange-300">3</span>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">Then It Just Happens.</h3>
+              <h3 className="text-3xl font-bold text-white mb-4">Monade AI Executes Seamlessly: Automated Actions & Follow-ups.</h3>
               <div className="space-y-4">
                 <div className="bg-black rounded-lg p-4 border border-gray-700/50">✉️ <span className="font-semibold">Email drafted + scheduled:</span> “Thanks again for visiting the Andheri duplex. Re-sharing the brochure and pricing options for your review.”</div>
                 <div className="bg-black rounded-lg p-4 border border-gray-700/50">📲 <span className="font-semibold">WhatsApp Reminder queued:</span> “Hi! Just reminding you about the 11 AM call tomorrow to discuss the Andheri property.”</div>

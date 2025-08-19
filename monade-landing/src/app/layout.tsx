@@ -1,3 +1,5 @@
+import React from "react";
+import Navbar from "../components/Navbar";
 import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -16,9 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Monade.ai - Voice AI Suite for Enterprises",
-  description: "Voice Agents and Models for Real Time Communications. Transform your business with advanced AI-powered voice solutions.",
-  keywords: ["Voice AI", "AI Agents", "Enterprise AI", "Voice Technology", "Real Time Communications"],
+  title: "Monade AI Voice Agent: Conversational AI for Automated Customer Service",
+  description: "Transform your business with Monade AI Voice Agent. Our conversational AI automates customer service, sales, and logistics, enhancing efficiency and reducing costs. Explore our AI virtual assistant solutions.",
+  keywords: ["AI Voice Agent", "Conversational AI", "Automated Customer Service", "AI Virtual Assistant", "AI Call Center Solution", "Voice AI for Business", "Natural Language Processing", "Speech Recognition", "Customer Experience Automation", "24/7 Customer Support AI", "Multilingual AI Agent", "AI for Sales Automation", "AI for Logistics Management", "AI for Real Estate Operations", "Business Efficiency AI", "Cost Reduction with AI", "Intelligent Automation Solutions", "AI-powered Communication", "Voice Assistant Technology", "AI for Inbound Calls", "AI for Outbound Calls", "Automated Voice Assistant"],
   authors: [{ name: "Monade.ai" }],
 };
 
@@ -38,22 +40,27 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased font-sans`}
       >
-<div style={{ display: "flex", alignItems: "center", gap: "1rem", position: "absolute", top: "20px", left: "250px", zIndex: 1000 }}>
-  <Link 
-    href="/" 
-    style={{ 
-      color: "#fff", 
-      textDecoration: "none", 
-      fontSize: "1.2rem", 
-      fontWeight: "bold", 
-      backgroundColor: "#000", 
-      padding: "0.5rem 1rem", 
-      borderRadius: "5px" 
-    }}
-  >
-    Home
-  </Link>
-</div>
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Monade AI Voice Agent",
+              "url": "https://www.business.monade.ai",
+              "logo": "https://www.business.monade.ai/monade-logo.svg",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "email": marketing@monade.ai,
+                "contactType": "customer service"
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/monade-ai",
+                "https://twitter.com/monade_ai"
+              ]
+            }
+          `}
+        </script>
+        <Navbar />
         {children}
       </body>
     </html>
