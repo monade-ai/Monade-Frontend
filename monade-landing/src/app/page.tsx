@@ -110,7 +110,7 @@ export default function Home() {
           <span className="text-white font-bold text-xl ml-2">monade.ai</span>
         </div>
         <div className="hidden md:flex items-center justify-center space-x-8 text-gray-200">
-          <a href="#" className="text-lg font-medium hover:text-white transition-colors">Products</a>
+<a href="/products" className="text-lg font-medium hover:text-white transition-colors">Products</a>
           <a href="#industries" className="text-lg font-medium hover:text-white transition-colors">Industries</a>
           <a href="/pricing" className="text-lg font-medium hover:text-white transition-colors">Pricing</a>
           <a href="/about" className="text-lg font-medium hover:text-white transition-colors">About</a>
@@ -126,16 +126,22 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
-            <button className="hidden md:flex border border-gray-600/50 px-4 py-2 rounded-lg hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-200 items-center space-x-2 text-sm font-medium backdrop-blur-sm">
+            <a
+              href="https://dashboard.monade.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex border border-gray-600/50 px-4 py-2 rounded-lg hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-200 items-center space-x-2 text-sm font-medium backdrop-blur-sm"
+            >
               <span>Log In</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </button>
+            </a>
           </div>
       </nav>
 
-      {/* Hero Section */}
+      
+
       <main className="relative z-10 flex flex-col items-center justify-center min-h-[90vh] px-6 text-center">
         <script type="application/ld+json">
           {`

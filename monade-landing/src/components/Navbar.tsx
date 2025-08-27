@@ -13,7 +13,7 @@ export default function Navbar() {
   type NavLink = { href: string; label: string };
 
   const desktopLinks: NavLink[] = [
-    ...(pathname !== "/" ? [{ href: "/", label: "← Back" }] : []),
+    ...(pathname !== "/products" ? [{ href: "/products", label: "← Back" }] : []),
     { href: "/products", label: "Products" },
     { href: "/demo", label: "Get a Demo" },
     { href: "/login", label: "Log In" },
@@ -43,6 +43,8 @@ export default function Navbar() {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0.5rem 1rem",
+          marginLeft: "3rem",
+          paddingLeft: "2rem"
         }}
       >
 
