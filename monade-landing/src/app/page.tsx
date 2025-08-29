@@ -130,7 +130,7 @@ export default function Home() {
       <section className="border-t border-[var(--border)] py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold">Monade AI Voice Agent: Lifelike Voices for Every Use Case</h2>
+            <h2 className="text-3xl md:text-5xl font-bold">Watch our AI agents in action</h2>
             <p className="lede text-lg max-w-3xl mx-auto mt-4">
               Explore how Monade's advanced conversational AI delivers lifelike voices across various applications. Select a use case below to experience our AI virtual assistant capabilities in multiple global languages.
             </p>
