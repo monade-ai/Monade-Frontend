@@ -50,7 +50,7 @@ export default function Navbar() {
 
         {/* Hide logo in mobile view */}
         {/* <div className="hidden md:block">
-          <Link href="/" style={{ color: "#fff", fontSize: "1.5rem", fontWeight: "bold" }}>
+          <Link href="/" style={{ color: "var(--foreground)", fontSize: "1.5rem", fontWeight: "bold" }}>
             monade.ai
           </Link>
         </div> */}
@@ -64,7 +64,7 @@ export default function Navbar() {
           style={{
             background: "none",
             border: "none",
-            color: "#fff",
+            color: "var(--foreground)",
             fontSize: "1.5rem",
             cursor: "pointer",
             marginTop: "0.5rem" // lowered position in mobile view
@@ -83,8 +83,8 @@ export default function Navbar() {
             top: 0,
             left: 0,
             width: "100%",
-            background: "#000",
-            color: "#fff",
+            background: "var(--surface)",
+            color: "var(--foreground)",
             padding: "1rem",
             animation: "slideDown 0.3s ease-out",
           }}
@@ -95,7 +95,7 @@ export default function Navbar() {
               style={{
                 background: "none",
                 border: "none",
-                color: "#fff",
+                color: "var(--foreground)",
                 fontSize: "1.5rem",
                 cursor: "pointer",
               }}
@@ -128,11 +128,11 @@ export default function Navbar() {
 }
 
 const linkStyle = {
-  color: "#fff",
+  color: "var(--foreground)",
   textDecoration: "none",
   fontSize: "1.2rem",
   fontWeight: "bold",
-  backgroundColor: "#000",
+  backgroundColor: "var(--surface)",
   padding: "0.5rem 1rem",
-  borderRadius: "5px",
+  borderRadius: 0,
 };
