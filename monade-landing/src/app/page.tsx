@@ -27,7 +27,7 @@ export default function Home() {
     { id: 'gujarati', name: 'Gujarati', flag: '🇮🇳' },
     { id: 'kannada', name: 'Kannada', flag: '🇮🇳' },
     { id: 'arabic', name: 'Arabic', flag: '🇸🇦' },
-    { id: 'german', name: 'German', flag: '🇩🇪' },
+    { id: 'german', name: 'German', flag: '��🇪' },
     { id: 'italian', name: 'Italian', flag: '🇮🇹' },
     { id: 'french', name: 'French', flag: '🇫🇷' },
   ];
@@ -136,149 +136,159 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            {/* Use cases */}
-            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 lg:col-span-2">Key Features of Monade AI Voice Agent</h3>
-              {useCases.map((useCase) => (
-                <button
-                  key={useCase.id}
-                  onClick={() => setSelectedUseCase(useCase.id)}
-                  className={`text-left p-5 border rounded-none transition-colors ${selectedUseCase === useCase.id ? 'border-[var(--brand)] bg-[var(--surface)]' : 'border-[var(--border)] hover:border-[var(--foreground)]/20'}`}
-                >
-                  <div className="w-10 h-10 bg-[var(--brand)] text-[var(--brand-ink)] flex items-center justify-center mb-3">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={useCase.icon} />
+          <div className="space-y-4">
+            {useCases.map((useCase) => {
+              const isOpen = selectedUseCase === useCase.id;
+              return (
+                <div key={useCase.id} className={`border ${isOpen ? 'border-[var(--brand)] bg-[var(--surface)]' : 'border-[var(--border)] bg-transparent'}`}>
+                  <button
+                    onClick={() => setSelectedUseCase(useCase.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`panel-${useCase.id}`}
+                    className="w-full flex items-center justify-between px-5 py-4 text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[var(--brand)] text-[var(--brand-ink)] flex items-center justify-center">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={useCase.icon} />
+                        </svg>
+                      </div>
+                      <div className="font-semibold">{useCase.name}</div>
+                    </div>
+                    <svg className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.187l3.71-3.956a.75.75 0 111.08 1.04l-4.24 4.52a.75.75 0 01-1.08 0l-4.24-4.52a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                     </svg>
-                  </div>
-                  <div className="font-semibold">{useCase.name}</div>
-                  <p className="text-sm text-[var(--muted-foreground)] mt-1">{useCase.description}</p>
-                </button>
-              ))}
-            </div>
+                  </button>
 
-            {/* Languages */}
-            <div className="lg:col-span-3 space-y-4">
-              <div className="flex flex-wrap gap-4 justify-center">
-                {languages.filter(l => ['english','hindi','arabic'].includes(l.id)).map((lang) => {
-                  const enabled = useCases.find(uc => uc.id === selectedUseCase)?.voices.includes(lang.id);
-                  const useCase = useCases.find(uc => uc.id === selectedUseCase);
-                  let audioSrc = '';
-                  if (useCase) {
-                    const langUpper = lang.id.charAt(0).toUpperCase() + lang.id.slice(1);
-                    switch (selectedUseCase) {
-                      case 'sales':
-                        audioSrc = `/audio/Sales${langUpper}.wav`;
-                        break;
-                      case 'support':
-                        if (lang.id === 'english') audioSrc = '/audio/CustomerSupportEnglish.wav';
-                        else if (lang.id === 'hindi') audioSrc = '/audio/customersupporthindi.wav';
-                        else if (lang.id === 'arabic') audioSrc = '/audio/customerarabic.wav';
-                        break;
-                      case 'real-estate':
-                        if (lang.id === 'english') audioSrc = '/audio/RealEstateEnglish.wav';
-                        else if (lang.id === 'hindi') audioSrc = '/audio/Real%20Estate%20Hindi.wav';
-                        else if (lang.id === 'arabic') audioSrc = '/audio/RealEstateArabic.wav';
-                        break;
-                      case 'logistics':
-                        if (lang.id === 'english') audioSrc = '/audio/logistics-sample.wav';
-                        else if (lang.id === 'hindi') audioSrc = '/audio/LogisticsHindi.wav';
-                        else if (lang.id === 'arabic') audioSrc = '/audio/LogisticArabic.wav';
-                        break;
-                    }
-                  }
-                  const isPlaying = playingAudio === audioSrc;
-
-                  return (
-                    <div key={lang.id} className={`w-full max-w-xs p-5 border rounded-none ${enabled ? 'border-[var(--border)] hover:border-[var(--foreground)]/20' : 'opacity-50 cursor-not-allowed'} transition-colors`}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{lang.flag}</span>
-                          <span className="font-medium">{lang.name}</span>
+                  {isOpen && (
+                    <div id={`panel-${useCase.id}`} className="px-5 pb-6 pt-2">
+                      <div className="grid md:grid-cols-2 gap-6 items-start">
+                        <div>
+                          <p className="text-[var(--muted-foreground)]">{useCase.description}</p>
                         </div>
-                        <button
-                          disabled={!enabled}
-                          onClick={() => handlePlayAudio(selectedUseCase, lang.id)}
-                          className={`w-10 h-10 rounded-none border ${enabled ? 'border-[var(--border)] hover:bg-[var(--brand)] hover:text-[var(--brand-ink)]' : 'border-[var(--border)]'} flex items-center justify-center transition-colors`}
-                        >
-                          <svg className={`w-5 h-5 ${isPlaying ? '' : ''}`} fill="currentColor" viewBox="0 0 24 24">
-                            {isPlaying ? (
-                              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                            ) : (
-                              <path d="M8 5v14l11-7z" />
-                            )}
-                          </svg>
-                        </button>
-                        {isPlaying && (
-                          <audio src={playingAudio ?? undefined} autoPlay onEnded={() => setPlayingAudio(null)} />
-                        )}
-                      </div>
-                      <div className="h-px bg-[var(--border)]"></div>
-                    </div>
-                  );
-                })}
-              </div>
+                        <div className="space-y-4">
+                          <div className="flex flex-wrap gap-4 justify-start">
+                            {languages.filter(l => ['english','hindi','arabic'].includes(l.id)).map((lang) => {
+                              const enabled = useCase.voices.includes(lang.id);
+                              const caseId = useCase.id;
+                              let audioSrc = '';
+                              const langUpper = lang.id.charAt(0).toUpperCase() + lang.id.slice(1);
+                              switch (caseId) {
+                                case 'sales':
+                                  audioSrc = `/audio/Sales${langUpper}.wav`;
+                                  break;
+                                case 'support':
+                                  if (lang.id === 'english') audioSrc = '/audio/CustomerSupportEnglish.wav';
+                                  else if (lang.id === 'hindi') audioSrc = '/audio/customersupporthindi.wav';
+                                  else if (lang.id === 'arabic') audioSrc = '/audio/customerarabic.wav';
+                                  break;
+                                case 'real-estate':
+                                  if (lang.id === 'english') audioSrc = '/audio/RealEstateEnglish.wav';
+                                  else if (lang.id === 'hindi') audioSrc = '/audio/Real%20Estate%20Hindi.wav';
+                                  else if (lang.id === 'arabic') audioSrc = '/audio/RealEstateArabic.wav';
+                                  break;
+                                case 'logistics':
+                                  if (lang.id === 'english') audioSrc = '/audio/logistics-sample.wav';
+                                  else if (lang.id === 'hindi') audioSrc = '/audio/LogisticsHindi.wav';
+                                  else if (lang.id === 'arabic') audioSrc = '/audio/LogisticArabic.wav';
+                                  break;
+                              }
+                              const isPlaying = playingAudio === audioSrc;
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {languages.filter(l => !['english','hindi','arabic'].includes(l.id)).map((lang) => {
-                  const enabled = useCases.find(uc => uc.id === selectedUseCase)?.voices.includes(lang.id);
-                  const useCase = useCases.find(uc => uc.id === selectedUseCase);
-                  let audioSrc = '';
-                  if (useCase) {
-                    const langUpper = lang.id.charAt(0).toUpperCase() + lang.id.slice(1);
-                    switch (selectedUseCase) {
-                      case 'sales':
-                        audioSrc = `/audio/Sales${langUpper}.wav`;
-                        break;
-                      case 'support':
-                        if (lang.id === 'english') audioSrc = '/audio/CustomerSupportEnglish.wav';
-                        else if (lang.id === 'hindi') audioSrc = '/audio/customersupporthindi.wav';
-                        else if (lang.id === 'arabic') audioSrc = '/audio/customerarabic.wav';
-                        break;
-                      case 'real-estate':
-                        if (lang.id === 'english') audioSrc = '/audio/RealEstateEnglish.wav';
-                        else if (lang.id === 'hindi') audioSrc = '/audio/Real%20Estate%20Hindi.wav';
-                        else if (lang.id === 'arabic') audioSrc = '/audio/RealEstateArabic.wav';
-                        break;
-                      case 'logistics':
-                        if (lang.id === 'english') audioSrc = '/audio/logistics-sample.wav';
-                        else if (lang.id === 'hindi') audioSrc = '/audio/LogisticsHindi.wav';
-                        else if (lang.id === 'arabic') audioSrc = '/audio/LogisticArabic.wav';
-                        break;
-                    }
-                  }
-                  const isPlaying = playingAudio === audioSrc;
+                              return (
+                                <div key={lang.id} className={`w-full max-w-xs p-5 border rounded-none ${enabled ? 'border-[var(--border)] hover:border-[var(--foreground)]/20' : 'opacity-50 cursor-not-allowed'} transition-colors`}>
+                                  <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-2xl">{lang.flag}</span>
+                                      <span className="font-medium">{lang.name}</span>
+                                    </div>
+                                    <button
+                                      disabled={!enabled}
+                                      onClick={() => handlePlayAudio(caseId, lang.id)}
+                                      className={`w-10 h-10 rounded-none border ${enabled ? 'border-[var(--border)] hover:bg-[var(--brand)] hover:text-[var(--brand-ink)]' : 'border-[var(--border)]'} flex items-center justify-center transition-colors`}
+                                    >
+                                      <svg className={`w-5 h-5 ${isPlaying ? '' : ''}`} fill="currentColor" viewBox="0 0 24 24">
+                                        {isPlaying ? (
+                                          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                                        ) : (
+                                          <path d="M8 5v14l11-7z" />
+                                        )}
+                                      </svg>
+                                    </button>
+                                    {isPlaying && (
+                                      <audio src={playingAudio ?? undefined} autoPlay onEnded={() => setPlayingAudio(null)} />
+                                    )}
+                                  </div>
+                                  <div className="h-px bg-[var(--border)]"></div>
+                                </div>
+                              );
+                            })}
+                          </div>
 
-                  return (
-                    <div key={lang.id} className={`p-5 border rounded-none ${enabled ? 'border-[var(--border)] hover:border-[var(--foreground)]/20' : 'opacity-50 cursor-not-allowed'} transition-colors`}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{lang.flag}</span>
-                          <span className="font-medium">{lang.name}</span>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            {languages.filter(l => !['english','hindi','arabic'].includes(l.id)).map((lang) => {
+                              const enabled = useCase.voices.includes(lang.id);
+                              const caseId = useCase.id;
+                              let audioSrc = '';
+                              const langUpper = lang.id.charAt(0).toUpperCase() + lang.id.slice(1);
+                              switch (caseId) {
+                                case 'sales':
+                                  audioSrc = `/audio/Sales${langUpper}.wav`;
+                                  break;
+                                case 'support':
+                                  if (lang.id === 'english') audioSrc = '/audio/CustomerSupportEnglish.wav';
+                                  else if (lang.id === 'hindi') audioSrc = '/audio/customersupporthindi.wav';
+                                  else if (lang.id === 'arabic') audioSrc = '/audio/customerarabic.wav';
+                                  break;
+                                case 'real-estate':
+                                  if (lang.id === 'english') audioSrc = '/audio/RealEstateEnglish.wav';
+                                  else if (lang.id === 'hindi') audioSrc = '/audio/Real%20Estate%20Hindi.wav';
+                                  else if (lang.id === 'arabic') audioSrc = '/audio/RealEstateArabic.wav';
+                                  break;
+                                case 'logistics':
+                                  if (lang.id === 'english') audioSrc = '/audio/logistics-sample.wav';
+                                  else if (lang.id === 'hindi') audioSrc = '/audio/LogisticsHindi.wav';
+                                  else if (lang.id === 'arabic') audioSrc = '/audio/LogisticArabic.wav';
+                                  break;
+                              }
+                              const isPlaying = playingAudio === audioSrc;
+
+                              return (
+                                <div key={lang.id} className={`p-5 border rounded-none ${enabled ? 'border-[var(--border)] hover:border-[var(--foreground)]/20' : 'opacity-50 cursor-not-allowed'} transition-colors`}>
+                                  <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-2xl">{lang.flag}</span>
+                                      <span className="font-medium">{lang.name}</span>
+                                    </div>
+                                    <button
+                                      disabled={!enabled}
+                                      onClick={() => handlePlayAudio(caseId, lang.id)}
+                                      className={`w-10 h-10 rounded-none border ${enabled ? 'border-[var(--border)] hover:bg-[var(--brand)] hover:text-[var(--brand-ink)]' : 'border-[var(--border)]'} flex items-center justify-center transition-colors`}
+                                    >
+                                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        {isPlaying ? (
+                                          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                                        ) : (
+                                          <path d="M8 5v14l11-7z" />
+                                        )}
+                                      </svg>
+                                    </button>
+                                    {isPlaying && (
+                                      <audio src={playingAudio ?? undefined} autoPlay onEnded={() => setPlayingAudio(null)} />
+                                    )}
+                                  </div>
+                                  <div className="h-px bg-[var(--border)]"></div>
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
-                        <button
-                          disabled={!enabled}
-                          onClick={() => handlePlayAudio(selectedUseCase, lang.id)}
-                          className={`w-10 h-10 rounded-none border ${enabled ? 'border-[var(--border)] hover:bg-[var(--brand)] hover:text-[var(--brand-ink)]' : 'border-[var(--border)]'} flex items-center justify-center transition-colors`}
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            {isPlaying ? (
-                              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                            ) : (
-                              <path d="M8 5v14l11-7z" />
-                            )}
-                          </svg>
-                        </button>
-                        {isPlaying && (
-                          <audio src={playingAudio ?? undefined} autoPlay onEnded={() => setPlayingAudio(null)} />
-                        )}
                       </div>
-                      <div className="h-px bg-[var(--border)]"></div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
