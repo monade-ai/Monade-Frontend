@@ -20,10 +20,11 @@ export default function Navbar() {
   ];
 
   const mobileLinks: NavLink[] = [
-    ...(pathname !== "/" ? [{ href: "/", label: "← Back" }] : []),
+    { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
-    { href: "/demo", label: "Get a Demo" },
-    // Removed login link from mobile view
+    { href: "/about", label: "About" },
+    { href: "/team", label: "Team" },
+    { href: "/pricing", label: "Pricing" },
   ];
 
   return (
@@ -42,20 +43,33 @@ export default function Navbar() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0.5rem 1rem",
-          marginLeft: "3rem",
-          paddingLeft: "2rem"
+          padding: "1rem 2rem",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          width: "100%"
         }}
       >
 
-        {/* Hide logo in mobile view */}
-        {/* <div className="hidden md:block">
-          <Link href="/" style={{ color: "#fff", fontSize: "1.5rem", fontWeight: "bold" }}>
-            monade.ai
-          </Link>
-        </div> */}
+        {/* Logo/Home Link - Only show on non-home pages */}
+        {pathname !== "/" && (
+          <div className="hidden md:block">
+            <Link href="/" style={{ color: "#fff", fontSize: "1.5rem", fontWeight: "bold", textDecoration: "none" }}>
+              monade.ai
+            </Link>
+          </div>
+        )}
 
-        {/* Desktop Links removed as per requirement */}
+        {/* Mobile Logo - Only show on non-home pages */}
+        {pathname !== "/" && (
+          <div className="md:hidden">
+            <Link href="/" style={{ color: "#fff", fontSize: "1.2rem", fontWeight: "bold", textDecoration: "none" }}>
+              monade.ai
+            </Link>
+          </div>
+        )}
+
+        {/* Spacer for home page to center the menu button */}
+        {pathname === "/" && <div></div>}
 
         {/* Mobile Menu Button */}
         <button

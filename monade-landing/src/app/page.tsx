@@ -105,11 +105,17 @@ export default function Home() {
       <nav className="relative z-10 flex items-center justify-between px-6 py-6 lg:px-12 backdrop-blur-sm">
         <div className="hidden md:flex items-center space-x-3">
           <div className="w-10 h-10 flex items-center justify-center">
-            <Image src="/whatsapp-logo.jpg" alt="Monade AI Voice Agent WhatsApp Integration" width={40} height={40} />
+            <Image 
+              src="/whatsapp-logo.jpg" 
+              alt="Monade AI Voice Agent WhatsApp Integration" 
+              width={40} 
+              height={40} 
+              className="rounded-full"
+            />
           </div>
           <span className="text-white font-bold text-xl ml-2">monade.ai</span>
         </div>
-        <div className="hidden md:flex items-center justify-center space-x-8 text-gray-200">
+        <div className="hidden md:flex items-center justify-center space-x-8 text-gray-200 ml-16">
 <a href="/products" className="text-lg font-medium hover:text-white transition-colors">Products</a>
           <a href="#industries" className="text-lg font-medium hover:text-white transition-colors">Industries</a>
           <a href="/pricing" className="text-lg font-medium hover:text-white transition-colors">Pricing</a>
@@ -245,6 +251,172 @@ export default function Home() {
           </button>
         </div>
       </main>
+
+      {/* Business Summary Section */}
+      <section className="relative py-16 bg-gradient-to-b from-black via-gray-900/50 to-black">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30 shadow-2xl">
+            <div className="inline-flex items-center px-4 py-2 bg-orange-600/20 border border-orange-500/30 rounded-full text-orange-400 text-sm font-medium mb-6">
+              <span className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse"></span>
+              Live Tech Startup Platform
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              About Monade AI
+            </h2>
+            <p className="text-xl text-gray-300 leading-relaxed mb-8">
+              Monade is a <strong className="text-white">live AI voice agent platform</strong> that helps <strong className="text-white">businesses across industries</strong> automate customer interactions with human-like conversational AI. We serve <strong className="text-white">real estate, e-commerce, logistics, and healthcare companies</strong> by providing 24/7 intelligent voice agents that reduce operational costs by up to 80% while improving customer satisfaction and response times.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+              <div className="bg-black/30 rounded-lg p-4 border border-gray-600/30">
+                <div className="text-2xl font-bold text-orange-400 mb-2">80%</div>
+                <div className="text-gray-300 text-sm">Cost Reduction</div>
+              </div>
+              <div className="bg-black/30 rounded-lg p-4 border border-gray-600/30">
+                <div className="text-2xl font-bold text-orange-400 mb-2">24/7</div>
+                <div className="text-gray-300 text-sm">Availability</div>
+              </div>
+              <div className="bg-black/30 rounded-lg p-4 border border-gray-600/30">
+                <div className="text-2xl font-bold text-orange-400 mb-2">50+</div>
+                <div className="text-gray-300 text-sm">Languages</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Demo Section */}
+      <section className="relative py-16 bg-gradient-to-b from-black via-gray-900/30 to-black">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            See Our AI Voice Agent in Action
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            Watch how our AI voice agents handle real customer conversations with human-like intelligence and natural flow.
+          </p>
+          
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30 shadow-2xl">
+            <div className="aspect-video bg-black/50 rounded-lg overflow-hidden mb-6">
+              <iframe
+                src="https://www.loom.com/embed/3f9c7780719d4d48845fba5b056c9f98?sid=cdd31389-4283-414c-bef5-549156be1b4b"
+                frameBorder="0"
+                allowFullScreen
+                className="w-full h-full"
+                title="Monade AI Voice Agent Demo"
+              ></iframe>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+              <div className="text-center">
+                <div className="text-lg font-bold text-orange-400 mb-1">Real Conversations</div>
+                <div className="text-gray-400">Actual customer interactions</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold text-orange-400 mb-1">Human-like AI</div>
+                <div className="text-gray-400">Natural conversation flow</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold text-orange-400 mb-1">50+ Languages</div>
+                <div className="text-gray-400">Global deployment ready</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Problem & Solution Section */}
+      <section className="relative py-16 bg-gradient-to-b from-black via-gray-900/30 to-black">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              The Problem We Solve
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Traditional customer service is expensive, limited, and inconsistent. Businesses struggle with high operational costs and poor customer experiences.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Problems */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-red-400 mb-6 flex items-center">
+                <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                Current Challenges
+              </h3>
+              <div className="space-y-4">
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-red-300 mb-2">High Operational Costs</h4>
+                  <p className="text-gray-300 text-sm">Hiring, training, and maintaining customer service teams costs $50,000+ per agent annually</p>
+                </div>
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-red-300 mb-2">Limited Availability</h4>
+                  <p className="text-gray-300 text-sm">Human agents work limited hours, leaving customers waiting during off-hours and weekends</p>
+                </div>
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-red-300 mb-2">Inconsistent Experience</h4>
+                  <p className="text-gray-300 text-sm">Service quality varies by agent mood, training level, and experience</p>
+                </div>
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-red-300 mb-2">Scalability Issues</h4>
+                  <p className="text-gray-300 text-sm">Difficult to quickly scale support during peak times or business growth</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Solutions */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-green-400 mb-6 flex items-center">
+                <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Monade Solutions
+              </h3>
+              <div className="space-y-4">
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-300 mb-2">80% Cost Reduction</h4>
+                  <p className="text-gray-300 text-sm">AI agents cost a fraction of human agents while handling unlimited concurrent calls</p>
+                </div>
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-300 mb-2">24/7 Availability</h4>
+                  <p className="text-gray-300 text-sm">Never miss a customer call with round-the-clock AI agents in 50+ languages</p>
+                </div>
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-300 mb-2">Consistent Excellence</h4>
+                  <p className="text-gray-300 text-sm">Every interaction follows best practices with human-like empathy and professionalism</p>
+                </div>
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-300 mb-2">Instant Scalability</h4>
+                  <p className="text-gray-300 text-sm">Scale from 1 to 1000+ concurrent calls instantly without hiring or training delays</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Impact Metrics */}
+          <div className="mt-16 bg-gradient-to-r from-orange-900/30 via-orange-800/20 to-orange-900/30 rounded-2xl p-8 border border-orange-500/30">
+            <h3 className="text-2xl font-bold text-white text-center mb-8">Business Impact</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+              <div>
+                <div className="text-3xl font-bold text-orange-400 mb-2">80%</div>
+                <div className="text-gray-300">Lower Costs</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-orange-400 mb-2">95%</div>
+                <div className="text-gray-300">Uptime</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-orange-400 mb-2">3x</div>
+                <div className="text-gray-300">Faster Response</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-orange-400 mb-2">∞</div>
+                <div className="text-gray-300">Scalability</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Combined Use Cases and Language Selection Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
