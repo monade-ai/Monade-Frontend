@@ -1,31 +1,84 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #1D1D1F; /* Apple-style deep gray */
-  --primary: #FF4D00;
-  --secondary: #6366f1;
-  --soft-bg: #F5F5F7;
+  --background: #F2F2F2; /* Subway Matte White */
+  --foreground: #1A1A1A; /* Industrial Black */
+  --primary: #FF4D00;   /* Monade Signal Orange */
+  --terminal-border: #1A1A1A;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --color-studio: #F5F5F7;
-  
-  --font-sans: "Inter", var(--font-inter);
-  --font-mono: "JetBrains Mono", var(--font-jetbrains-mono);
-
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
+  --color-terminal-black: #1A1A1A;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Subway Grid System */
+.terminal-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 100px);
+  gap: 0;
+  border: 2px solid var(--terminal-border);
+}
+
+.terminal-block {
+  border: 1px solid var(--terminal-border);
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-block-orange {
+  background: var(--primary);
+  color: white;
+}
+
+.terminal-block-black {
+  background: var(--foreground);
+  color: white;
+}
+
+/* Split-flap Animation Placeholder */
+@keyframes clack {
+  0% { transform: rotateX(-90deg); opacity: 0; }
+  100% { transform: rotateX(0deg); opacity: 1; }
+}
+
+.animate-clack {
+  animation: clack 0.4s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+
+/* Heavy Mechanical Slide */
+@keyframes mechanical-slide {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-thud {
+  animation: mechanical-slide 0.6s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.font-signage {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.8;
+}
+
+.border-heavy {
+  border: 2px solid var(--terminal-border);
 }
 
 /* Glassmorphism */

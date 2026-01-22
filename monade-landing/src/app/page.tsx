@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import Link from "next/link";
 import ExplodedView from "@/components/ExplodedView";
 import VoiceGallery from "@/components/VoiceGallery";
 
