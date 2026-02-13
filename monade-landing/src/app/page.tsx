@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import ExplodedView from "@/components/ExplodedView";
 import VoiceGallery from "@/components/VoiceGallery";
+import ResourcesDropdown from "@/components/ResourcesDropdown";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
             <Link href="/pricing" className="text-sm font-medium text-slate-500 hover:text-black transition-colors">
               Pricing
             </Link>
+            <ResourcesDropdown />
           </div>
 
           <div className="flex items-center gap-4">
@@ -67,6 +69,7 @@ export default function Home() {
 
         {/* Feature Bento Grid - Notion/Apple style: Each card is a "Product Story" */}
         <section className="max-w-7xl mx-auto px-6 mt-32 grid grid-cols-1 md:grid-cols-12 gap-6">
+          <h2 className="sr-only">Product highlights</h2>
           
           {/* Main Cockpit Preview - The "Big Bento" */}
           <div className="md:col-span-8 bg-slate-50 rounded-3xl p-8 border border-slate-100 overflow-hidden relative group">

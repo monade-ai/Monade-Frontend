@@ -1,0 +1,144 @@
+'use client';
+
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { formatDate, PostMeta } from '@/lib/markdown.types';
+import { ArrowRight } from 'lucide-react';
+
+// Server component data fetching workaround for client component
+import { useEffect, useState } from 'react';
+
+export default function BlogPage() {
+  const [posts, setPosts] = useState<PostMeta[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/posts?type=blog')
+      .then(res => res.json())
+      .then(data => {
+        setPosts(data);
+        setIsLoaded(true);
+      });
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-[#FDFBF7]">
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-medium text-[#FF4D00] tracking-wide uppercase mb-4"
+          >
+            Blog
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl md:text-6xl font-medium text-[#1A1A1A] tracking-tight leading-[1.1] mb-6"
+          >
+            Thoughts on voice,
+            <br />
+            <span className="text-[#888]">design, and AI</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-[#666] max-w-2xl leading-relaxed"
+          >
+            Insights from our team on building conversational AI that people actually want to use.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="h-px bg-[#E5E5E5]" />
+      </div>
+
+      {/* Posts Grid */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          {!isLoaded ? (
+            <div className="space-y-16">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="h-4 w-32 bg-[#E5E5E5] rounded mb-4" />
+                  <div className="h-8 w-3/4 bg-[#E5E5E5] rounded mb-4" />
+                  <div className="h-4 w-full bg-[#E5E5E5] rounded" />
+                </div>
+              ))}
+            </div>
+          ) : posts.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+            >
+              <p className="text-[#888] text-lg">No posts yet.</p>
+              <p className="text-[#AAA] mt-2">Check back soon.</p>
+            </motion.div>
+          ) : (
+            <div className="space-y-0">
+              {posts.map((post, index) => (
+                <motion.article
+                  key={post.slug}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group block py-12 border-b border-[#E5E5E5] last:border-b-0"
+                  >
+                    <div className="flex items-start justify-between gap-8">
+                      <div className="flex-1 space-y-4">
+                        <div className="flex items-center gap-4 text-sm text-[#888]">
+                          <time dateTime={post.date}>{formatDate(post.date)}</time>
+                          {post.readTime && (
+                            <>
+                              <span className="w-1 h-1 rounded-full bg-[#CCC]" />
+                              <span>{post.readTime}</span>
+                            </>
+                          )}
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-medium text-[#1A1A1A] tracking-tight group-hover:text-[#FF4D00] transition-colors duration-300">
+                          {post.title}
+                        </h2>
+                        <p className="text-lg text-[#666] leading-relaxed max-w-2xl">
+                          {post.excerpt}
+                        </p>
+                        {post.tags && post.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {post.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-3 py-1 text-xs font-medium text-[#666] bg-[#F5F5F5] rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <div className="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-[#E5E5E5] group-hover:border-[#FF4D00] group-hover:bg-[#FF4D00] transition-all duration-300">
+                        <ArrowRight className="w-5 h-5 text-[#888] group-hover:text-white transition-colors duration-300" />
+                      </div>
+                    </div>
+                  </Link>
+                </motion.article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Footer spacer */}
+      <div className="h-20" />
+    </main>
+  );
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, EB_Garamond } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -15,6 +15,12 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const ebGaramond = EB_Garamond({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Monade Cockpit | Ops-Grade Voice Intelligence",
   description: "Run voice workflows at scale with measurable outcomes and auditable control.",
@@ -23,7 +29,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FF4D00",
+  themeColor: "#D94126",
 };
 
 export default function RootLayout({
@@ -34,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased font-sans bg-white text-foreground`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${ebGaramond.variable} antialiased font-sans bg-white text-foreground`}
       >
         {children}
       </body>

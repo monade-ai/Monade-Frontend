@@ -12,9 +12,9 @@ const ExplodedView = () => {
             <div className="absolute w-[300px] h-[300px] bg-primary/5 rounded-full blur-heavy animate-pulse"></div>
             
             {/* Layers */}
-            <div className="relative w-full h-full flex flex-col items-center justify-center space-y-[-100px]">
+            <div className="relative w-full h-full flex flex-col items-center justify-center gap-6">
               {/* Layer 3: The Mouth */}
-              <div className="w-64 h-32 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 hover:translate-y-[-20px] transition-luxury group cursor-help z-30">
+              <div className="w-64 h-32 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 transition-luxury group cursor-help z-30">
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase mb-2">Layer 03 // Output</span>
                 <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                    <div className="h-full bg-primary w-2/3 animate-shimmer"></div>
@@ -23,7 +23,7 @@ const ExplodedView = () => {
               </div>
 
               {/* Layer 2: The Brain */}
-              <div className="w-80 h-40 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 hover:scale-105 transition-luxury z-20">
+              <div className="w-80 h-40 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 transition-luxury z-20">
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase mb-2">Layer 02 // Logic</span>
                 <div className="grid grid-cols-4 gap-2 w-full">
                   {[...Array(8)].map((_, i) => (
@@ -34,7 +34,7 @@ const ExplodedView = () => {
               </div>
 
               {/* Layer 1: The Ear */}
-              <div className="w-64 h-32 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 hover:translate-y-[20px] transition-luxury z-10 opacity-60">
+              <div className="w-64 h-32 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 transition-luxury z-10 opacity-60">
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase mb-2">Layer 01 // Input</span>
                 <div className="flex gap-1 items-center">
                   {[...Array(5)].map((_, i) => (
@@ -75,7 +75,7 @@ const DetailPoint = ({ title, desc }: { title: string, desc: string }) => (
   <div className="flex gap-4 group">
     <div className="w-px h-12 bg-slate-100 group-hover:bg-primary transition-colors"></div>
     <div className="space-y-1">
-      <h4 className="text-sm font-bold uppercase tracking-wider">{title}</h4>
+      <h3 className="text-sm font-bold uppercase tracking-wider">{title}</h3>
       <p className="text-sm text-slate-500 max-w-xs">{desc}</p>
     </div>
   </div>

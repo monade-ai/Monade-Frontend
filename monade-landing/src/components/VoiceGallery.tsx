@@ -32,9 +32,12 @@ const VoiceGallery = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {personas.map((p, i) => (
-            <div 
+            <button
               key={p.name}
-              className={`relative rounded-3xl overflow-hidden group cursor-pointer transition-luxury ${activePersona === i ? 'ring-2 ring-primary ring-offset-4' : 'opacity-80 hover:opacity-100'}`}
+              type="button"
+              aria-label={`Select ${p.name} persona`}
+              aria-pressed={activePersona === i}
+              className={`relative rounded-3xl overflow-hidden group cursor-pointer transition-luxury text-left w-full ${activePersona === i ? 'ring-2 ring-primary ring-offset-4' : 'opacity-80 hover:opacity-100'}`}
               onClick={() => setActivePersona(i)}
             >
               <div className={`h-[500px] ${p.color} relative overflow-hidden`}>
@@ -62,18 +65,18 @@ const VoiceGallery = () => {
                 </p>
                 <div className="mt-6 flex items-center justify-between">
                    <div className="flex gap-2">
-                     {['Professional', 'Empathetic', 'Urgent'].map(t => (
-                       <button key={t} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold uppercase tracking-wide hover:border-primary hover:text-primary transition-colors">
+                     {['Professional', 'Empathetic', 'Urgent'].map((t) => (
+                       <span key={t} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold uppercase tracking-wide">
                          {t}
-                       </button>
+                       </span>
                      ))}
                    </div>
-                   <button className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-luxury">
+                   <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-lg" aria-hidden="true">
                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                   </button>
+                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

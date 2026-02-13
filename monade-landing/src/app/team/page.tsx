@@ -64,6 +64,7 @@ export default function TeamPage() {
       {/* Team Members */}
       <section className="py-12 bg-black">
         <div className="max-w-7xl mx-auto px-6">
+          <h2 className="sr-only">Team members</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {teamMembers.map((member, index) => (
               <div key={index} className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30 shadow-2xl hover:shadow-orange-500/10 transition-all duration-300">
