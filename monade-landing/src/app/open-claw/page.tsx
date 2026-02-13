@@ -7,7 +7,7 @@ import LiveTranscriptDemo from "@/components/LiveTranscriptDemo";
 export default function OpenClawPage() {
     return (
         <div className="min-h-screen bg-[#FDFBF7] text-[#1A1A1A] selection:bg-[#D94126] selection:text-white overflow-hidden font-sans">
-            <Navbar variant="black" />
+            <Navbar variant="transparent" />
 
             {/* Hero Section */}
             <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20">

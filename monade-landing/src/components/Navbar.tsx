@@ -70,8 +70,8 @@ export default function Navbar({ variant }: NavbarProps) {
     isLightTheme = isResourcesPage;
   }
 
-  const textColorClass = isLightTheme ? "text-[#1A1A1A]" : "text-white";
-  const mutedTextColorClass = isLightTheme ? "text-[#666] hover:text-[#1A1A1A]" : "text-white/70 hover:text-white";
+  const textColorClass = "text-[#1A1A1A]";
+  const mutedTextColorClass = "text-[#1A1A1A]/70 hover:text-[#1A1A1A]";
 
   const navLinks = [
     { href: "/#Product", label: "Product" },
@@ -83,7 +83,7 @@ export default function Navbar({ variant }: NavbarProps) {
 
   return (
     <header className="fixed top-0 left-0 w-full z-[1000] px-6 py-6 pointer-events-none">
-      <div className="max-w-5xl mx-auto w-full pointer-events-auto">
+      <div className="max-w-[90%] mx-auto w-full pointer-events-auto">
         <LiquidGlassCard
           className={cn(
             "w-full transition-all duration-300 overflow-visible",
@@ -160,7 +160,13 @@ export default function Navbar({ variant }: NavbarProps) {
                       transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
                     >
-                      <div className="w-[280px] bg-white rounded-2xl shadow-xl border border-[#E5E5E5]/50 overflow-hidden">
+                      <LiquidGlassCard
+                        className="w-[280px] bg-white/40 overflow-hidden"
+                        borderRadius="24px"
+                        blurIntensity="lg"
+                        shadowIntensity="sm"
+                        glowIntensity="none"
+                      >
                         <div className="p-2">
                           {resourceLinks.map((item) => (
                             <Link
@@ -170,24 +176,23 @@ export default function Navbar({ variant }: NavbarProps) {
                               className={cn(
                                 "group flex items-start gap-3 p-3 rounded-xl transition-colors duration-200",
                                 pathname.startsWith(item.href)
-                                  ? "bg-[#FF4D00]/5"
-                                  : "hover:bg-[#F8F8F8]"
+                                  ? "bg-[#FF4D00]/10"
+                                  : "hover:bg-black/5"
                               )}
                             >
                               <div
                                 className={cn(
                                   "flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200",
                                   pathname.startsWith(item.href)
-                                    ? "bg-[#FF4D00]/10 text-[#FF4D00]"
-                                    : "bg-[#F5F5F5] text-[#888] group-hover:bg-[#FF4D00]/10 group-hover:text-[#FF4D00]"
-                                )}
-                              >
+                                    ? "bg-[#FF4D00]/20 text-[#FF4D00]"
+                                    : "bg-black/5 text-[#888] group-hover:bg-[#FF4D00]/20 group-hover:text-[#FF4D00]"
+                                )}>
                                 <item.icon className="w-4 h-4" />
                               </div>
                               <div className="pt-0.5">
                                 <span
                                   className={cn(
-                                    "text-sm font-medium transition-colors duration-200",
+                                    "text-sm font-bold transition-colors duration-200",
                                     pathname.startsWith(item.href)
                                       ? "text-[#FF4D00]"
                                       : "text-[#1A1A1A] group-hover:text-[#FF4D00]"
@@ -195,14 +200,14 @@ export default function Navbar({ variant }: NavbarProps) {
                                 >
                                   {item.label}
                                 </span>
-                                <p className="text-xs text-[#888] mt-0.5">
+                                <p className="text-xs text-[#1A1A1A]/60 mt-0.5 font-medium">
                                   {item.description}
                                 </p>
                               </div>
                             </Link>
                           ))}
                         </div>
-                      </div>
+                      </LiquidGlassCard>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -219,10 +224,7 @@ export default function Navbar({ variant }: NavbarProps) {
               </button>
               <button
                 type="button"
-                className={cn(
-                  "px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg hover:scale-105 active:scale-95",
-                  isBlackTheme ? 'bg-white text-[#1A1A1A] hover:bg-gray-100' : 'bg-[#1A1A1A] text-white hover:bg-black'
-                )}
+                className="px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg hover:scale-105 active:scale-95 bg-[#1A1A1A] text-white hover:bg-black"
               >
                 Book Demo
               </button>
@@ -298,10 +300,7 @@ export default function Navbar({ variant }: NavbarProps) {
                     </button>
                     <button
                       type="button"
-                      className={cn(
-                        "w-full py-3 rounded-full text-lg font-bold shadow-lg",
-                        isBlackTheme ? 'bg-white text-[#1A1A1A]' : 'bg-[#1A1A1A] text-white'
-                      )}
+                      className="w-full py-3 rounded-full text-lg font-bold shadow-lg bg-[#1A1A1A] text-white"
                     >
                       Book Demo
                     </button>
@@ -311,7 +310,7 @@ export default function Navbar({ variant }: NavbarProps) {
             )}
           </AnimatePresence>
         </LiquidGlassCard>
-      </div>
-    </header>
+      </div >
+    </header >
   );
 }

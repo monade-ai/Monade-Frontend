@@ -34,3 +34,6 @@ Thumbs.db
 *.md
 !README.md
 !docs/**/*.md
+!conductor/**/*.md
+!conductor/**/*.json
+
