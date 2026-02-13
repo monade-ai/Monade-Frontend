@@ -94,7 +94,7 @@ export default function Navbar({ variant }: NavbarProps) {
           shadowIntensity="md"
           glowIntensity="sm"
         >
-          <div className="flex justify-between items-center px-6 md:px-8 py-3 w-full">
+          <div className="flex justify-between items-center px-6 md:px-10 py-5 w-full">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group transition-all">
               <div className="w-8 h-8 bg-[#FF4D00] rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
@@ -253,54 +253,86 @@ export default function Navbar({ variant }: NavbarProps) {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="md:hidden overflow-hidden"
               >
-                <div className="px-8 pb-8 pt-4 space-y-1">
+                <div className="px-8 pb-10 pt-4 space-y-1">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={closeMenu}
                       className={cn(
-                        "flex items-center gap-3 py-3 text-lg font-medium transition-colors",
+                        "flex items-center gap-3 py-4 text-xl font-bold transition-all",
                         pathname === link.href ? "text-[#FF4D00]" : cn(textColorClass, "hover:text-[#FF4D00]")
                       )}
                     >
-                      {link.icon && <link.icon className="w-5 h-5 text-[#FF4D00]" />}
+                      {link.icon && <link.icon className="w-6 h-6 text-[#FF4D00]" />}
                       {link.label}
                     </Link>
                   ))}
 
-                  {/* Resources Section */}
-                  <div className="pt-4 mt-4 border-t border-black/5 dark:border-white/5">
-                    <p className="text-xs font-medium text-[#888] uppercase tracking-wider mb-3">
-                      Resources
-                    </p>
-                    {resourceLinks.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={closeMenu}
-                        className={cn(
-                          "flex items-center gap-3 py-3 text-lg font-medium transition-colors",
-                          pathname.startsWith(item.href) ? "text-[#FF4D00]" : cn(textColorClass, "hover:text-[#FF4D00]")
-                        )}
+                  {/* Mobile Resources Accordion */}
+                  <div className="py-2">
+                    <button
+                      onClick={() => setIsResourcesOpen(!isResourcesOpen)}
+                      className={cn(
+                        "flex items-center justify-between w-full py-4 text-xl font-bold transition-all",
+                        isResourcesPage ? "text-[#FF4D00]" : textColorClass
+                      )}
+                    >
+                      <span className="flex items-center gap-3">
+                        Resources
+                      </span>
+                      <motion.span
+                        animate={{ rotate: isResourcesOpen ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
                       >
-                        <item.icon className="w-5 h-5" />
-                        {item.label}
-                      </Link>
-                    ))}
+                        <ChevronDown className="w-6 h-6" />
+                      </motion.span>
+                    </button>
+
+                    <AnimatePresence>
+                      {isResourcesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden bg-black/5 rounded-2xl mx-[-1rem] px-4"
+                        >
+                          <div className="py-4 space-y-1">
+                            {resourceLinks.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={closeMenu}
+                                className={cn(
+                                  "flex items-center gap-4 p-4 rounded-xl transition-all",
+                                  pathname.startsWith(item.href) ? "bg-[#FF4D00]/10 text-[#FF4D00]" : "text-[#1A1A1A]/70"
+                                )}
+                              >
+                                <item.icon className="w-5 h-5" />
+                                <div className="flex flex-col">
+                                  <span className="text-base font-bold">{item.label}</span>
+                                  <span className="text-xs opacity-60 font-medium">{item.description}</span>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Mobile CTAs */}
-                  <div className="pt-6 mt-4 border-t border-black/5 dark:border-white/5 space-y-3">
-                    <button type="button" className={cn("w-full py-3 text-lg font-bold", textColorClass)}>
+                  <div className="pt-8 mt-4 border-t border-black/5 space-y-4">
+                    <button type="button" className={cn("w-full py-4 text-xl font-bold", textColorClass)}>
                       Log In
                     </button>
                     <button
                       type="button"
-                      className="w-full py-3 rounded-full text-lg font-bold shadow-lg bg-[#1A1A1A] text-white"
+                      className="w-full py-4 rounded-full text-xl font-bold shadow-lg bg-[#1A1A1A] text-white active:scale-95 transition-transform"
                     >
                       Book Demo
                     </button>

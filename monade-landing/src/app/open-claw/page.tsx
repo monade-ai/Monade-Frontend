@@ -13,20 +13,20 @@ export default function OpenClawPage() {
             <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20">
                 <div className="max-w-5xl mx-auto text-center space-y-8 relative z-20">
                     <h1 className="text-7xl md:text-[7rem] font-bold tracking-tighter leading-[0.9] text-[#1A1A1A]">
-                        Your best sales rep <br />
-                        <span className="text-[#D94126]">is a crab.</span>
+                        Your next ten thousand <br />
+                        <span className="text-[#D94126]">sales calls start now.</span>
                     </h1>
 
                     <p className="text-xl md:text-3xl text-[#1A1A1A]/70 font-medium leading-normal max-w-4xl mx-auto tracking-tight pt-4">
-                        Open Claw agents don't just chat. They dial, they pitch, they negotiate, and they close. Deploy a full-blown autonomous sales vertical in minutes.
+                        Open Claw agents dial, qualify, handle objections, and book meetings — autonomously. They follow your best playbook with 100% adherence, never burn out, and close in Hindi, English, or Hinglish.
                     </p>
 
                     <div className="pt-8 flex justify-center gap-6">
                         <button className="bg-[#1A1A1A] text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-black transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-                            Deploy Sales Force
+                            Deploy Your Sales Agent
                         </button>
                         <button className="flex items-center gap-2 text-[#1A1A1A] font-bold text-lg hover:opacity-60 transition-opacity px-6 py-5">
-                            Listen to Calls <ArrowRight className="w-5 h-5" />
+                            Listen to a Live Call <ArrowRight className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
@@ -51,18 +51,19 @@ export default function OpenClawPage() {
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
                     <div>
                         <h2 className="text-5xl font-bold tracking-tight mb-8 leading-tight">
-                            Scale your revenue, <br />
-                            <span className="text-[#D94126]">not your headcount.</span>
+                            Scale revenue, <br />
+                            <span className="text-[#D94126]">not headcount.</span>
                         </h2>
                         <p className="text-xl text-[#1A1A1A]/60 leading-relaxed mb-8">
-                            Hiring, training, and managing a sales floor is slow and expensive. Open Claw agents are trained instantly, never sleep, and follow your playbook with 100% adherence.
+                            Hiring a sales floor is slow. Training takes months. Attrition kills momentum. Open Claw agents are production-ready from day one — they follow your playbook with 100% adherence, handle unlimited concurrent calls, and escalate to your human closers when the deal is ready.
                         </p>
                         <ul className="space-y-4">
                             {[
-                                "Unlimited concurrent calls",
-                                "Perfect script adherence",
-                                "Instant CRM updates",
-                                "Zero emotional burnout"
+                                "Unlimited concurrent outbound calls",
+                                "100% script adherence — zero emotional drift",
+                                "CRM updated in real-time after every call",
+                                "Instant warm transfer to human closers",
+                                "Hindi, English, Hinglish — matches caller in 1-2 turns"
                             ].map((item, i) => (
                                 <li key={i} className="flex items-center gap-3 text-lg font-medium">
                                     <CheckCircle2 className="w-6 h-6 text-[#D94126]" />
@@ -75,8 +76,8 @@ export default function OpenClawPage() {
                     <div className="bg-[#FDFBF7] rounded-3xl p-8 border border-[#1A1A1A]/5 aspect-square flex items-center justify-center relative overflow-hidden">
                         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#1A1A1A 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
                         <div className="relative z-10 text-center">
-                            <div className="text-8xl font-bold text-[#D94126] mb-2">10k+</div>
-                            <div className="text-xl font-medium text-[#1A1A1A]/60">Daily Outbound Dials</div>
+                            <div className="text-8xl font-bold text-[#D94126] mb-2">10,000+</div>
+                            <div className="text-xl font-medium text-[#1A1A1A]/60">Daily Outbound Capacity</div>
                         </div>
                     </div>
                 </div>
@@ -87,36 +88,36 @@ export default function OpenClawPage() {
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-4xl font-bold mb-16 text-center">Full-Cycle Sales Automation</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Card 1 */}
+                        {/* Card 1: Outbound */}
                         <div className="bg-white p-10 rounded-3xl shadow-sm border border-[#1A1A1A]/5 hover:shadow-xl transition-all duration-300">
                             <div className="w-14 h-14 bg-[#FDFBF7] rounded-2xl flex items-center justify-center mb-8">
                                 <Phone className="w-8 h-8 text-[#1A1A1A]" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-4">Outbound Lead Gen.</h3>
+                            <h3 className="text-2xl font-bold mb-4">Outbound at Scale.</h3>
                             <p className="text-[#1A1A1A]/60 leading-relaxed">
-                                Cold calling at scale. Open Claw qualifies leads, handles objections, and books meetings directly on your calendar.
+                                Cold-call thousands of leads simultaneously. Open Claw qualifies against your ICP, handles first-pass objections, and books meetings directly on your team's calendar. Your closers only talk to people who are ready to buy.
                             </p>
                         </div>
 
-                        {/* Card 2 */}
+                        {/* Card 2: Inbound (dark/featured) */}
                         <div className="bg-[#1A1A1A] text-white p-10 rounded-3xl shadow-xl border border-[#1A1A1A]/5 transform md:-translate-y-4">
                             <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-8">
                                 <Users className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-4">Inbound Conversion.</h3>
+                            <h3 className="text-2xl font-bold mb-4">Inbound in Under 3 Seconds.</h3>
                             <p className="text-white/60 leading-relaxed">
-                                Never miss a lead. Instant response to inbound inquiries, qualifying intent and routing hot leads to human closers (or closing them itself).
+                                Every missed inbound call is revenue walking away. Open Claw answers instantly, qualifies intent, asks the right discovery questions, and either books the meeting or closes — 24/7, in whichever language your customer speaks.
                             </p>
                         </div>
 
-                        {/* Card 3 */}
+                        {/* Card 3: Revenue Ops */}
                         <div className="bg-white p-10 rounded-3xl shadow-sm border border-[#1A1A1A]/5 hover:shadow-xl transition-all duration-300">
                             <div className="w-14 h-14 bg-[#FDFBF7] rounded-2xl flex items-center justify-center mb-8">
                                 <BarChart3 className="w-8 h-8 text-[#D94126]" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-4">Revenue Ops.</h3>
+                            <h3 className="text-2xl font-bold mb-4">Revenue on Autopilot.</h3>
                             <p className="text-[#1A1A1A]/60 leading-relaxed">
-                                Automated follow-ups, renewal reminders, and payment collections. Ensure your revenue pipeline is always flowing.
+                                Follow-ups that never slip. Renewal reminders on schedule. Payment collection calls that are persistent but professional. Your revenue pipeline keeps moving without human overhead.
                             </p>
                         </div>
                     </div>
@@ -127,15 +128,15 @@ export default function OpenClawPage() {
             <footer className="py-20 px-6 bg-white border-t border-[#1A1A1A]/10 text-center">
                 <div className="max-w-2xl mx-auto space-y-8">
                     <h2 className="text-4xl font-bold tracking-tight text-[#1A1A1A]">
-                        Ready to automate your sales floor?
+                        Stop losing deals to voicemail.
                     </h2>
                     <div className="flex justify-center gap-4">
                         <button className="bg-[#D94126] text-white px-8 py-4 rounded-full font-bold hover:bg-[#b0301a] transition-colors shadow-lg">
-                            Get Early Access
+                            Deploy Your Sales Agent
                         </button>
                     </div>
                     <p className="text-xs text-[#1A1A1A]/30 pt-12">
-                        © 2025 Monade AI.
+                        © 2026 Monade AI.
                     </p>
                 </div>
             </footer>

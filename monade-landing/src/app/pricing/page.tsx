@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Check, 
-  ChevronDown, 
-  ChevronUp, 
-  Clock, 
-  ShieldCheck, 
-  Zap, 
-  Globe, 
+import {
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  ShieldCheck,
+  Zap,
+  Globe,
   Lock
 } from 'lucide-react';
 import Link from 'next/link';
@@ -66,21 +66,21 @@ export default function PricingPage() {
         {/* Header */}
         <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance">
-            Pricing that scales with <br />
-            <span className="text-slate-400 font-medium">your operation.</span>
+            Pay for outcomes, <br />
+            <span className="text-slate-400 font-medium">not platform fees.</span>
           </h1>
           <p className="text-xl text-slate-500 max-w-xl mx-auto">
-            No hidden fees. No legacy clutter. Just precision voice intelligence calibrated to your volume.
+            No monthly subscription. No seat licensing. No hidden setup costs. Per-second billing calibrated to your call volume. Everything else is included.
           </p>
 
           {/* Monthly/Yearly Toggle */}
           <div className="flex items-center justify-center gap-4 pt-4">
             <span className={`text-sm font-bold ${billingCycle === 'monthly' ? 'text-slate-900' : 'text-slate-400'}`}>Monthly</span>
-            <button 
+            <button
               onClick={() => setBillingCycle(prev => prev === 'monthly' ? 'yearly' : 'monthly')}
               className="w-14 h-8 bg-slate-100 rounded-full p-1 relative flex items-center transition-colors"
             >
-              <motion.div 
+              <motion.div
                 animate={{ x: billingCycle === 'yearly' ? 24 : 0 }}
                 className="w-6 h-6 bg-white rounded-full shadow-sm border border-slate-200"
               />
@@ -100,7 +100,7 @@ export default function PricingPage() {
                 <h3 className="text-2xl font-bold">What is your monthly volume?</h3>
               </div>
               <div className="text-right">
-                <motion.div 
+                <motion.div
                   key={callVolume}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -113,10 +113,10 @@ export default function PricingPage() {
             </div>
 
             <div className="relative pt-4 pb-8">
-              <input 
-                type="range" 
-                min="1000" 
-                max="100000" 
+              <input
+                type="range"
+                min="1000"
+                max="100000"
                 step="1000"
                 value={callVolume}
                 onChange={(e) => setCallVolume(parseInt(e.target.value))}
@@ -154,32 +154,32 @@ export default function PricingPage() {
 
         {/* Pricing Triptych */}
         <section className="max-w-7xl mx-auto px-6 mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-          
+
           {/* Artisan */}
-          <PricingCard 
+          <PricingCard
             title="The Artisan"
             price={callVolume < 10000 ? 0.25 : 0.22}
-            desc="Precision for the few. Perfect for boutique startups."
-            features={['142ms Response Latency', 'Core Hinglish NLP', 'Standard Compliance', 'WhatsApp Integration']}
+            desc="For teams running their first voice AI pilot. Core Hinglish NLP, standard CRM integrations, 8-stage script architecture. Everything you need to prove ROI."
+            features={['Sub-200ms Response', 'Core Hinglish NLP', 'Standard CRM Integration', '8-Stage Script Architecture']}
             type="light"
           />
 
           {/* Engine */}
-          <PricingCard 
+          <PricingCard
             title="The Engine"
             price={callVolume < 10000 ? 0.20 : 0.18}
-            desc="Scale without the noise. Our most popular operational core."
-            features={['Everything in Artisan', 'Custom Rubrics & Logic', 'Sentiment Heatmaps', 'Dedicated Support Hub']}
+            desc="Your operational core. Custom call rubrics, sentiment heatmaps, priority support, and the full self-improving script engine. Weekly refinement included."
+            features={['Everything in Artisan', 'Custom Rubrics & Call Logic', 'Sentiment Heatmaps', 'Weekly Script Refinement']}
             type="primary"
             popular
           />
 
           {/* Sovereign */}
-          <PricingCard 
+          <PricingCard
             title="The Sovereign"
             price="Custom"
-            desc="Total infrastructure control. For the world's largest ops."
-            features={['Air-gapped Deployment', 'Dedicated GPU Clusters', '24/7 War Room Access', 'Global Dialect Tuning']}
+            desc="Full infrastructure control. Dedicated GPU clusters, air-gapped deployment, global dialect tuning, TRAI/DPDP compliance, and a direct line to our founders."
+            features={['Air-gapped Deployment', 'Dedicated GPU Clusters', '24/7 Founder Access', 'Global Dialect Tuning']}
             type="vault"
           />
 
@@ -193,24 +193,24 @@ export default function PricingPage() {
           </div>
 
           <div className="border border-slate-100 rounded-2xl overflow-hidden">
-            <FeatureRow 
-              title="Spectral Noise Isolation" 
+            <FeatureRow
+              title="Spectral Noise Isolation"
               icon={<Zap className="w-4 h-4" />}
-              desc="Our 'Ear' layer filters out Mumbai traffic and Bangalore office hum in real-time before processing intent."
+              desc="Filters out Mumbai traffic, office hum, and construction noise in real-time before processing caller intent. Your agent hears clearly, even when your caller can't."
               isExpanded={expandedFeature === 'spectral'}
               onClick={() => setExpandedFeature(expandedFeature === 'spectral' ? null : 'spectral')}
             />
-            <FeatureRow 
-              title="Hinglish Code-Switching" 
+            <FeatureRow
+              title="Hinglish Code-Switching"
               icon={<Globe className="w-4 h-4" />}
-              desc="Native understanding of mixed language patterns (Hindi + English) without the need for translation layers."
+              desc="Natively understands mixed Hindi-English speech. Technical terms stay in English (EMI, ROI, site visit). Trust phrases stay in Hindi (अच्छा, समझ में आया, ठीक है). Matches the caller's language mix within 1-2 turns."
               isExpanded={expandedFeature === 'hinglish'}
               onClick={() => setExpandedFeature(expandedFeature === 'hinglish' ? null : 'hinglish')}
             />
-            <FeatureRow 
-              title="PII Auto-Redaction" 
+            <FeatureRow
+              title="PII Auto-Redaction"
               icon={<Lock className="w-4 h-4" />}
-              desc="Automatically blurs and redacts sensitive data like Aadhaar numbers or credit cards in both audio and transcript."
+              desc="Detects and redacts sensitive data — Aadhaar numbers, credit card details, medical info — from both audio recordings and transcripts. DPDP Act compliant by default."
               isExpanded={expandedFeature === 'pii'}
               onClick={() => setExpandedFeature(expandedFeature === 'pii' ? null : 'pii')}
             />
@@ -226,11 +226,10 @@ function PricingCard({ title, price, desc, features, type, popular }: PricingCar
   const isPrimary = type === 'primary';
 
   return (
-    <motion.div 
+    <motion.div
       whileHover={{ y: -10 }}
-      className={`p-8 rounded-3xl relative flex flex-col justify-between h-[600px] transition-luxury ${
-        isVault ? 'glass-vault text-white' : 'glass-liquid text-slate-900'
-      } ${isPrimary ? 'ring-2 ring-primary ring-offset-4' : ''}`}
+      className={`p-8 rounded-3xl relative flex flex-col justify-between h-[600px] transition-luxury ${isVault ? 'glass-vault text-white' : 'glass-liquid text-slate-900'
+        } ${isPrimary ? 'ring-2 ring-primary ring-offset-4' : ''}`}
     >
       {popular && (
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-lg">
@@ -247,7 +246,7 @@ function PricingCard({ title, price, desc, features, type, popular }: PricingCar
           </div>
         </div>
         <p className={`text-sm leading-relaxed ${isVault ? 'text-slate-400' : 'text-slate-500'}`}>{desc}</p>
-        
+
         <div className="pt-8 space-y-4">
           {features.map((f: string) => (
             <div key={f} className="flex items-start gap-3 text-sm">
@@ -258,11 +257,10 @@ function PricingCard({ title, price, desc, features, type, popular }: PricingCar
         </div>
       </div>
 
-      <button className={`w-full py-4 rounded-full font-bold text-sm transition-all shadow-lg ${
-        isVault ? 'bg-white text-slate-900 hover:bg-slate-100' : 
-        isPrimary ? 'bg-primary text-white hover:bg-orange-600 shadow-orange-500/20' : 
-        'bg-slate-900 text-white hover:bg-black'
-      }`}>
+      <button className={`w-full py-4 rounded-full font-bold text-sm transition-all shadow-lg ${isVault ? 'bg-white text-slate-900 hover:bg-slate-100' :
+          isPrimary ? 'bg-primary text-white hover:bg-orange-600 shadow-orange-500/20' :
+            'bg-slate-900 text-white hover:bg-black'
+        }`}>
         {isVault ? 'Speak to a Founder' : 'Get Started'}
       </button>
     </motion.div>
@@ -272,7 +270,7 @@ function PricingCard({ title, price, desc, features, type, popular }: PricingCar
 function FeatureRow({ title, icon, desc, isExpanded, onClick }: FeatureRowProps) {
   return (
     <div className="border-b border-slate-50 last:border-0">
-      <button 
+      <button
         onClick={onClick}
         className="w-full p-6 flex items-center justify-between hover:bg-slate-50 transition-colors group"
       >
@@ -286,7 +284,7 @@ function FeatureRow({ title, icon, desc, isExpanded, onClick }: FeatureRowProps)
       </button>
       <AnimatePresence>
         {isExpanded && (
-          <motion.div 
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -295,15 +293,15 @@ function FeatureRow({ title, icon, desc, isExpanded, onClick }: FeatureRowProps)
             <div className="px-6 pb-6 pl-18 text-sm text-slate-500 leading-relaxed bg-slate-50/50">
               {desc}
               <div className="mt-4 p-4 glass-liquid rounded-xl text-[10px] font-mono flex items-center gap-4">
-                 <div className="flex gap-1">
-                   <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                   <span className="text-slate-400 uppercase font-bold">Live Visualizer</span>
-                 </div>
-                 <div className="flex gap-2">
-                    {[...Array(12)].map((_, i) => (
-                      <div key={i} className="w-1 bg-primary/20 rounded-full h-4" />
-                    ))}
-                 </div>
+                <div className="flex gap-1">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-slate-400 uppercase font-bold">Live Visualizer</span>
+                </div>
+                <div className="flex gap-2">
+                  {[...Array(12)].map((_, i) => (
+                    <div key={i} className="w-1 bg-primary/20 rounded-full h-4" />
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>

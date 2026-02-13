@@ -11,11 +11,11 @@ export default function ProductsPage() {
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              Our AI-Powered Agents
+              One Platform. Every Conversation.
             </span>
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            Unified memory across all channels ensures seamless customer experiences. Currently serving enterprise clients with proven results.
+            Voice, email, and WhatsApp agents that share a single memory. Your customer never repeats themselves — no matter which channel they reach you on.
           </p>
         </div>
       </section>
@@ -34,8 +34,8 @@ export default function ProductsPage() {
                 <div className="text-gray-300 text-sm">Voice, Email, WhatsApp integration</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-blue-400 mb-2">50+ Languages</div>
-                <div className="text-gray-300 text-sm">Global deployment ready</div>
+                <div className="text-2xl font-bold text-blue-400 mb-2">10+ Languages</div>
+                <div className="text-gray-300 text-sm">Hindi, English, Hinglish, Marathi, Tamil, Telugu</div>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function ProductsPage() {
       <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             {/* Voice Agent */}
             <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl border border-gray-700/30 overflow-hidden hover:scale-105 transition-transform duration-300">
               {/* UI Mockup */}
@@ -79,30 +79,30 @@ export default function ProductsPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Voice Agent</h3>
                 <p className="text-gray-400 mb-4">
-                  Engage customers with lifelike AI voice interactions that understand context and intent, available 24/7 in 50+ languages.
+                  Handles inbound and outbound calls with 8-stage conversation architecture. Qualifies leads, books appointments, and escalates to your team when the deal is hot. Sub-200ms response. 24/7. Hindi, English, and Hinglish.
                 </p>
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Human-like conversation flow
+                    Natural conversation flow — not IVR menus
                   </div>
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Real-time sentiment analysis
+                    43:57 talk ratio — your prospect talks more
                   </div>
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Seamless call transfers
+                    Seamless warm transfer to human closers
                   </div>
                 </div>
                 <p className="text-orange-400 font-semibold">Perfect for sales, support, and lead qualification.</p>
@@ -137,33 +137,33 @@ export default function ProductsPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Email Agent</h3>
                 <p className="text-gray-400 mb-4">
-                  Automate personalized email communication with AI that remembers past interactions and adapts tone and content.
+                  Auto-generates personalized follow-up emails from call context. Remembers past interactions, adapts tone to the recipient, and sends at optimal times. Your outbound never goes stale.
                 </p>
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Personalized content generation
+                    Context-aware content from call transcripts
                   </div>
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Smart scheduling and follow-ups
+                    Smart scheduling and drip sequences
                   </div>
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    CRM integration
+                    Full CRM integration — no manual drafting
                   </div>
                 </div>
-                <p className="text-orange-400 font-semibold">Ideal for follow-ups, campaigns, and onboarding.</p>
+                <p className="text-orange-400 font-semibold">Ideal for follow-ups, campaigns, and onboarding flows.</p>
               </div>
             </div>
 
@@ -199,33 +199,33 @@ export default function ProductsPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-white mb-4">WhatsApp Agent</h3>
                 <p className="text-gray-400 mb-4">
-                  Deliver instant, contextual responses on WhatsApp with AI that shares unified memory across all channels.
+                  Instant, contextual responses on WhatsApp. Shares unified memory with voice and email — so when a customer calls about an order and then messages on WhatsApp, your agent already knows the full story.
                 </p>
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Instant message responses
+                    Rich media support (brochures, location, documents)
                   </div>
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Rich media support
+                    Cross-channel memory — zero context loss
                   </div>
                   <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Cross-channel memory
+                    WhatsApp qualification (opportunity, not brush-off)
                   </div>
                 </div>
-                <p className="text-orange-400 font-semibold">Great for quick support, reminders, and updates.</p>
+                <p className="text-orange-400 font-semibold">Built for quick support, appointment reminders, and order updates.</p>
               </div>
             </div>
           </div>
@@ -237,9 +237,9 @@ export default function ProductsPage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">See It In Action</h2>
           <p className="text-xl text-gray-300 mb-8">
-            Experience our AI voice agents through interactive demos and real customer conversations.
+            Listen to real voice agent conversations. Sales calls, support interactions, and lead qualification — in Hindi, English, and Hinglish.
           </p>
-          
+
           <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30">
             <div className="aspect-video bg-black/50 rounded-lg overflow-hidden mb-6">
               <iframe
@@ -250,7 +250,7 @@ export default function ProductsPage() {
                 title="Monade AI Voice Agent Demo"
               ></iframe>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="text-center">
                 <div className="text-lg font-bold text-orange-400 mb-1">Real Conversations</div>
@@ -258,11 +258,11 @@ export default function ProductsPage() {
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-orange-400 mb-1">Multiple Languages</div>
-                <div className="text-gray-400">Test in 50+ languages</div>
+                <div className="text-gray-400">Hindi, English, Hinglish, Marathi</div>
               </div>
               <div className="text-center">
                 <div className="text-lg font-bold text-orange-400 mb-1">Industry Scenarios</div>
-                <div className="text-gray-400">Sales, support, real estate</div>
+                <div className="text-gray-400">Real estate, healthcare, EdTech</div>
               </div>
             </div>
           </div>
@@ -275,7 +275,7 @@ export default function ProductsPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Platform Specifications</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Enterprise-grade infrastructure powering our AI voice agent platform.
+              Production-grade infrastructure built on LiveKit + Gemini 2.5 Live. Designed for Indian market constraints.
             </p>
           </div>
 
@@ -293,8 +293,8 @@ export default function ProductsPage() {
               <div className="text-gray-300 text-sm">Concurrent Calls</div>
             </div>
             <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-2">SOC 2</div>
-              <div className="text-gray-300 text-sm">Compliant</div>
+              <div className="text-2xl font-bold text-orange-400 mb-2">DPDP</div>
+              <div className="text-gray-300 text-sm">Act Compliant</div>
             </div>
           </div>
         </div>
