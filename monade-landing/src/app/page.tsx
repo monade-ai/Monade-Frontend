@@ -1,46 +1,17 @@
 'use client';
 
 import React from "react";
-import Link from "next/link";
 import ExplodedView from "@/components/ExplodedView";
 import VoiceGallery from "@/components/VoiceGallery";
-import ResourcesDropdown from "@/components/ResourcesDropdown";
+
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white selection:bg-primary/10">
-      {/* Navigation - Airbnb style: Thin, blurred, clean */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-black/5">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">M</span>
-            </div>
-            <span className="font-bold tracking-tight text-xl">monade</span>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-8">
-            {['Product', 'Workflows', 'Compliance'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-slate-500 hover:text-black transition-colors">
-                {item}
-              </a>
-            ))}
-            <Link href="/pricing" className="text-sm font-medium text-slate-500 hover:text-black transition-colors">
-              Pricing
-            </Link>
-            <ResourcesDropdown />
-          </div>
+      <Navbar variant="transparent" />
 
-          <div className="flex items-center gap-4">
-            <button className="text-sm font-bold text-slate-900 hover:opacity-70 transition-opacity">Log In</button>
-            <button className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-black transition-all shadow-soft">
-              Book Demo
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <main className="pt-32 pb-20">
+      <main className="pt-40 pb-20">
         {/* Hero Section - Airbnb x Apple: Huge White Space, Clean Typography */}
         <section className="max-w-5xl mx-auto px-6 text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
@@ -49,7 +20,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-slate-900 text-balance leading-[0.95]">
-            Voice Intelligence for the <br /> 
+            Voice Intelligence for the <br />
             <span className="text-slate-400">Next Billion Operations.</span>
           </h1>
 
@@ -70,7 +41,7 @@ export default function Home() {
         {/* Feature Bento Grid - Notion/Apple style: Each card is a "Product Story" */}
         <section className="max-w-7xl mx-auto px-6 mt-32 grid grid-cols-1 md:grid-cols-12 gap-6">
           <h2 className="sr-only">Product highlights</h2>
-          
+
           {/* Main Cockpit Preview - The "Big Bento" */}
           <div className="md:col-span-8 bg-slate-50 rounded-3xl p-8 border border-slate-100 overflow-hidden relative group">
             <div className="relative z-10 space-y-4 mb-8">
@@ -78,33 +49,33 @@ export default function Home() {
               <h3 className="text-3xl font-bold">Total Operational Control.</h3>
               <p className="text-slate-500 max-w-md">Monitor every syllable, every accent, and every compliance checkpoint in real-time.</p>
             </div>
-            
+
             {/* A "Fire" looking dashboard preview inside the card */}
             <div className="glass rounded-2xl shadow-premium border border-black/5 p-4 transform transition-transform group-hover:scale-[1.02] duration-500">
-               <div className="flex items-center justify-between mb-4 border-b border-black/5 pb-2">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+              <div className="flex items-center justify-between mb-4 border-b border-black/5 pb-2">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                </div>
+                <span className="font-mono text-[10px] text-slate-400">MONADE_TRACE_v4.2</span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex gap-4 items-start bg-white/50 p-3 rounded-xl border border-white">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">A</div>
+                  <div className="space-y-1">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Agent [Hindi-EN]</p>
+                    <p className="text-sm font-medium">"Aapka loan approved ho gaya hai, bas signature chahiye."</p>
                   </div>
-                  <span className="font-mono text-[10px] text-slate-400">MONADE_TRACE_v4.2</span>
-               </div>
-               <div className="space-y-3">
-                 <div className="flex gap-4 items-start bg-white/50 p-3 rounded-xl border border-white">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">A</div>
-                    <div className="space-y-1">
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Agent [Hindi-EN]</p>
-                      <p className="text-sm font-medium">"Aapka loan approved ho gaya hai, bas signature chahiye."</p>
-                    </div>
-                 </div>
-                 <div className="flex gap-4 items-start p-3">
-                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold text-xs">U</div>
-                    <div className="space-y-1">
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Customer</p>
-                      <p className="text-sm font-medium">"Great! Verification kab tak hogi?"</p>
-                    </div>
-                 </div>
-               </div>
+                </div>
+                <div className="flex gap-4 items-start p-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold text-xs">U</div>
+                  <div className="space-y-1">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Customer</p>
+                    <p className="text-sm font-medium">"Great! Verification kab tak hogi?"</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -144,7 +115,7 @@ export default function Home() {
           <div className="md:col-span-4 bg-slate-50 rounded-3xl p-8 border border-slate-100 flex flex-col justify-between">
             <h3 className="text-xl font-bold">Infinite Scale.</h3>
             <div className="flex -space-x-3 mt-4">
-              {[1,2,3,4].map(i => (
+              {[1, 2, 3, 4].map(i => (
                 <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200"></div>
               ))}
               <div className="w-10 h-10 rounded-full border-2 border-white bg-primary flex items-center justify-center text-[10px] text-white font-bold">+10k</div>
@@ -162,13 +133,13 @@ export default function Home() {
 
         {/* Footer Section */}
         <section className="max-w-5xl mx-auto px-6 mt-40 text-center space-y-12">
-            <h2 className="text-4xl font-bold tracking-tight">Ready to humanize your ops?</h2>
-            <div className="flex justify-center gap-4">
-              <button className="bg-slate-900 text-white px-10 py-4 rounded-full font-bold hover:bg-black transition-all">Get Started</button>
-            </div>
-            <div className="pt-20 border-t border-slate-100 text-slate-400 text-sm font-medium">
-              © 2025 Monade AI. Engineered for Truth.
-            </div>
+          <h2 className="text-4xl font-bold tracking-tight">Ready to humanize your ops?</h2>
+          <div className="flex justify-center gap-4">
+            <button className="bg-slate-900 text-white px-10 py-4 rounded-full font-bold hover:bg-black transition-all">Get Started</button>
+          </div>
+          <div className="pt-20 border-t border-slate-100 text-slate-400 text-sm font-medium">
+            © 2025 Monade AI. Engineered for Truth.
+          </div>
         </section>
       </main>
     </div>

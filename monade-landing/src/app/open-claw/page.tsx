@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Phone, BarChart3, Users, Zap, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Phone, BarChart3, Users, ArrowRight, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import LiveTranscriptDemo from "@/components/LiveTranscriptDemo";
 

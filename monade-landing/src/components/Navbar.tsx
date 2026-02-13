@@ -4,6 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, BookOpen, Building2, FileText, ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+import { LiquidGlassCard } from "./LiquidGlassCard";
 
 const CrabIcon = ({ className }: { className?: string }) => (
   <svg
@@ -53,7 +56,6 @@ export default function Navbar({ variant }: NavbarProps) {
   );
 
   // Determine effective theme
-  // If variant is explicit, use it. Otherwise derive from path.
   let isLightTheme = false;
   let isBlackTheme = false;
 
@@ -68,224 +70,248 @@ export default function Navbar({ variant }: NavbarProps) {
     isLightTheme = isResourcesPage;
   }
 
-  // Common text color logic
-  // Light theme: Black text
-  // Dark/Transparent/Black theme: White text
   const textColorClass = isLightTheme ? "text-[#1A1A1A]" : "text-white";
   const mutedTextColorClass = isLightTheme ? "text-[#666] hover:text-[#1A1A1A]" : "text-white/70 hover:text-white";
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/products", label: "Products" },
+    { href: "/#Product", label: "Product" },
+    { href: "/#Workflows", label: "Workflows" },
+    { href: "/#Compliance", label: "Compliance" },
     { href: "/pricing", label: "Pricing" },
     { href: "/open-claw", label: "Open Claw", icon: CrabIcon },
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-[1000] transition-colors duration-300 ${isLightTheme
-          ? "bg-[#FDFBF7]/80 backdrop-blur-xl border-b border-[#E5E5E5]/50"
-          : isBlackTheme
-            ? "bg-[#1A1A1A] border-b border-white/10"
-            : "bg-transparent"
-        }`}
-    >
-      <div className="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto w-full">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#FF4D00] rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-lg">M</span>
-          </div>
-          <span
-            className={`font-bold tracking-tight text-xl ${textColorClass}`}
-          >
-            monade
-          </span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`flex items-center gap-2 text-sm font-medium transition-colors duration-200 ${pathname === link.href
-                ? isLightTheme
-                  ? "text-[#1A1A1A]"
-                  : "text-white"
-                : mutedTextColorClass
-                }`}
-            >
-              {link.icon && <link.icon className="w-4 h-4" />}
-              {link.label}
-            </Link>
-          ))}
-
-          {/* Resources Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setIsResourcesOpen(true)}
-            onMouseLeave={() => setIsResourcesOpen(false)}
-          >
-            <button
-              type="button"
-              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${isResourcesPage
-                ? isLightTheme
-                  ? "text-[#FF4D00]"
-                  : "text-white"
-                : mutedTextColorClass
-                }`}
-            >
-              Resources
-              <motion.span
-                animate={{ rotate: isResourcesOpen ? 180 : 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <ChevronDown className="w-4 h-4" />
-              </motion.span>
-            </button>
-
-            <AnimatePresence>
-              {isResourcesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
-                >
-                  <div className="w-[280px] bg-white rounded-2xl shadow-xl border border-[#E5E5E5]/50 overflow-hidden">
-                    <div className="p-2">
-                      {resourceLinks.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setIsResourcesOpen(false)}
-                          className={`group flex items-start gap-3 p-3 rounded-xl transition-colors duration-200 ${pathname.startsWith(item.href)
-                            ? "bg-[#FF4D00]/5"
-                            : "hover:bg-[#F8F8F8]"
-                            }`}
-                        >
-                          <div
-                            className={`flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200 ${pathname.startsWith(item.href)
-                              ? "bg-[#FF4D00]/10 text-[#FF4D00]"
-                              : "bg-[#F5F5F5] text-[#888] group-hover:bg-[#FF4D00]/10 group-hover:text-[#FF4D00]"
-                              }`}
-                          >
-                            <item.icon className="w-4 h-4" />
-                          </div>
-                          <div className="pt-0.5">
-                            <span
-                              className={`text-sm font-medium transition-colors duration-200 ${pathname.startsWith(item.href)
-                                ? "text-[#FF4D00]"
-                                : "text-[#1A1A1A] group-hover:text-[#FF4D00]"
-                                }`}
-                            >
-                              {item.label}
-                            </span>
-                            <p className="text-xs text-[#888] mt-0.5">
-                              {item.description}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </nav>
-
-        {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-4">
-          <button
-            type="button"
-            className={`text-sm font-bold transition-opacity ${textColorClass} hover:opacity-70`}
-          >
-            Log In
-          </button>
-          <button type="button" className={`${isBlackTheme ? 'bg-white text-[#1A1A1A] hover:bg-gray-200' : 'bg-[#1A1A1A] text-white hover:bg-black'} px-5 py-2 rounded-full text-sm font-bold transition-all shadow-soft`}>
-            Book Demo
-          </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          onClick={toggleMenu}
-          className="md:hidden p-2"
-          aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? (
-            <X className={`w-6 h-6 ${isLightTheme ? "text-[#1A1A1A]" : "text-white"}`} />
-          ) : (
-            <Menu className={`w-6 h-6 ${isLightTheme ? "text-[#1A1A1A]" : "text-white"}`} />
+    <header className="fixed top-0 left-0 w-full z-[1000] px-6 py-6 pointer-events-none">
+      <div className="max-w-5xl mx-auto w-full pointer-events-auto">
+        <LiquidGlassCard
+          className={cn(
+            "w-full transition-all duration-300 overflow-visible",
+            isLightTheme ? "bg-white/40" : isBlackTheme ? "bg-black/60" : "bg-white/10"
           )}
-        </button>
-      </div>
+          borderRadius="9999px"
+          blurIntensity="xl"
+          shadowIntensity="md"
+          glowIntensity="sm"
+        >
+          <div className="flex justify-between items-center px-6 md:px-8 py-3 w-full">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 group transition-all">
+              <div className="w-8 h-8 bg-[#FF4D00] rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-white font-bold text-lg">M</span>
+              </div>
+              <span className={cn("font-bold tracking-tight text-xl", textColorClass)}>
+                monade
+              </span>
+            </Link>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden bg-white border-b border-[#E5E5E5] overflow-hidden"
-          >
-            <div className="px-6 py-6 space-y-1">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={closeMenu}
-                  className={`flex items-center gap-3 py-3 text-lg font-medium transition-colors ${pathname === link.href
-                    ? "text-[#FF4D00]"
-                    : "text-[#1A1A1A] hover:text-[#FF4D00]"
-                    }`}
+                  className={cn(
+                    "flex items-center gap-2 text-sm font-medium transition-colors duration-200",
+                    pathname === link.href || (link.href.startsWith('/#') && pathname === '/')
+                      ? isLightTheme
+                        ? "text-[#FF4D00]"
+                        : "text-[#FF4D00]"
+                      : mutedTextColorClass
+                  )}
                 >
-                  {link.icon && <link.icon className="w-5 h-5 text-[#FF4D00]" />}
+                  {link.icon && <link.icon className="w-4 h-4" />}
                   {link.label}
                 </Link>
               ))}
 
-              {/* Resources Section */}
-              <div className="pt-4 mt-4 border-t border-[#F0F0F0]">
-                <p className="text-xs font-medium text-[#888] uppercase tracking-wider mb-3">
+              {/* Resources Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsResourcesOpen(true)}
+                onMouseLeave={() => setIsResourcesOpen(false)}
+              >
+                <button
+                  type="button"
+                  className={cn(
+                    "flex items-center gap-1.5 text-sm font-medium transition-colors duration-200",
+                    isResourcesPage
+                      ? isLightTheme
+                        ? "text-[#FF4D00]"
+                        : "text-[#FF4D00]"
+                      : mutedTextColorClass
+                  )}
+                >
                   Resources
-                </p>
-                {resourceLinks.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMenu}
-                    className={`flex items-center gap-3 py-3 text-lg font-medium transition-colors ${pathname.startsWith(item.href)
-                      ? "text-[#FF4D00]"
-                      : "text-[#1A1A1A] hover:text-[#FF4D00]"
-                      }`}
+                  <motion.span
+                    animate={{ rotate: isResourcesOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <item.icon className="w-5 h-5" />
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
+                    <ChevronDown className="w-4 h-4" />
+                  </motion.span>
+                </button>
 
-              {/* Mobile CTAs */}
-              <div className="pt-6 mt-4 border-t border-[#F0F0F0] space-y-3">
-                <button type="button" className="w-full py-3 text-lg font-bold text-[#1A1A1A]">
-                  Log In
-                </button>
-                <button type="button" className="w-full bg-[#1A1A1A] text-white py-3 rounded-full text-lg font-bold">
-                  Book Demo
-                </button>
+                <AnimatePresence>
+                  {isResourcesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
+                    >
+                      <div className="w-[280px] bg-white rounded-2xl shadow-xl border border-[#E5E5E5]/50 overflow-hidden">
+                        <div className="p-2">
+                          {resourceLinks.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={() => setIsResourcesOpen(false)}
+                              className={cn(
+                                "group flex items-start gap-3 p-3 rounded-xl transition-colors duration-200",
+                                pathname.startsWith(item.href)
+                                  ? "bg-[#FF4D00]/5"
+                                  : "hover:bg-[#F8F8F8]"
+                              )}
+                            >
+                              <div
+                                className={cn(
+                                  "flex items-center justify-center w-9 h-9 rounded-xl transition-colors duration-200",
+                                  pathname.startsWith(item.href)
+                                    ? "bg-[#FF4D00]/10 text-[#FF4D00]"
+                                    : "bg-[#F5F5F5] text-[#888] group-hover:bg-[#FF4D00]/10 group-hover:text-[#FF4D00]"
+                                )}
+                              >
+                                <item.icon className="w-4 h-4" />
+                              </div>
+                              <div className="pt-0.5">
+                                <span
+                                  className={cn(
+                                    "text-sm font-medium transition-colors duration-200",
+                                    pathname.startsWith(item.href)
+                                      ? "text-[#FF4D00]"
+                                      : "text-[#1A1A1A] group-hover:text-[#FF4D00]"
+                                  )}
+                                >
+                                  {item.label}
+                                </span>
+                                <p className="text-xs text-[#888] mt-0.5">
+                                  {item.description}
+                                </p>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+            </nav>
+
+            {/* Desktop CTAs */}
+            <div className="hidden md:flex items-center gap-4">
+              <button
+                type="button"
+                className={cn("text-sm font-bold transition-opacity hover:opacity-70", textColorClass)}
+              >
+                Log In
+              </button>
+              <button
+                type="button"
+                className={cn(
+                  "px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg hover:scale-105 active:scale-95",
+                  isBlackTheme ? 'bg-white text-[#1A1A1A] hover:bg-gray-100' : 'bg-[#1A1A1A] text-white hover:bg-black'
+                )}
+              >
+                Book Demo
+              </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              onClick={toggleMenu}
+              className="md:hidden p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {isMenuOpen ? (
+                <X className={cn("w-6 h-6", textColorClass)} />
+              ) : (
+                <Menu className={cn("w-6 h-6", textColorClass)} />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="px-8 pb-8 pt-4 space-y-1">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={closeMenu}
+                      className={cn(
+                        "flex items-center gap-3 py-3 text-lg font-medium transition-colors",
+                        pathname === link.href ? "text-[#FF4D00]" : cn(textColorClass, "hover:text-[#FF4D00]")
+                      )}
+                    >
+                      {link.icon && <link.icon className="w-5 h-5 text-[#FF4D00]" />}
+                      {link.label}
+                    </Link>
+                  ))}
+
+                  {/* Resources Section */}
+                  <div className="pt-4 mt-4 border-t border-black/5 dark:border-white/5">
+                    <p className="text-xs font-medium text-[#888] uppercase tracking-wider mb-3">
+                      Resources
+                    </p>
+                    {resourceLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={closeMenu}
+                        className={cn(
+                          "flex items-center gap-3 py-3 text-lg font-medium transition-colors",
+                          pathname.startsWith(item.href) ? "text-[#FF4D00]" : cn(textColorClass, "hover:text-[#FF4D00]")
+                        )}
+                      >
+                        <item.icon className="w-5 h-5" />
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Mobile CTAs */}
+                  <div className="pt-6 mt-4 border-t border-black/5 dark:border-white/5 space-y-3">
+                    <button type="button" className={cn("w-full py-3 text-lg font-bold", textColorClass)}>
+                      Log In
+                    </button>
+                    <button
+                      type="button"
+                      className={cn(
+                        "w-full py-3 rounded-full text-lg font-bold shadow-lg",
+                        isBlackTheme ? 'bg-white text-[#1A1A1A]' : 'bg-[#1A1A1A] text-white'
+                      )}
+                    >
+                      Book Demo
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </LiquidGlassCard>
+      </div>
     </header>
   );
 }

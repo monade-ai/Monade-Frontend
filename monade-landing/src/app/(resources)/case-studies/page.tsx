@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { PostMeta, formatDate } from '@/lib/markdown.types';
+import { PostMeta } from "@/lib/markdown.types";
 import { ArrowUpRight } from 'lucide-react';
 
 export default function CaseStudiesPage() {

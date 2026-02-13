@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Mail, CheckCircle2, ArrowRight } from "lucide-react";
+import { Calendar, Mail, CheckCircle2 } from "lucide-react";
 
 // Script Data
 const SCRIPT = [
@@ -208,7 +208,7 @@ export default function LiveTranscriptDemo() {
                                 </div>
                             </div>
                             <div className="bg-white/5 rounded p-3 text-sm font-mono text-white/80">
-                            > {SCRIPT[currentStep].action.result}
+                                &gt; {SCRIPT[currentStep].action.result}
                             </div>
                         </motion.div>
                     )}
