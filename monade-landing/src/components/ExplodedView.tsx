@@ -5,19 +5,19 @@ const ExplodedView = () => {
     <section className="py-40 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center gap-20">
-          
+
           {/* Visual: The Exploded View Schematic */}
           <div className="relative w-full md:w-1/2 h-[500px] flex items-center justify-center">
             {/* Background Glows */}
             <div className="absolute w-[300px] h-[300px] bg-primary/5 rounded-full blur-heavy animate-pulse"></div>
-            
+
             {/* Layers */}
             <div className="relative w-full h-full flex flex-col items-center justify-center gap-6">
               {/* Layer 3: The Mouth */}
               <div className="w-64 h-32 glass rounded-2xl border border-black/5 shadow-premium flex flex-col items-center justify-center p-4 transform -rotate-x-12 transition-luxury group cursor-help z-30">
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase mb-2">Layer 03 // Output</span>
                 <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                   <div className="h-full bg-primary w-2/3 animate-shimmer"></div>
+                  <div className="h-full bg-primary w-2/3 animate-shimmer"></div>
                 </div>
                 <span className="text-xs font-bold mt-2 group-hover:text-primary transition-colors">Neural Synthesis</span>
               </div>
@@ -38,7 +38,7 @@ const ExplodedView = () => {
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase mb-2">Layer 01 // Input</span>
                 <div className="flex gap-1 items-center">
                   {[...Array(5)].map((_, i) => (
-                    <div key={i} className="w-1 bg-slate-200 rounded-full" style={{ height: `${Math.random() * 20 + 10}px` }}></div>
+                    <div key={i} className="w-1 bg-slate-200 rounded-full" style={{ height: `${[15, 25, 18, 22, 12][i % 5]}px` }}></div>
                   ))}
                 </div>
                 <span className="text-xs font-bold mt-2">Ambient Noise Isolation</span>
@@ -49,7 +49,7 @@ const ExplodedView = () => {
           {/* Text: The Story */}
           <div className="w-full md:w-1/2 space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full">
-               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">The Anatomy of a Call</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">The Anatomy of a Call</span>
             </div>
             <h2 className="text-5xl font-bold tracking-tight-compact leading-[1.1]">
               Engineered for the <br />Obsessive.
@@ -57,7 +57,7 @@ const ExplodedView = () => {
             <p className="text-lg text-slate-500 leading-relaxed max-w-md">
               We disassembled the standard voice stack and rebuilt it for high-density environments. No jitter, no lag, just pure operational presence.
             </p>
-            
+
             <div className="space-y-6 pt-4">
               <DetailPoint title="The Ear" desc="Advanced spectral filtering that isolates the human voice from Mumbai's traffic or Bangalore's office hum." />
               <DetailPoint title="The Brain" desc="A proprietary Hinglish NLP core that understands code-switching in real-time, resolving intent in under 150ms." />

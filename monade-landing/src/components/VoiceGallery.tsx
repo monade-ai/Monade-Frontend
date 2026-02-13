@@ -42,9 +42,9 @@ const VoiceGallery = () => {
             >
               <div className={`h-[500px] ${p.color} relative overflow-hidden`}>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
-                
+
                 <div className="absolute inset-0 flex items-center justify-center text-8xl grayscale opacity-20 group-hover:grayscale-0 group-hover:opacity-40 transition-luxury">
-                   {p.name === 'Riya' ? '👩🏽‍💼' : '👨🏽‍💼'}
+                  {p.name === 'Riya' ? '👩🏽‍💼' : '👨🏽‍💼'}
                 </div>
 
                 <div className="absolute bottom-8 left-8 z-20 text-white space-y-1">
@@ -53,9 +53,9 @@ const VoiceGallery = () => {
                 </div>
 
                 <div className="absolute bottom-8 right-8 z-20 flex items-end gap-1 h-8">
-                   {[...Array(4)].map((_, idx) => (
-                     <div key={idx} className="w-1 bg-white/40 rounded-full animate-breathe" style={{ height: `${Math.random() * 100}%`, animationDelay: `${idx * 0.2}s` }}></div>
-                   ))}
+                  {[...Array(4)].map((_, idx) => (
+                    <div key={idx} className="w-1 bg-white/40 rounded-full animate-breathe" style={{ height: `${[40, 70, 50, 90][idx]}%`, animationDelay: `${idx * 0.2}s` }}></div>
+                  ))}
                 </div>
               </div>
 
@@ -64,16 +64,16 @@ const VoiceGallery = () => {
                   "{p.quote}"
                 </p>
                 <div className="mt-6 flex items-center justify-between">
-                   <div className="flex gap-2">
-                     {['Professional', 'Empathetic', 'Urgent'].map((t) => (
-                       <span key={t} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold uppercase tracking-wide">
-                         {t}
-                       </span>
-                     ))}
-                   </div>
-                   <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-lg" aria-hidden="true">
-                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                   </div>
+                  <div className="flex gap-2">
+                    {['Professional', 'Empathetic', 'Urgent'].map((t) => (
+                      <span key={t} className="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-bold uppercase tracking-wide">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white shadow-lg" aria-hidden="true">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                  </div>
                 </div>
               </div>
             </button>
