@@ -3,6 +3,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
+import AgentGramophone from "@/components/sections/AgentGramophone";
 import BentoGrid from "@/components/sections/BentoGrid";
 import AppIntegration from "@/components/sections/AppIntegration";
 import HowItWorks from "@/components/sections/HowItWorks";
@@ -19,6 +20,7 @@ export default function Home() {
 
       <main>
         <Hero />
+        <AgentGramophone />
         <BentoGrid />
         <AppIntegration />
         <HowItWorks />
