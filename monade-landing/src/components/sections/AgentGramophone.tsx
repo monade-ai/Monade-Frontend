@@ -1,271 +1,334 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Play, Pause, SkipBack, SkipForward, Phone, 
-  X, ChevronRight, Music, Mic2,
-  Car, Building, ShoppingBag, Utensils
+  Play, Pause, Phone, X, ChevronRight, Music, Mic2,
+  Car, Building, ShoppingBag, Utensils, FileText, MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LiquidGlassCard } from "@/components/LiquidGlassCard";
 
-// ─── Types & Mock Data ───
+// ─── Data Layer: Industrial B2B Protocols ───
 const AGENTS = [
   {
     id: "taxi",
     name: "Ravi",
-    icon: <Car className="w-5 h-5" />,
-    role: "Night Dispatcher",
-    specialty: "Logistics",
-    color: "bg-rose-500",
-    glow: "rgba(244, 63, 94, 0.2)",
-    recordLabel: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=200&h=200"
+    category: "Logistics",
+    description: "Night Dispatch Automation",
+    icon: <Car className="w-4 h-4" />,
+    role: "Automated Fleet Dispatcher",
+    specialty: "Route Optimization",
+    color: "bg-[#D97757]", // Burnt Clay
+    recordLabel: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=200&h=200",
+    instructionScript: "1. Capture pickup/drop coordinates. 2. Query Driver Webhook. 3. Confirm Vehicle MH-02-CD.",
+    transcript: [
+      { speaker: 'agent', text: "Namaste, GoFleet. Pune drop?" },
+      { speaker: 'customer', text: "Yes, just landed at T2. Need a ride to Pune." },
+      { speaker: 'agent', text: "One moment... Found one. Suresh is 4 mins away." },
+      { speaker: 'customer', text: "Great, what's the car number?" },
+      { speaker: 'agent', text: "White Ertiga, MH-02-CD-5512. Details sent via WhatsApp." }
+    ]
   },
   {
     id: "realestate",
     name: "Ananya",
-    icon: <Building className="w-5 h-5" />,
-    role: "Luxury Consultant",
-    specialty: "Real Estate",
-    color: "bg-sky-500",
-    glow: "rgba(14, 165, 233, 0.2)",
-    recordLabel: "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=200&h=200"
+    category: "Real Estate",
+    description: "High-Intent Lead Qual",
+    icon: <Building className="w-4 h-4" />,
+    role: "Luxury Property Consultant",
+    specialty: "High-Intent Filtering",
+    color: "bg-[#708894]", // Steel Blue
+    recordLabel: "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=200&h=200",
+    instructionScript: "1. Filter for Research vs Investment. 2. Qualify budget (>₹5Cr). 3. Book site visit via API.",
+    transcript: [
+      { speaker: 'agent', text: "Honestly, most people are just browsing—are you actively looking?" },
+      { speaker: 'customer', text: "Looking for investment options in Worli." },
+      { speaker: 'agent', text: "Perfect. pre-launch offer ends Tuesday. Site visit?" },
+      { speaker: 'customer', text: "Can you arrange pickup for Sunday 4 PM?" },
+      { speaker: 'agent', text: "Confirmed. Triggering driver assignment protocol." }
+    ]
   },
   {
     id: "ecommerce",
     name: "Priya",
-    icon: <ShoppingBag className="w-5 h-5" />,
-    role: "Support Hero",
-    specialty: "E-Commerce",
-    color: "bg-emerald-500",
-    glow: "rgba(16, 185, 129, 0.2)",
-    recordLabel: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=200&h=200"
+    category: "E-Commerce",
+    description: "Post-Purchase Support",
+    icon: <ShoppingBag className="w-4 h-4" />,
+    role: "Support Automation Hero",
+    specialty: "Shopify API / WISMO",
+    color: "bg-[#869781]", // Sage Green
+    recordLabel: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=200&h=200",
+    instructionScript: "1. Authenticate Order ID. 2. Pull Shopify status. 3. Process priority return labels.",
+    transcript: [
+      { speaker: 'agent', text: "Hi Priya! Calling about your order for the Blue Linen Shirt?" },
+      { speaker: 'customer', text: "Yes! It was supposed to be here yesterday." },
+      { speaker: 'agent', text: "Delayed at Bhiwandi due to rain. Delivery expected tomorrow." },
+      { speaker: 'customer', text: "Can you make it urgent?" },
+      { speaker: 'agent', text: "Already flagged for priority. Check your WhatsApp now." }
+    ]
   },
   {
     id: "restaurant",
     name: "Vikram",
-    icon: <Utensils className="w-5 h-5" />,
-    role: "The Host",
-    specialty: "Hospitality",
-    color: "bg-amber-500",
-    glow: "rgba(245, 158, 11, 0.2)",
-    recordLabel: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&q=80&w=200&h=200"
+    category: "Hospitality",
+    description: "Reservation & Host Control",
+    icon: <Utensils className="w-4 h-4" />,
+    role: "Cloud Kitchen Sales Host",
+    specialty: "Upselling / POS Sync",
+    color: "bg-[#C2A370]", // Muted Ochre
+    recordLabel: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&q=80&w=200&h=200",
+    instructionScript: "1. Sync with Petpooja POS. 2. Mandatory upsell: Dessert. 3. Print KOT in kitchen.",
+    transcript: [
+      { speaker: 'agent', text: "Biryani Blues, Namaste. Two Chicken Dum?" },
+      { speaker: 'customer', text: "Yes, for delivery." },
+      { speaker: 'agent', text: "Typically people order Double Ka Meetha with that. Add one for ₹150?" },
+      { speaker: 'customer', text: "Sure, add one." },
+      { speaker: 'agent', text: "Done. Your order is at the kitchen station now." }
+    ]
   }
 ];
 
-// ─── Components ───
+// ─── Sub-Components ───
 
-const VinylRecord = ({ isPlaying }: { isPlaying: boolean, image: string }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const restingRotation = isMobile ? -25 : -45;
-
-  return (
-    <div className="relative w-64 h-64 md:w-[320px] md:h-[320px] flex items-center justify-center group">
-      <div className="absolute inset-0 bg-black/60 rounded-full blur-3xl scale-95 translate-y-10" />
-      <div className="absolute inset-[-12px] rounded-full border-[1px] border-white/5 bg-black/40 shadow-inner" />
-
-      <motion.div
-        animate={{ rotate: isPlaying ? 360 : 0 }}
-        transition={{ rotate: { duration: 3, repeat: Infinity, ease: "linear" } }}
-        className="relative w-full h-full bg-[#080C14] rounded-full border-[8px] border-[#161B22] shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex items-center justify-center overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ 
-          backgroundImage: 'repeating-radial-gradient(circle at center, transparent 0, transparent 1px, #000 2px)',
-          backgroundSize: '100% 100%'
-        }} />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/40 pointer-events-none" />
-        <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-white p-1.5 shadow-2xl overflow-hidden border-4 border-black/10">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-5 h-5 bg-[#0F172A] rounded-full border-[3px] border-white/10 shadow-inner" />
-          </div>
+const SchematicRecord = ({ isPlaying, image }: { isPlaying: boolean, image: string }) => (
+  <div className="relative w-64 h-64 md:w-[320px] md:h-[320px] flex items-center justify-center">
+    <motion.div
+      animate={{ rotate: isPlaying ? 360 : 0 }}
+      transition={{ rotate: { duration: 4, repeat: Infinity, ease: "linear" } }}
+      className="relative w-full h-full rounded-full border border-black/20 flex items-center justify-center bg-white/5 shadow-inner"
+    >
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="absolute rounded-full border border-black/10" style={{ inset: `${(i + 1) * 24}px` }} />
+      ))}
+      <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border border-black/20 bg-white p-1 shadow-sm overflow-hidden">
+        <img src={image} alt="Label" className="w-full h-full object-cover rounded-full opacity-80" />
+        <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-4 h-4 bg-[#1E293B] rounded-full border border-white/20 shadow-inner" />
         </div>
-      </motion.div>
+      </div>
+    </motion.div>
 
-      <motion.div
-        initial={false}
-        animate={isPlaying ? { rotate: [-10, 10] } : { rotate: restingRotation }}
-        transition={isPlaying 
-          ? { rotate: { duration: 60, ease: "linear" } } 
-          : { type: "spring", stiffness: 40, damping: 20 }
-        }
-        className="absolute -top-12 right-6 w-10 h-56 origin-top z-20 pointer-events-none"
-      >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-slate-400 to-slate-600 rounded-full shadow-lg border border-white/10" />
-          <div className="w-2.5 h-full mx-auto bg-gradient-to-r from-slate-300 via-slate-100 to-slate-400 rounded-full shadow-md relative mt-4">
-              <div className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-8 h-12 bg-slate-800 rounded-md shadow-2xl flex flex-col items-center justify-start py-2 border border-white/5">
-                  <div className="w-0.5 h-4 bg-slate-400 rounded-full" />
-                  <div className="w-1 h-1 bg-white/40 absolute bottom-1 rounded-full blur-[1px]" />
-              </div>
-          </div>
-      </motion.div>
-    </div>
-  );
-};
+    <motion.div
+      initial={{ rotate: -25 }}
+      animate={isPlaying ? { rotate: [-10, 15] } : { rotate: -25 }}
+      transition={isPlaying ? { rotate: { duration: 60, ease: "linear" } } : { type: "spring", stiffness: 100, damping: 15 }}
+      className="absolute -top-8 right-4 w-10 h-56 origin-top z-20 pointer-events-none"
+    >
+        <div className="w-10 h-10 border border-black/40 bg-[#1E293B] rounded-full mb-1 shadow-lg" />
+        <div className="w-1 h-44 bg-black/20 mx-auto relative shadow-sm">
+            <div className="absolute bottom-[-2px] left-[-4px] w-3 h-7 border border-black/40 bg-[#1E293B] flex items-center justify-center shadow-lg">
+                <div className="w-[1px] h-3 bg-white/30" />
+            </div>
+        </div>
+    </motion.div>
+  </div>
+);
 
 export const AgentGramophone = () => {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [activeTab, setActiveTab] = useState<'transcript' | 'script'>('transcript');
   const [showCallPopup, setShowCallPopup] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [turnIndex, setTurnIndex] = useState(-1);
+  const transcriptScrollRef = useRef<HTMLDivElement>(null);
 
   const agent = AGENTS[currentAgentIndex];
 
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setTurnIndex(prev => (prev + 1) % agent.transcript.length);
+      }, 2000); 
+    } else {
+      setTurnIndex(-1);
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, agent]);
+
+  useEffect(() => {
+    if (transcriptScrollRef.current) {
+        if (turnIndex === -1) {
+            transcriptScrollRef.current.scrollTop = 0;
+        } else if (turnIndex > 1) {
+            transcriptScrollRef.current.scrollTop = (turnIndex - 1) * 80;
+        }
+    }
+  }, [turnIndex]);
+
   return (
-    <section className="py-24 px-6 bg-[#FDFBF7] overflow-hidden relative">
+    <section className="py-24 px-6 bg-[#FDFBF7] overflow-hidden relative selection:bg-black/10 font-sans antialiased text-black">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-primary font-bold tracking-widest uppercase text-[10px]">
-              <Music className="w-3 h-3" /> Laboratory Dispatch v2.2
+        
+        {/* Header */}
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-black/40 font-bold uppercase text-[10px] tracking-widest">
+              <Music className="w-3 h-3" /> Field Intelligence v4.6
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900">
-              Intelligence <span className="font-serif italic text-slate-400 font-medium">Station</span>.
+              Agent <span className="font-serif italic text-slate-400 font-medium">Listening</span> Station.
             </h2>
           </div>
         </div>
 
+        {/* ─── Track Selector (Restore: Short Labels + Tooltips + Clear Lens) ─── */}
         <div className="mb-10 relative flex justify-center">
-          <div className="bg-[#E2E8F0] p-1.5 rounded-[32px] flex items-center gap-2 relative shadow-[inset_0_4px_12px_rgba(0,0,0,0.1),0_1px_2px_rgba(255,255,255,1)]">
+          <div className="bg-slate-200/40 p-1.5 rounded-[24px] flex flex-wrap items-center justify-center gap-1 relative border border-white">
             {AGENTS.map((track, idx) => (
-              <button
-                key={track.id}
-                onClick={() => {
-                    setCurrentAgentIndex(idx);
-                    setIsPlaying(false);
-                }}
-                className="relative w-16 h-16 flex items-center justify-center rounded-[24px] group z-10"
-              >
-                <div className="absolute inset-1 bg-black/5 rounded-[20px] shadow-inner opacity-40 group-hover:opacity-100 transition-opacity" />
-                <div className={cn(
-                    "relative z-10 transition-all duration-300",
-                    currentAgentIndex === idx ? "text-slate-900 scale-110" : "text-slate-400 group-hover:text-slate-600"
-                )}>
-                  {track.icon}
+              <div key={track.id} className="relative group">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 bg-[#0F172A] text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-lg opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 whitespace-nowrap">
+                    {track.description}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-[4px] border-transparent border-t-[#0F172A]" />
                 </div>
-                {currentAgentIndex === idx && (
-                  <motion.div
-                    layoutId="glass-selector"
-                    className="absolute inset-0 z-20 pointer-events-none"
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  >
-                    <LiquidGlassCard
-                      className="w-full h-full bg-white/5 border border-white/40"
-                      borderRadius="24px"
-                      blurIntensity="xl"
-                      shadowIntensity="md"
-                      glowIntensity="sm"
+
+                <button
+                    onClick={() => {
+                        setCurrentAgentIndex(idx);
+                        setIsPlaying(false);
+                        setTurnIndex(-1);
+                    }}
+                    className="relative flex items-center gap-3 px-5 py-3 rounded-[18px] z-10 transition-all active:scale-95"
+                >
+                    <div className={cn(
+                        "transition-colors duration-300",
+                        currentAgentIndex === idx ? "text-slate-900" : "text-slate-900/30 group-hover:text-slate-900"
+                    )}>
+                    {track.icon}
+                    </div>
+                    <span className={cn(
+                        "text-[11px] font-bold uppercase tracking-widest transition-colors duration-300",
+                        currentAgentIndex === idx ? "text-slate-900" : "text-slate-900/30 group-hover:text-slate-900"
+                    )}>
+                        {track.category}
+                    </span>
+                    
+                    {currentAgentIndex === idx && (
+                    <motion.div
+                        layoutId="glass-selector"
+                        className="absolute inset-0 z-[-1] pointer-events-none"
+                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     >
-                      <div className="w-full h-full" />
-                    </LiquidGlassCard>
-                  </motion.div>
-                )}
-              </button>
+                        <LiquidGlassCard
+                        className="w-full h-full bg-white/5 border border-white/60"
+                        borderRadius="18px"
+                        blurIntensity="xl"
+                        shadowIntensity="md"
+                        glowIntensity="none"
+                        >
+                        <div className="w-full h-full" />
+                        </LiquidGlassCard>
+                    </motion.div>
+                    )}
+                </button>
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-[#020617] rounded-[64px] p-5 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.6)] border-[1px] border-slate-800/80 relative overflow-hidden">
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/carbon-fibre.png")' }} />
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative z-10">
-            <div className="lg:col-span-5 bg-[#0F172A] rounded-[48px] p-12 flex flex-col relative overflow-hidden shadow-2xl border border-white/5">
-              <div className="relative z-10 flex-1">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={agent.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
-                    className="space-y-6"
-                  >
-                    <div className="flex items-center gap-4">
-                        <span className={cn("inline-block px-3 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-[0.2em] text-white shadow-lg", agent.color)}>
-                        Active Payload
-                        </span>
-                        <div className="text-white/10 text-xl font-mono tracking-tighter italic">#{currentAgentIndex + 1}</div>
-                    </div>
-                    <h3 className="text-6xl font-bold tracking-tighter text-white leading-none">{agent.name}</h3>
-                    <p className="text-2xl font-serif italic text-white/50 leading-snug max-w-[280px]">
-                      "{agent.role} specializing in {agent.specialty}."
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+        {/* ─── The Main Engineering Deck (Pure Solid Color) ─── */}
+        <div className={cn(
+            "rounded-[32px] border border-black/10 transition-colors duration-700 p-4 shadow-sm",
+            agent.color
+        )}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch relative z-10">
+            
+            {/* Left Column: Tabbed Logic & High-Contrast Diarization */}
+            <div className="lg:col-span-5 flex flex-col gap-4">
+              <div className="bg-black/5 rounded-[24px] border border-black/10 p-6 lg:p-10 flex-1 flex flex-col overflow-hidden relative min-h-[350px] lg:min-h-[500px]">
+                
+                <div className="flex gap-1 bg-black/10 p-1 rounded-xl mb-10 w-fit border border-black/5">
+                    <button onClick={() => setActiveTab('transcript')} className={cn("px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all", activeTab === 'transcript' ? "bg-black/80 text-white" : "text-black/30 hover:text-black/50")}>Transcript</button>
+                    <button onClick={() => setActiveTab('script')} className={cn("px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all", activeTab === 'script' ? "bg-black/80 text-white" : "text-black/30 hover:text-black/50")}>Agent_Script</button>
+                </div>
 
-              <div className="mt-12 relative z-10">
-                <div className="bg-black/80 backdrop-blur-3xl rounded-[36px] p-4 border border-white/10 flex items-center justify-between gap-4 shadow-[inset_0_2px_20px_rgba(255,255,255,0.05)]">
-                  <div className="flex items-center gap-3">
-                    <button 
-                      onClick={() => setIsPlaying(!isPlaying)}
-                      className="w-16 h-16 rounded-3xl bg-white text-black flex items-center justify-center hover:bg-slate-200 transition-all active:scale-95 shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
-                    >
-                      {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current translate-x-0.5" />}
-                    </button>
-                  </div>
-                  <button 
-                    onClick={() => setShowCallPopup(true)}
-                    className={cn(
-                        "flex items-center justify-center md:justify-start gap-3 px-4 md:px-8 h-16 text-white rounded-3xl font-bold text-base transition-all shadow-xl group",
-                        agent.id === 'taxi' ? 'bg-rose-500 hover:bg-rose-600 shadow-rose-500/20' : 
-                        agent.id === 'realestate' ? 'bg-sky-500 hover:bg-sky-600 shadow-sky-500/20' :
-                        agent.id === 'ecommerce' ? 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20' :
-                        'bg-amber-500 hover:bg-amber-600 shadow-amber-500/20'
-                    )}
-                  >
-                    <Phone className="w-5 h-5 fill-current group-hover:animate-bounce" />
-                    <span className="hidden md:inline">Initiate Call</span>
-                  </button>
+                <div className="flex-1 overflow-hidden">
+                    <AnimatePresence mode="wait">
+                        {activeTab === 'transcript' ? (
+                            <motion.div key="transcript" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-full">
+                                <div ref={transcriptScrollRef} className="h-[300px] overflow-y-auto scroll-smooth no-scrollbar space-y-6">
+                                    {agent.transcript.map((line, i) => (
+                                        <div key={i} className={cn(
+                                            "flex flex-col gap-1 transition-all duration-700",
+                                            i <= turnIndex ? "opacity-100" : "opacity-10"
+                                        )}>
+                                            <div className="flex items-center gap-2">
+                                                <span className={cn(
+                                                    "text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border border-black/20 shadow-sm",
+                                                    line.speaker === 'agent' ? "bg-black text-white" : "bg-white text-black"
+                                                )}>
+                                                    {line.speaker === 'agent' ? "System_Agent" : "Incoming_User"}
+                                                </span>
+                                                <span className="text-[8px] font-mono text-black/20 font-bold tracking-tighter">00:0{i}:00</span>
+                                            </div>
+                                            <p className="text-xl font-bold tracking-tight text-black leading-tight">
+                                                "{line.text}"
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        ) : (
+                            <motion.div key="script" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
+                                <div className="text-[10px] font-bold text-black/20 uppercase tracking-[0.2em] mb-4 font-black">Core_Instructions_v4</div>
+                                <p className="text-xl font-serif italic text-black/60 leading-relaxed font-medium">
+                                    "{agent.instructionScript}"
+                                </p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
               </div>
-              <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full blur-[120px] transition-colors duration-1000 opacity-20" style={{ backgroundColor: agent.glow }} />
             </div>
 
-            <div className="lg:col-span-7 bg-[#05080F] rounded-[48px] flex items-center justify-center p-12 border border-white/5 shadow-inner relative group min-h-[480px]">
-                <div className="absolute top-8 left-8 w-2 h-2 rounded-full bg-emerald-500/40 blur-[4px] animate-pulse" />
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={agent.id}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.5, ease: "circOut" }}
-                    >
-                        <VinylRecord isPlaying={isPlaying} image={agent.recordLabel} />
-                    </motion.div>
-                </AnimatePresence>
+            {/* Right Column: Record Player & Console */}
+            <div className="lg:col-span-7 flex flex-col gap-4">
+                <div className="hidden lg:flex bg-white/5 rounded-[24px] border border-black/10 flex items-center justify-center p-12 flex-1 min-h-[450px] shadow-inner relative overflow-hidden">
+                    <AnimatePresence mode="wait">
+                        <motion.div key={agent.id} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}>
+                            <SchematicRecord isPlaying={isPlaying} image={agent.recordLabel} />
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+
+                <div className="bg-black/5 rounded-[24px] border border-black/10 p-2 flex gap-2">
+                    <button onClick={() => setIsPlaying(!isPlaying)} className="w-16 h-16 rounded-[18px] bg-black text-white flex items-center justify-center hover:bg-black/80 active:scale-95 shadow-lg">
+                    {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current translate-x-0.5" />}
+                    </button>
+                    <button onClick={() => setShowCallPopup(true)} className="flex-1 h-16 rounded-[18px] bg-black text-white font-bold text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 shadow-xl group">
+                    <Phone className="w-4 h-4 fill-current group-hover:animate-bounce" />
+                    <span>Initiate Call</span>
+                    </button>
+                </div>
             </div>
+
           </div>
         </div>
       </div>
 
+      {/* ─── Call Terminal (Airbnb-Inspired) ─── */}
       <AnimatePresence>
         {showCallPopup && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[2000] flex items-center justify-center px-6">
-            <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl" onClick={() => setShowCallPopup(false)} />
-            <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }} className="relative w-full max-w-lg">
-                <LiquidGlassCard className="w-full bg-white/60 p-12 border border-white" borderRadius="48px" blurIntensity="xl" shadowIntensity="lg" glowIntensity="md">
-                    <button onClick={() => setShowCallPopup(false)} className="absolute top-8 right-8 p-3 rounded-full hover:bg-black/5 transition-colors"><X className="w-6 h-6" /></button>
-                    <div className="flex flex-col items-center text-center space-y-8">
-                        <div className="w-20 h-20 rounded-[32px] bg-emerald-500/10 flex items-center justify-center text-emerald-500 shadow-inner"><Mic2 className="w-10 h-10" /></div>
-                        <div className="space-y-2">
-                            <h3 className="text-3xl font-bold tracking-tight text-slate-900">Establish Connection</h3>
-                            <p className="text-base text-slate-500 font-serif italic max-w-[280px] mx-auto">You are about to speak with {agent.name}, {agent.role}.</p>
-                        </div>
-                        <div className="w-full space-y-4">
-                            <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full px-8 py-6 rounded-2xl bg-white/40 border-2 border-slate-200 focus:border-emerald-500 outline-none font-bold text-xl transition-all text-center shadow-inner" />
-                            <button className="w-full py-6 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-emerald-500 transition-all flex items-center justify-center gap-3 shadow-2xl">Initiate Protocol <ChevronRight className="w-5 h-5" /></button>
-                        </div>
-                        <p className="text-[10px] uppercase font-bold text-slate-400 tracking-[0.3em]">Signal Encrypted • Monade Network</p>
+            <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onClick={() => setShowCallPopup(false)} />
+            <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }} className="relative w-full max-w-lg bg-white rounded-[40px] shadow-2xl overflow-hidden">
+                <button onClick={() => setShowCallPopup(false)} className="absolute top-8 right-8 p-2.5 rounded-full hover:bg-slate-50 text-slate-400 hover:text-slate-900 transition-all z-20 border border-slate-100"><X className="w-5 h-5" /></button>
+                <div className="p-12 flex flex-col items-center text-center">
+                    <div className={cn("w-20 h-20 rounded-[28px] flex items-center justify-center mb-8 bg-opacity-10", agent.color)}>
+                        <Mic2 className={cn("w-10 h-10 stroke-[1.5px]", agent.color.replace('bg-', 'text-'))} />
                     </div>
-                </LiquidGlassCard>
+                    <div className="space-y-3 mb-10">
+                        <h3 className="text-4xl font-bold tracking-tight text-slate-900 leading-tight">Establish Connection</h3>
+                        <p className="text-lg text-slate-500 font-serif italic max-w-[320px] mx-auto">Connect with {agent.name} to demonstrate the {agent.category} workflow.</p>
+                    </div>
+                    <div className="w-full space-y-5">
+                        <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full px-8 py-6 rounded-3xl bg-slate-50 border-2 border-slate-100 focus:border-slate-900 focus:bg-white outline-none font-mono text-2xl text-center text-slate-900 transition-all" />
+                        <button className={cn("w-full py-6 rounded-3xl font-bold text-lg text-white shadow-xl hover:shadow-2xl flex items-center justify-center gap-3", agent.color)}>Initiate Connection <ChevronRight className="w-5 h-5" /></button>
+                    </div>
+                </div>
             </motion.div>
           </motion.div>
         )}

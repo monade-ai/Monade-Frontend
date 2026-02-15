@@ -13,6 +13,8 @@ import {
   Lock
 } from 'lucide-react';
 import Link from 'next/link';
+import Navbar from "@/components/Navbar";
+import FooterCTA from "@/components/sections/FooterCTA";
 
 interface PricingCardProps {
   title: string;
@@ -45,22 +47,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-primary/10">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-black/5">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">M</span>
-            </div>
-            <span className="font-bold tracking-tight text-xl">monade</span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <button className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-black transition-all shadow-soft">
-              Book Demo
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Navbar variant="light" />
 
       <main className="pt-32 pb-20">
         {/* Header */}
@@ -217,6 +204,7 @@ export default function PricingPage() {
           </div>
         </section>
       </main>
+      <FooterCTA />
     </div>
   );
 }

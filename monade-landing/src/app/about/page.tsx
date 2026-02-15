@@ -1,9 +1,12 @@
 import React from "react";
+import Navbar from "@/components/Navbar";
+import FooterCTA from "@/components/sections/FooterCTA";
 import "./about.css";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-black text-white">
+      <Navbar variant="black" />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-orange-900/50 via-black to-orange-900/50">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-900/30 via-black to-orange-900/30"></div>
@@ -137,6 +140,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <FooterCTA />
     </div>
   );
 }

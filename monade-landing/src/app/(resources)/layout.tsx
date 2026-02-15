@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import FooterCTA from "@/components/sections/FooterCTA";
 
 export default function ResourcesLayout({
   children,
@@ -9,6 +10,7 @@ export default function ResourcesLayout({
     <>
       <Navbar />
       {children}
+      <FooterCTA />
     </>
   );
 }

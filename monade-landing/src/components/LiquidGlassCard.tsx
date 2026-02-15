@@ -186,7 +186,7 @@ export const LiquidGlassCard = ({
                 />
 
                 {/* Content */}
-                <div className="relative z-30">
+                <div className="relative z-30 h-full">
                     {children}
                 </div>
             </MotionComponent>
