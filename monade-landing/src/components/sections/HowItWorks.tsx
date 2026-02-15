@@ -1,106 +1,118 @@
 'use client';
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
+
+const STEPS = [
+  {
+    id: "01",
+    title: "Knowledge",
+    desc: "Ingest your raw data from Sheets, Notion, or PDFs.",
+    color: "bg-[#708894]" // Steel Blue
+  },
+  {
+    id: "02",
+    title: "Synthesis",
+    desc: "Map logic using 18 principles of persuasion.",
+    color: "bg-[#869781]" // Sage Green
+  },
+  {
+    id: "03",
+    title: "Calibration",
+    desc: "Adjust tone and resonance until it feels human.",
+    color: "bg-[#D97757]" // Burnt Clay
+  },
+  {
+    id: "04",
+    title: "Deployment",
+    desc: "Go live instantly at sub-200ms latency.",
+    color: "bg-[#5A6B7D]" // Muted Storm Blue
+  },
+  {
+    id: "05",
+    title: "Evolution",
+    desc: "The loop closes. Every call refines the next.",
+    color: "bg-[#BC8A7A]" // Muted Terracotta/Clay
+  }
+];
 
 export const HowItWorks = () => {
-  const steps = [
-    {
-      number: "01",
-      title: "Knowledge",
-      desc: "Ingest your raw data. Google Sheets, Notion, or documentation. The foundation of context."
-    },
-    {
-      number: "02",
-      title: "Synthesis",
-      desc: "Our engine architecturally maps your script. 18 principles of persuasion applied instantly."
-    },
-    {
-      number: "03",
-      title: "Calibration",
-      desc: "Review the logic. Adjust the tone. Ensure the cultural resonance is absolute."
-    },
-    {
-      number: "04",
-      title: "Deployment",
-      desc: "Go live in sub-200ms. Real-time execution via LiveKit and Gemini 2.5."
-    },
-    {
-      number: "05",
-      title: "Evolution",
-      desc: "The loop closes. Every call refines the next. A singular, self-optimizing system."
-    }
-  ];
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % STEPS.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="py-40 bg-white overflow-hidden">
+    <section className="py-16 bg-[#FDFBF7] overflow-hidden text-[#1A1A1A] border-y border-black/5">
       <div className="max-w-[1400px] mx-auto px-6">
-        {/* The Manifest Header */}
-        <div className="mb-32">
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            className="text-[11px] font-bold tracking-[0.4em] text-slate-400 uppercase mb-6"
-          >
-            The Architecture of Conversion
-          </motion.p>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 max-w-4xl leading-[0.95]"
-          >
-            A singular, continuous <br /> 
-            <span className="text-slate-300">loop of improvement.</span>
-          </motion.h2>
-        </div>
-
-        {/* The Sequence */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-slate-100 border-y border-slate-100">
-          {steps.map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: i * 0.1 }}
-              className="bg-white py-16 pr-8 group hover:bg-slate-50/50 transition-colors duration-500"
-            >
-              <div className="space-y-12">
-                {/* Precision Indicator */}
-                <div className="flex items-center gap-4">
-                  <span className="text-[10px] font-mono font-bold text-primary">{step.number}</span>
-                  <div className="h-[1px] w-8 bg-slate-100 group-hover:w-12 group-hover:bg-primary transition-all duration-500" />
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="text-2xl font-bold tracking-tight text-slate-900">
-                    {step.title}
-                  </h4>
-                  <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Minimalist Footnote */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="mt-24 flex flex-col md:flex-row justify-between items-end gap-8"
-        >
-          <div className="space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Total Implementation Time</span>
-            <div className="text-4xl font-bold tracking-tighter text-slate-900">48 Hours.</div>
+        
+        {/* Header: Pure Clarity */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-16">
+          <div className="space-y-4">
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none uppercase text-slate-900">
+              A continuous <br />
+              <span className="font-serif italic text-slate-300 font-light lowercase">loop of improvement.</span>
+            </h2>
+            <p className="text-xl text-slate-400 max-w-sm leading-relaxed font-medium">
+                We remove the technical friction to focus on one outcome: a perfect phone call.
+            </p>
           </div>
-          <p className="text-xs text-slate-400 max-w-xs text-right leading-relaxed">
-            Eliminating the unnecessary. Focusing on the relationship between data and the outcome.
-          </p>
-        </motion.div>
+        </div>
+
+        {/* ─── The Modules ─── */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-2 relative">
+            {STEPS.map((step, i) => (
+                <motion.div 
+                    key={step.id} 
+                    onClick={() => setActiveStep(i)}
+                    className={cn(
+                        "p-10 rounded-[24px] border transition-all duration-700 cursor-pointer flex flex-col h-[340px] justify-between relative overflow-hidden",
+                        activeStep === i 
+                            ? cn(step.color, "text-white border-white/10 shadow-2xl scale-[1.02] z-10") 
+                            : "bg-white border-black/5 text-[#1A1A1A] opacity-40 grayscale group hover:opacity-80"
+                    )}
+                >
+                    {/* Material Bevel */}
+                    {activeStep === i && (
+                        <div className="absolute inset-0 pointer-events-none border-t border-white/20 rounded-[24px] z-20 shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)]" />
+                    )}
+
+                    <div className="space-y-10 relative z-10">
+                        <h4 className="text-2xl md:text-3xl font-bold tracking-tighter uppercase leading-[0.9]">
+                            {step.title}
+                        </h4>
+                    </div>
+
+                    <div className={cn(
+                        "transition-all duration-700 relative z-10",
+                        activeStep === i ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                    )}>
+                        <p className="text-lg md:text-xl font-serif italic leading-[1.1] opacity-70">
+                            {step.desc}
+                        </p>
+                    </div>
+
+                    {/* Subtle Texture */}
+                    {activeStep === i && (
+                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+                    )}
+                </motion.div>
+            ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="mt-16 flex justify-center pt-12 border-t border-black/5">
+            <button className="flex items-center gap-3 px-10 py-5 bg-black text-white rounded-full font-bold text-lg hover:bg-[#D94126] transition-all shadow-xl active:scale-95 group">
+                Start your 48-hour pilot <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+        </div>
+
       </div>
     </section>
   );

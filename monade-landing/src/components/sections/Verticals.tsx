@@ -1,100 +1,160 @@
 'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Building2, Heart, GraduationCap } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Building2, Heart, GraduationCap, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const DATA = [
+  {
+    id: "01",
+    icon: Building2,
+    vertical: "Real Estate",
+    location: "Mumbai Brokers",
+    challenge: "8-second spam gate and family decision dynamics.",
+    approach: "Permission-based opening. Family walkthrough offers. Loss framing on inventory. Respectful register with 'ji' honorifics.",
+    metric: "3x",
+    color: "bg-[#D97757]" // Burnt Clay
+  },
+  {
+    id: "02",
+    icon: Heart,
+    vertical: "Healthcare",
+    location: "IVF Clinics",
+    challenge: "High-sensitivity topics and after-hours call loss.",
+    approach: "Warm, empathetic persona. No medical advice. EMI framing before total cost. Family welcome for consultations.",
+    metric: "+35%",
+    color: "bg-[#869781]" // Sage Green
+  },
+  {
+    id: "03",
+    icon: GraduationCap,
+    vertical: "EdTech",
+    location: "Career Coaching",
+    challenge: "High competition and parental ROI skepticism.",
+    approach: "Social proof anchoring with local alumni data. Parental inclusivity. Micro-commitments before enrollment ask.",
+    metric: "2.5x",
+    color: "bg-[#708894]" // Steel Blue
+  }
+];
 
 export const Verticals = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+
   return (
-    <section className="py-32 bg-slate-50 border-y border-slate-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
-          <p className="text-xs font-bold text-primary uppercase tracking-[0.3em] mb-4">Verticals We've Solved</p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
-            Every industry has invisible complexity. We've mapped it.
+    <section className="py-32 bg-[#FDFBF7] overflow-hidden text-[#1A1A1A] border-y border-black/5">
+      <div className="max-w-[1400px] mx-auto px-6">
+        
+        {/* Header */}
+        <div className="mb-20 max-w-4xl">
+          <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-black leading-[0.85] uppercase">
+            Industries <br />
+            <span className="font-serif italic text-slate-300 font-light lowercase">mapped.</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: <Building2 className="w-7 h-7" />,
-              vertical: "Real Estate",
-              location: "Mumbai Brokers",
-              challenge: "8-second spam gate + family decision dynamics + site visit booking friction",
-              approach: "Permission-based opening. Family walkthrough offers. Loss framing on inventory. Respectful register with 'ji' honorifics.",
-              principles: ["Permission Before Pitch", "Family Decisions Are Real", "Loss Frame First"],
-              metric: "3x",
-              metricLabel: "Booking Rate Improvement",
-              insight: "'Ji' honorific in first 30s = +40% trust score"
-            },
-            {
-              icon: <Heart className="w-7 h-7" />,
-              vertical: "Healthcare",
-              location: "IVF Clinics",
-              challenge: "High-sensitivity topic. After-hours calls going to voicemail = lost patients worth ₹3L+.",
-              approach: "Warm, empathetic persona. No medical advice. EMI framing before total cost. Family welcome for consultations.",
-              principles: ["Autonomy Preservation", "EMI Before Total Cost", "Family Decision Embrace"],
-              metric: "+35%",
-              metricLabel: "Appointment Booking Rate",
-              insight: "100% after-hours capture (vs 0% before)"
-            },
-            {
-              icon: <GraduationCap className="w-7 h-7" />,
-              vertical: "EdTech",
-              location: "Career Coaching",
-              challenge: "High competition. Parents involved in decisions. ROI skepticism from students.",
-              approach: "Social proof anchoring with local alumni data. Parental inclusivity. Micro-commitments before enrollment ask.",
-              principles: ["Anchor Early", "Micro-Commitments", "Inoculate Before Pitch"],
-              metric: "2.5x",
-              metricLabel: "Conversion Rate Increase",
-              insight: "Enrollment cycle: 14 days → 6 days"
-            },
-          ].map((study, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: i * 0.15 }}
-              className="bg-white rounded-3xl p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
+        {/* ─── The Machined Registry ─── */}
+        <div className="flex flex-col border-t border-black/5">
+          {DATA.map((item, i) => (
+            <div 
+              key={i} 
+              onMouseEnter={() => setActiveIndex(i)}
+              className="relative transition-all duration-700 cursor-pointer overflow-hidden group"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
-                  {study.icon}
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">{study.vertical}</h4>
-                  <span className="text-xs text-slate-400 font-medium">{study.location}</span>
-                </div>
-              </div>
+              {/* THE PIGMENT SLIDE */}
+              <AnimatePresence>
+                {activeIndex === i && (
+                  <motion.div 
+                    initial={{ x: "-100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "100%" }}
+                    transition={{ type: "spring", stiffness: 100, damping: 22 }}
+                    className={cn("absolute inset-0 z-0", item.color)}
+                  />
+                )}
+              </AnimatePresence>
 
-              <div className="space-y-4 flex-1">
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Challenge</span>
-                  <p className="text-sm text-slate-600 mt-1">{study.challenge}</p>
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Script Approach</span>
-                  <p className="text-sm text-slate-600 mt-1">{study.approach}</p>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {study.principles.map((p, j) => (
-                    <span key={j} className="text-[10px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded-full">{p}</span>
-                  ))}
-                </div>
-              </div>
+              {/* The Interaction Slot */}
+              <div className={cn(
+                "relative z-10 px-6 py-10 lg:px-16 transition-all duration-700",
+                activeIndex === i ? "text-white" : "text-black/40 hover:text-black"
+              )}>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    
+                    {/* Col 1: Identity */}
+                    <div className="lg:col-span-3 flex items-center gap-6 lg:gap-8">
+                        <item.icon className={cn(
+                            "w-6 h-6 lg:w-8 lg:h-8 transition-all duration-500",
+                            activeIndex === i ? "stroke-[2px] scale-110" : "stroke-[1px] opacity-40 group-hover:opacity-100"
+                        )} />
+                        <div>
+                            <h4 className="text-2xl lg:text-4xl font-bold tracking-tighter uppercase leading-none mb-1">{item.vertical}</h4>
+                            <span className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest opacity-40">{item.location}</span>
+                        </div>
+                    </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-100">
-                <div className="flex items-end gap-2 mb-1">
-                  <span className="text-4xl font-mono font-bold text-primary">{study.metric}</span>
-                  <span className="text-xs font-bold text-slate-400 uppercase mb-1">{study.metricLabel}</span>
+                    {/* Col 2: THE TYPOGRAPHIC BLOOM */}
+                    <div className="lg:col-span-6">
+                        <AnimatePresence mode="wait">
+                            {activeIndex === i && (
+                                <motion.div
+                                    initial={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+                                    animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                                    exit={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+                                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                >
+                                    <p className="text-lg lg:text-2xl font-serif italic leading-tight max-w-xl">
+                                        "{item.approach}"
+                                    </p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* Col 3: The Metric */}
+                    <div className="lg:col-span-3 lg:text-right">
+                        <motion.div 
+                            animate={{ 
+                                opacity: activeIndex === i ? 1 : 0.1,
+                                scale: activeIndex === i ? 1 : 0.95
+                            }}
+                            className="text-6xl lg:text-8xl font-mono font-bold tracking-tighter leading-none"
+                        >
+                            {item.metric}
+                        </motion.div>
+                    </div>
+
                 </div>
-                <p className="text-xs text-slate-500 italic mt-2">Key insight: {study.insight}</p>
+
+                {/* The Challenge Reveal */}
+                <motion.div
+                    animate={{ 
+                        height: activeIndex === i ? "auto" : 0,
+                        opacity: activeIndex === i ? 0.4 : 0,
+                        marginTop: activeIndex === i ? 32 : 0
+                    }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                >
+                    <p className="text-xs uppercase font-black tracking-[0.2em] border-t border-current pt-8">
+                        The Challenge: {item.challenge}
+                    </p>
+                </motion.div>
+
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
+
+        {/* Minimal Footer */}
+        <div className="mt-24 flex justify-center">
+            <button className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.3em] group">
+                Deploy for your industry 
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-500" />
+            </button>
+        </div>
+
       </div>
     </section>
   );

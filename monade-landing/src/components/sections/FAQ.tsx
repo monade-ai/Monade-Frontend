@@ -2,8 +2,19 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+// ─── Sub-Components ───
+
+const PrecisionToggle = ({ isExpanded }: { isExpanded: boolean }) => (
+    <div className="relative w-6 h-6 flex items-center justify-center shrink-0">
+        <div className="absolute w-4 h-[1px] bg-black/20" />
+        <motion.div 
+            animate={{ rotate: isExpanded ? 90 : 0, opacity: isExpanded ? 0 : 1 }}
+            className="absolute w-[1px] h-4 bg-black/20" 
+        />
+    </div>
+);
 
 export const FAQ = () => {
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
@@ -12,60 +23,78 @@ export const FAQ = () => {
     {
       id: "robotic",
       q: "Will it sound robotic?",
-      a: "Most voice AI does — because it ignores how humans actually talk. Our scripts handle 400-1200ms latency with varied filler phrases, interruption protocols (stop → acknowledge → redirect), and tiered repair sequences. We design for AI constraints, not around them. Listen to a sample call. If it sounds like IVR, we're not doing our job."
+      a: "Most voice AI does because it ignores how humans actually talk. Our models handle latency with varied fillers and interruption protocols. We design for AI constraints, not around them. If it sounds like an automated machine, we've failed."
     },
     {
       id: "chatgpt",
-      q: "How is this different from ChatGPT + a phone number?",
-      a: "ChatGPT is general-purpose conversation. Our scripts are engineered for conversion: 8-stage architecture, 43:57 talk ratio enforcement, adjacency pair design, Indian cultural compliance, and behavioral science mechanics. It's the difference between 'can talk' and 'actually books appointments.'"
+      q: "How is this different from generic LLMs?",
+      a: "General-purpose models are built for text. Our agents are engineered for conversion: 8-stage architecture, 43:57 talk ratio enforcement, and behavioral science mechanics. It is the difference between a chat bot and a closer."
     },
     {
       id: "unknown",
-      q: "What if the customer asks something outside the knowledge base?",
-      a: "Three-tier fallback: 1) Rephrase the question (maybe it was unclear), 2) Offer multiple choice (narrow down intent), 3) Offer human callback within 2 hours (preserve the lead). Plus: every unknown question gets flagged. Next week's script can answer it."
+      q: "What if the customer asks something outside the brain?",
+      a: "We use a three-tier fallback: rephrasing for clarity, offering multiple choice to narrow intent, or a human callback within 2 hours. Every unknown question is flagged—next week's script will have the answer."
     },
     {
       id: "family",
-      q: '"I need to discuss with my wife" — how do you handle that?',
-      a: `We don't treat it as an objection. In India, family consultation is culturally normative. Our scripts embrace it: "Absolutely — this is a family decision. Would it help if I send a comparison document? Or schedule a weekend walkthrough where everyone can join?" Conversion rate after properly supported family consultation: 40-50%.`
+      q: "How do you handle family consultation?",
+      a: `In India, this is culturally normative. We embrace it. Our scripts offer comparison documents or weekend walkthroughs where the whole family can join. We don't fight the culture; we align with it.`
     },
     {
       id: "setup",
       q: "How long does setup take?",
-      a: "2-3 days for your first vertical. Day 1: Upload knowledge base. Day 1-2: We generate script using 18-principle framework. Day 2: You review and approve. Day 2-3: Technical integration. Day 3: Test calls → goes live. Each additional vertical: 1 day."
+      a: "48 to 72 hours for your first industry vertical. We ingest your data, generate the persuasion map, and perform tonal calibration before going live. Each additional vertical takes less than a day."
     },
   ];
 
   return (
-    <section className="py-32 bg-slate-50 border-y border-slate-100">
-      <div className="max-w-3xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4">Common Questions</h2>
-          <p className="text-lg text-slate-500">Everything you need to know about the platform.</p>
+    <section className="py-24 bg-[#FDFBF7] overflow-hidden text-[#1A1A1A] border-t border-black/5">
+      <div className="max-w-4xl mx-auto px-6">
+        
+        {/* Header */}
+        <div className="mb-12">
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-black leading-none uppercase">
+            Common <br />
+            <span className="font-serif italic text-slate-300 font-light lowercase text-[0.9em]">questions.</span>
+          </h2>
         </div>
 
-        <div className="space-y-4">
+        {/* ─── The Compact Accordion ─── */}
+        <div className="flex flex-col border-t border-black/10">
           {faqs.map((faq) => (
-            <div key={faq.id} className="bg-white border border-slate-100 rounded-3xl overflow-hidden transition-all hover:shadow-lg">
+            <div 
+              key={faq.id} 
+              className={cn(
+                "group border-b border-black/10 transition-all duration-700",
+                expandedFaq === faq.id ? "bg-white shadow-sm" : "bg-transparent hover:bg-black/[0.01]"
+              )}
+            >
               <button
                 onClick={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
-                className="w-full p-8 flex items-center justify-between text-left"
+                className="w-full py-8 flex items-center justify-between text-left px-4 lg:px-8"
               >
-                <span className="font-bold text-lg text-slate-900 pr-8 leading-snug">{faq.q}</span>
-                <div className={cn("w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center transition-colors shrink-0", expandedFaq === faq.id ? "bg-primary text-white" : "text-slate-400")}>
-                  {expandedFaq === faq.id ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                </div>
+                <span className={cn(
+                    "font-bold text-xl md:text-2xl tracking-tight transition-all duration-500 max-w-2xl leading-snug",
+                    expandedFaq === faq.id ? "text-black" : "text-black/40"
+                )}>
+                    {faq.q}
+                </span>
+                <PrecisionToggle isExpanded={expandedFaq === faq.id} />
               </button>
+
               <AnimatePresence>
                 {expandedFaq === faq.id && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <div className="px-8 pb-8 text-slate-500 leading-relaxed text-base pt-0">
-                      {faq.a}
+                    <div className="px-4 lg:px-8 pb-10">
+                        <div className="h-px w-12 bg-[#D94126] mb-6" />
+                        <p className="text-lg md:text-xl text-slate-500 font-serif italic leading-relaxed max-w-3xl">
+                            {faq.a}
+                        </p>
                     </div>
                   </motion.div>
                 )}
@@ -73,6 +102,7 @@ export const FAQ = () => {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
