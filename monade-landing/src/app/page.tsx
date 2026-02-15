@@ -7,6 +7,7 @@ import AgentGramophone from "@/components/sections/AgentGramophone";
 import BentoGrid from "@/components/sections/BentoGrid";
 import AppIntegration from "@/components/sections/AppIntegration";
 import HowItWorks from "@/components/sections/HowItWorks";
+import LanguageSupport from "@/components/sections/LanguageSupport";
 import CRMIntegrations from "@/components/sections/CRMIntegrations";
 import Verticals from "@/components/sections/Verticals";
 import Testimonials from "@/components/sections/Testimonials";
@@ -24,6 +25,7 @@ export default function Home() {
         <BentoGrid />
         <AppIntegration />
         <HowItWorks />
+        <LanguageSupport />
         <CRMIntegrations />
         <Verticals />
         <Testimonials />

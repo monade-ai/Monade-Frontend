@@ -7,6 +7,7 @@ import { Menu, X, BookOpen, Building2, FileText, ChevronDown } from "lucide-reac
 import { cn } from "@/lib/utils";
 
 import { LiquidGlassCard } from "./LiquidGlassCard";
+import OpenClawBanner from "./sections/OpenClawBanner";
 
 const CrabIcon = ({ className }: { className?: string }) => (
   <svg
@@ -76,14 +77,15 @@ export default function Navbar({ variant }: NavbarProps) {
   const navLinks = [
     { href: "/#Experience", label: "Experience" },
     { href: "/#HowItWorks", label: "How it works" },
-    { href: "/#Trust", label: "Trust" },
+    { href: "/trust", label: "Trust" },
     { href: "/pricing", label: "Pricing" },
-    { href: "/open-claw", label: "Open source", icon: CrabIcon },
+    { href: "/open-claw", label: "Open Claw", icon: CrabIcon },
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[1000] px-4 py-4 md:px-6 md:py-6 pointer-events-none">
-      <div className="max-w-[95%] mx-auto w-full pointer-events-auto">
+    <header className="fixed top-0 left-0 w-full z-[1000] pointer-events-none">
+      <OpenClawBanner />
+      <div className="max-w-[95%] mx-auto w-full pointer-events-auto mt-4 md:mt-6">
         <div
           className={cn(
             "w-full transition-all duration-500 rounded-2xl border border-slate-200/50 shadow-sm overflow-visible",
@@ -231,7 +233,7 @@ export default function Navbar({ variant }: NavbarProps) {
                         isBlackTheme && (pathname === link.href ? "text-white" : "text-slate-400 hover:text-white")
                       )}
                     >
-                      {link.icon && <link.icon className="w-8 h-8 text-[#FF4D00]" />}
+                      {link.icon && <link.icon className={cn("w-8 h-8", pathname === link.href ? "text-primary" : "text-slate-400")} />}
                       {link.label}
                     </Link>
                   ))}

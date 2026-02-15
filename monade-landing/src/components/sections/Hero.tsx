@@ -6,9 +6,9 @@ import { ArrowRight } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <section className="relative pt-48 pb-32 px-6 overflow-hidden">
+    <section className="relative pt-32 pb-16 px-6 overflow-hidden">
       <div className="max-w-[1400px] mx-auto text-center relative z-10">
-        <div className="space-y-12 max-w-5xl mx-auto">
+        <div className="space-y-8 max-w-5xl mx-auto">
           {/* Badge - Minimalist and informative */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -35,7 +35,7 @@ export const Hero = () => {
           </p>
 
           {/* CTAs - Clean and balanced */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button className="px-10 py-4 bg-slate-900 text-white rounded-xl font-bold text-lg transition-all hover:bg-black active:scale-[0.98]">
               Get started for free
             </button>
