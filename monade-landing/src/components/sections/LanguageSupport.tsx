@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Mic2, ChevronRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -35,29 +36,43 @@ const SECONDARY_LANGUAGES = [
   { name: "Dutch", voices: 4, flag: "🇳🇱" },
 ];
 
-const VOICES = [
-  "Achernar", "Aoede", "Charon", "Despina", "Fenrir", "Kore", "Leda", "Orus", "Puck", "Zephyr"
-];
-
 export const LanguageSupport = () => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section className="py-24 bg-white border-t border-slate-100 overflow-hidden">
+    <section className="py-16 bg-white border-t border-slate-100 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header: Simplified and Direct */}
-        <div className="max-w-3xl mb-20">
-          <h2 className="text-4xl md:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.05] mb-6">
-            Talk to anyone, anywhere.
-          </h2>
-          <p className="text-xl text-slate-500 leading-relaxed max-w-2xl">
-            We support Hindi, Marathi, Tamil, Bengali, Gujarati, Chinese, Swahili, and 24 other languages with 30 high-quality voices.
-          </p>
+        <div className="max-w-7xl flex flex-col md:flex-row justify-between items-start mb-8 relative">
+          <div className="max-w-3xl">
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.05] mb-6">
+              Talk to anyone, anywhere.
+            </h2>
+            <p className="text-xl text-slate-500 leading-relaxed max-w-2xl">
+              We support Hindi, Marathi, Tamil, Bengali, Gujarati, Chinese, Swahili, and 24 other languages with 30 high-quality voices.
+            </p>
+          </div>
+
+          {/* Country Balls visual asset */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="hidden lg:block relative w-[450px] aspect-[3/2] -mr-12 -mt-10"
+          >
+            <Image
+              src="/country balls.png"
+              alt="Global coverage"
+              fill
+              className="object-contain opacity-90 grayscale-[0.1] hover:grayscale-0 transition-all duration-700"
+            />
+          </motion.div>
         </div>
 
         {/* Language Grid: Refined and Minimal */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-24 transition-all duration-500">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-12 transition-all duration-500">
           {PRIMARY_LANGUAGES.map((lang, i) => (
             <motion.div
               key={lang.name}
