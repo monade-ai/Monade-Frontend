@@ -50,7 +50,7 @@ export const HeroVisual = () => {
               <div className="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center text-intellect">
                 <Database className="w-5 h-5" />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-40">Source Data</span>
+              <span className="text-[11px] font-bold text-white/40">Business data</span>
             </div>
             <p className="text-lg leading-relaxed font-serif italic opacity-80">
               "We have 15 outlets in Bangalore. Delivery is ₹40. Average prep time is 20 mins. Customers often ask about spice levels..."
@@ -68,14 +68,14 @@ export const HeroVisual = () => {
               <div className="w-10 h-10 rounded-2xl bg-primary/20 flex items-center justify-center text-primary">
                 <Zap className="w-5 h-5 fill-current" />
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Live Synthesis v4</span>
+              <span className="text-[11px] font-bold text-primary">Live AI</span>
             </div>
-            <p className="text-xl font-bold tracking-tight mb-2">
+            <p className="text-xl font-bold tracking-tight mb-2 text-balance">
               "Sir, Bangalore outlets par availability check kar li hai. Delivery charge ₹40 rahega — kitna spicy chahiye aapko?"
             </p>
             <div className="flex gap-2 mt-4">
-              <span className="text-[9px] font-bold bg-white/5 px-2 py-1 rounded-full opacity-60">Hinglish</span>
-              <span className="text-[9px] font-bold bg-white/5 px-2 py-1 rounded-full opacity-60">Context-Aware</span>
+              <span className="text-[10px] font-bold bg-white/5 px-3 py-1 rounded-full opacity-60">Natural flow</span>
+              <span className="text-[10px] font-bold bg-white/5 px-3 py-1 rounded-full opacity-60">Context aware</span>
             </div>
           </FloatingCard>
         </div>
@@ -90,7 +90,7 @@ export const HeroVisual = () => {
               </div>
               <div className="text-right">
                 <div className="text-3xl font-mono font-bold text-emerald-500">+420%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest opacity-40">Booking Rate</div>
+                <div className="text-[11px] font-bold text-white/40">Booking rate</div>
               </div>
             </div>
             <div className="h-24 flex items-end gap-1.5">
@@ -103,21 +103,21 @@ export const HeroVisual = () => {
           <FloatingCard rotation="-1" delay={0.9} className="bg-[#0F172A] text-white">
             <div className="flex items-center gap-3 mb-6">
               <Phone className="w-4 h-4 text-sky-400" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-sky-400">Live Transcript</span>
+              <span className="text-[11px] font-bold text-sky-400">Transcript</span>
             </div>
             <div className="space-y-4">
               <div className="flex gap-3">
                 <div className="w-6 h-6 rounded-full bg-white/10 flex-shrink-0" />
                 <p className="text-xs opacity-60">"Are the apartments in Worli pet-friendly?"</p>
               </div>
-              <div className="flex gap-3 justify-end">
+              <div className="flex gap-3 justify-end text-right">
                 <p className="text-xs text-primary font-bold">"Absolutely. We have a dedicated pet park on the 5th floor."</p>
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex-shrink-0" />
               </div>
               <div className="pt-4 border-t border-white/5">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[9px] font-bold opacity-40">Sentiment: Highly Interested</span>
+                  <span className="text-[10px] font-bold opacity-40">Interest: High</span>
                 </div>
               </div>
             </div>

@@ -68,10 +68,13 @@ export const FooterCTA = () => {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row items-start gap-4"
           >
-            <button className="px-8 py-4 bg-primary text-white rounded-xl font-semibold text-lg hover:bg-orange-600 transition-all active:scale-[0.98]">
+            <Link href="/pricing" className="px-8 py-4 bg-primary text-white rounded-xl font-semibold text-lg hover:bg-orange-600 transition-all active:scale-[0.98]">
               Get started for free
-            </button>
-            <button className="px-8 py-4 bg-slate-50 text-slate-900 rounded-xl font-semibold text-lg hover:bg-slate-100 transition-all">
+            </Link>
+            <button 
+              onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+              className="px-8 py-4 bg-slate-50 text-slate-900 rounded-xl font-semibold text-lg hover:bg-slate-100 transition-all"
+            >
               Talk to us
             </button>
           </motion.div>

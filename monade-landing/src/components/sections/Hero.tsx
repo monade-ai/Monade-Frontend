@@ -2,7 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Phone, Target, Globe } from "lucide-react";
+import { Phone, Target, Globe } from "lucide-react";
+import Link from "next/link";
 
 export const Hero = () => {
   return (
@@ -36,10 +37,13 @@ export const Hero = () => {
 
           {/* CTAs - Clean and balanced */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <button className="px-10 py-4 bg-slate-900 text-white rounded-xl font-bold text-lg transition-all hover:bg-black active:scale-[0.98]">
+            <Link href="/pricing" className="px-10 py-4 bg-slate-900 text-white rounded-xl font-bold text-lg transition-all hover:bg-black active:scale-[0.98]">
               Get started for free
-            </button>
-            <button className="px-10 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all active:scale-[0.98]">
+            </Link>
+            <button 
+              onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+              className="px-10 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all active:scale-[0.98]"
+            >
               View the demo
             </button>
           </div>

@@ -43,7 +43,7 @@ export const LanguageSupport = () => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section className="py-32 bg-white border-t border-slate-100 overflow-hidden">
+    <section className="py-24 bg-white border-t border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header: Simplified and Direct */}
@@ -69,7 +69,7 @@ export const LanguageSupport = () => {
             >
               <div className="text-2xl mb-4 grayscale group-hover:grayscale-0 transition-all duration-500">{lang.flag}</div>
               <h4 className="font-bold text-slate-900 mb-1">{lang.name}</h4>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">{lang.voices} voices</p>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{lang.voices} voices</p>
             </motion.div>
           ))}
 

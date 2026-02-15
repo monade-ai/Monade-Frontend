@@ -148,10 +148,13 @@ export const Verticals = () => {
         </div>
 
         {/* Minimal Footer */}
-        <div className="mt-24 flex justify-center">
-            <button className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.3em] group">
+        <div className="mt-16 flex justify-center pt-8 border-t border-black/5">
+            <button 
+                onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+                className="flex items-center gap-3 px-8 py-3 text-sm font-bold text-slate-900 hover:opacity-70 transition-all group"
+            >
                 Deploy for your industry 
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-500" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
         </div>
 

@@ -330,7 +330,7 @@ export const AgentGramophone = () => {
                 
                 <div className="flex gap-1 bg-black/10 p-1 rounded-xl mb-10 w-fit border border-black/5">
                     <button onClick={() => setActiveTab('transcript')} className={cn("px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all", activeTab === 'transcript' ? "bg-black/80 text-white" : "text-black/30 hover:text-black/50")}>Transcript</button>
-                    <button onClick={() => setActiveTab('script')} className={cn("px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all", activeTab === 'script' ? "bg-black/80 text-white" : "text-black/30 hover:text-black/50")}>Agent_Script</button>
+                    <button onClick={() => setActiveTab('script')} className={cn("px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all", activeTab === 'script' ? "bg-black/80 text-white" : "text-black/30 hover:text-black/50")}>Instructions</button>
                 </div>
 
                 <div className="flex-1 overflow-hidden">
@@ -348,7 +348,7 @@ export const AgentGramophone = () => {
                                                     "text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border border-black/20 shadow-sm",
                                                     line.speaker === 'agent' ? "bg-black text-white" : "bg-white text-black"
                                                 )}>
-                                                    {line.speaker === 'agent' ? "System_Agent" : "Incoming_User"}
+                                                    {line.speaker === 'agent' ? "Agent" : "User"}
                                                 </span>
                                                 <span className="text-[8px] font-mono text-black/20 font-bold tracking-tighter">00:0{i}:00</span>
                                             </div>
@@ -361,7 +361,7 @@ export const AgentGramophone = () => {
                             </motion.div>
                         ) : (
                             <motion.div key="script" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
-                                <div className="text-[10px] font-bold text-black/20 uppercase tracking-[0.2em] mb-4 font-black">Core_Instructions_v4</div>
+                                <div className="text-[11px] font-bold text-black/20 uppercase tracking-widest mb-4">Internal instructions</div>
                                 <p className="text-xl font-serif italic text-black/60 leading-relaxed font-medium">
                                     "{agent.instructionScript}"
                                 </p>
@@ -425,7 +425,13 @@ export const AgentGramophone = () => {
                         <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} disabled={isCalling} className="w-full px-8 py-6 rounded-3xl bg-slate-50 border-2 border-slate-100 focus:border-slate-900 focus:bg-white outline-none font-mono text-2xl text-center text-slate-900 transition-all disabled:opacity-60" />
                         {callError && <p className="text-sm text-red-600 font-medium">{callError}</p>}
                         {callSuccess && <p className="text-sm text-emerald-700 font-medium">{callSuccess}</p>}
-                        <button onClick={handleInitiateConnection} disabled={isCalling} className={cn("w-full py-6 rounded-3xl font-bold text-lg text-white shadow-xl hover:shadow-2xl flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed", agent.color)}>{isCalling ? "Initiating..." : "Initiate Connection"} <ChevronRight className="w-5 h-5" /></button>
+                        <button 
+                            onClick={handleInitiateConnection} 
+                            disabled={isCalling} 
+                            className={cn("w-full py-6 rounded-3xl font-bold text-lg text-white shadow-xl hover:shadow-2xl flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed", agent.color)}
+                        >
+                            {isCalling ? "Initiating..." : "Start the call"} <ChevronRight className="w-5 h-5" />
+                        </button>
                     </div>
                 </div>
             </motion.div>

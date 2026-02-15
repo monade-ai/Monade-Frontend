@@ -152,11 +152,11 @@ export default function PricingPage() {
         </section>
 
         {/* Hardware Module Cards */}
-        <section className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-56">
+        <section className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-40">
           
           {/* Artisan Slab */}
           <PricingSlab 
-            label="ART_01"
+            label="ART 01"
             title="Artisan"
             price={callVolume < 10000 ? 0.25 : 0.22}
             desc="For teams shipping their first models. Hand-crafted quality with zero complexity."
@@ -166,7 +166,7 @@ export default function PricingPage() {
 
           {/* Engine Slab (Obsidian) */}
           <PricingSlab 
-            label="ENG_02"
+            label="ENG 02"
             title="The Engine"
             price={callVolume < 10000 ? 0.20 : 0.18}
             desc="Optimized for high-volume production. Custom fine-tuning and dedicated support."
@@ -177,7 +177,7 @@ export default function PricingPage() {
 
           {/* Sovereign Slab */}
           <PricingSlab 
-            label="SOV_03"
+            label="SOV 03"
             title="Sovereign"
             price="Bespoke"
             desc="Total infrastructure control. Dedicated GPU clusters and air-gapped security."
@@ -188,10 +188,10 @@ export default function PricingPage() {
         </section>
 
         {/* Technical Ledger */}
-        <section className="max-w-4xl mx-auto px-6 mb-32">
-          <div className="flex items-end justify-between mb-20 border-b border-slate-200 pb-10">
-            <h2 className="text-5xl font-bold tracking-tight">The Detail Ledger</h2>
-            <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] pb-2">Technical_Specs</span>
+        <section className="max-w-4xl mx-auto px-6 mb-24">
+          <div className="flex items-end justify-between mb-16 border-b border-slate-200 pb-8">
+            <h2 className="text-5xl font-bold tracking-tight text-slate-900">Technical specifications</h2>
+            <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest pb-2">Loadout details</span>
           </div>
 
           <div className="space-y-6">
@@ -262,13 +262,15 @@ function PricingSlab({ label, title, price, desc, features, variant, highlight }
                 </div>
             </div>
 
-            <button className={cn(
-                "mt-20 w-full py-6 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 active:scale-[0.98]",
+            <button 
+                onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+                className={cn(
+                "mt-20 w-full py-6 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-3 active:scale-[0.98]",
                 isObsidian 
-                    ? "bg-white text-black hover:bg-primary hover:text-white shadow-2xl" 
-                    : "bg-black text-white hover:bg-[#D94126] shadow-xl"
+                    ? "bg-white text-black hover:bg-slate-100 shadow-2xl" 
+                    : "bg-black text-white hover:bg-slate-900 shadow-xl"
             )}>
-                Initialize Link <ArrowUpRight className="w-4 h-4" />
+                Get started <ArrowUpRight className="w-4 h-4" />
             </button>
         </div>
     );

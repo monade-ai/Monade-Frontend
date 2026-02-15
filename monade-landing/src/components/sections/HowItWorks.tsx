@@ -107,9 +107,12 @@ export const HowItWorks = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="mt-16 flex justify-center pt-12 border-t border-black/5">
-            <button className="flex items-center gap-3 px-10 py-5 bg-black text-white rounded-full font-bold text-lg hover:bg-[#D94126] transition-all shadow-xl active:scale-95 group">
-                Start your 48-hour pilot <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        <div className="mt-12 flex justify-center pt-10 border-t border-black/5">
+            <button 
+                onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+                className="flex items-center gap-3 px-10 py-4 bg-black text-white rounded-xl font-bold text-lg hover:bg-slate-900 transition-all shadow-lg active:scale-0.98 group"
+            >
+                Start your pilot <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
         </div>
 
