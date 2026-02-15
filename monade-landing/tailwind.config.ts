@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: [
@@ -39,8 +40,9 @@ const config: Config = {
         'f-233': '14.5625rem' // 233px
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "Inter", "sans-serif"],
-        mono: ["var(--font-geist-mono)", "JetBrains Mono", "monospace"],
+        sans: ["var(--font-inter)", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "monospace"],
+        serif: ["var(--font-serif)", "serif"],
       },
       backdropBlur: {
         'premium': '20px',
@@ -52,7 +54,7 @@ const config: Config = {
       }
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [typography],
 };
 
 export default config;

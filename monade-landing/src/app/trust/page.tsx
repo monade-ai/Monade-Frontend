@@ -138,21 +138,7 @@ export default function TrustPage() {
               </div>
             </div>
 
-            <div className="bg-slate-50 rounded-3xl p-10 border border-slate-100">
-              <h4 className="text-lg font-semibold text-slate-900 mb-4">
-                A simple promise.
-              </h4>
-              <p className="text-base text-slate-500 font-serif italic leading-relaxed">
-                "We treat your data the same way we treat your brand's voice—with absolute respect. We never sell your data, we never use it to train models for others, and we never compromise on safety."
-              </p>
-              <div className="mt-8 flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-slate-200" />
-                <div>
-                  <div className="font-bold text-xs text-slate-900">Amol Soans</div>
-                  <div className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Co-founder & CEO</div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </section>
 

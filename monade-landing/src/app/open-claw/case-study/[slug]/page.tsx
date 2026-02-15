@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Zap, Share2, Quote } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -12,10 +12,12 @@ import { cn } from '@/lib/utils';
 
 export default function CaseStudyPage() {
     const params = useParams();
-    const router = useRouter();
     const slug = params.slug as string;
 
     const study = CASE_STUDIES.find((s) => s.slug === slug);
+    if (!study) {
+        notFound();
+    }
 
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -34,10 +36,6 @@ export default function CaseStudyPage() {
     };
 
     const impactStyle = getImpactColor(study.rank);
-
-    if (!study) {
-        notFound();
-    }
 
     return (
         <div className="min-h-screen bg-[#FDFBF7] text-[#1A1A1A] font-sans selection:bg-[#D94126] selection:text-white">

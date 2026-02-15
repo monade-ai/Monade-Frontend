@@ -1,8 +1,4 @@
-'use client';
-
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Twitter, Linkedin, Github } from "lucide-react";
+import { Twitter, Linkedin, Github } from "lucide-react";
 import Link from "next/link";
 
 const footerLinks = [
@@ -39,55 +35,34 @@ export const FooterCTA = () => {
   return (
     <footer className="bg-white text-slate-900 pt-32 pb-16 font-sans antialiased border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Main CTA Section - Airbnb style copy, Apple style layout */}
         <div className="max-w-3xl mb-40">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-slate-900 mb-8"
-          >
+          <h2 className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-slate-900 mb-8">
             Ready to give your <br />business a voice?
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-slate-500 mb-10 leading-relaxed max-w-2xl"
-          >
+          </h2>
+
+          <p className="text-xl md:text-2xl text-slate-500 mb-10 leading-relaxed max-w-2xl">
             Deploy your first agent in minutes. No complex setups, just clear conversations.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row items-start gap-4"
-          >
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-start gap-4">
             <Link href="/pricing" className="px-8 py-4 bg-primary text-white rounded-xl font-semibold text-lg hover:bg-orange-600 transition-all active:scale-[0.98]">
               Get started for free
             </Link>
-            <button 
-              onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+            <Link
+              href="https://calendly.com/monade-ai/demo"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 bg-slate-50 text-slate-900 rounded-xl font-semibold text-lg hover:bg-slate-100 transition-all"
             >
               Talk to us
-            </button>
-          </motion.div>
+            </Link>
+          </div>
         </div>
 
-        {/* Navigation Grid - Clean and Airy */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 py-20 border-t border-slate-100">
-          {/* Brand Info */}
           <div className="col-span-2 lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">
-                M
-              </div>
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">M</div>
               <span className="font-bold text-xl tracking-tight">monade</span>
             </Link>
             <p className="text-slate-400 text-base leading-relaxed max-w-sm">
@@ -102,7 +77,6 @@ export const FooterCTA = () => {
             </div>
           </div>
 
-          {/* Links */}
           {footerLinks.map((category) => (
             <div key={category.title} className="space-y-6">
               <h3 className="font-semibold text-sm text-slate-900">{category.title}</h3>
@@ -119,12 +93,9 @@ export const FooterCTA = () => {
           ))}
         </div>
 
-        {/* Bottom Bar - Minimalist */}
         <div className="pt-10 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-sm text-slate-400 font-medium">
-            © 2026 Monade AI Inc. All rights reserved.
-          </div>
-          
+          <div className="text-sm text-slate-400 font-medium">© 2026 Monade AI Inc. All rights reserved.</div>
+
           <div className="flex gap-8 text-sm text-slate-400 font-medium">
             <Link href="#" className="hover:text-slate-900 transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-slate-900 transition-colors">Terms</Link>

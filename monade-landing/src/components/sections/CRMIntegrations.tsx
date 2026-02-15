@@ -1,7 +1,3 @@
-'use client';
-
-import React from "react";
-
 export const CRMIntegrations = () => {
   return (
     <section className="py-24 bg-white">

@@ -1,6 +1,3 @@
-'use client';
-
-import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
 import AgentGramophone from "@/components/sections/AgentGramophone";

@@ -11,8 +11,8 @@ export async function generateStaticParams() {
     }));
 }
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-    const { slug } = params;
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
     const study = CASE_STUDIES.find((s) => s.slug === slug);
 
     if (!study) {

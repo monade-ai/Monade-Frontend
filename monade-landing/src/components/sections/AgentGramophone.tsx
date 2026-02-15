@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { 
   Play, Pause, Phone, X, ChevronRight, Mic2,
   Car, Building, ShoppingBag, Utensils
@@ -105,10 +106,12 @@ const SchematicRecord = ({ isPlaying, image, activeId }: { isPlaying: boolean, i
       ))}
       <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border border-black/20 bg-white p-1 shadow-sm overflow-hidden">
         {/* Disk Label changes with agent but container is persistent. No fade here. */}
-        <img 
-          src={image} 
-          alt="Label" 
-          className="w-full h-full object-cover rounded-full opacity-80" 
+        <Image
+          src={image}
+          alt="Label"
+          fill
+          sizes="(max-width: 768px) 96px, 128px"
+          className="w-full h-full object-cover rounded-full opacity-80"
         />
         <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-4 h-4 bg-[#1E293B] rounded-full border border-white/20 shadow-inner" />

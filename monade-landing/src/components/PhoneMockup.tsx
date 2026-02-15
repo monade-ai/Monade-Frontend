@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { 
     MoreVertical, CheckCheck, Smile, Paperclip, 
     Camera, Mic, Phone, Video, ChevronLeft,
@@ -312,7 +313,14 @@ export const PhoneMockup = () => {
                     <div className="flex items-center gap-1">
                         <ChevronLeft className="w-5 h-5 text-[#00a884] -ml-1" />
                         <div className="w-9 h-9 rounded-full bg-[#6a7175] flex items-center justify-center overflow-hidden border border-white/10">
-                            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=100&h=100" alt="Agent" className="w-full h-full object-cover" />
+                            <Image
+                              src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=100&h=100"
+                              alt="Agent"
+                              width={36}
+                              height={36}
+                              sizes="36px"
+                              className="w-full h-full object-cover"
+                            />
                         </div>
                         <div className="ml-1">
                             <h3 className="text-[#e9edef] text-[15px] font-medium leading-none">MonadeClaw</h3>
@@ -422,4 +430,3 @@ export const PhoneMockup = () => {
 };
 
 export default PhoneMockup;
-

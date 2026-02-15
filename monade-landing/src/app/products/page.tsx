@@ -300,6 +300,7 @@ export default function ProductsPage() {
           </div>
         </div>
       </section>
+      </main>
       <FooterCTA />
     </div>
   );

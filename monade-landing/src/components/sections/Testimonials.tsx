@@ -1,7 +1,3 @@
-'use client';
-
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const testimonials = [
@@ -56,11 +52,8 @@ const testimonials = [
 ];
 
 export const Testimonials = () => {
-  const [activeSlide, setActiveStep] = useState(0);
-
   return (
     <section className="py-32 bg-[#FDFBF7] overflow-hidden">
-      
       <div className="text-center mb-24 px-6">
         <h2 className="text-5xl md:text-8xl font-serif italic text-slate-900 tracking-tight relative inline-block">
           Love letters to Monade
@@ -71,7 +64,6 @@ export const Testimonials = () => {
         </h2>
       </div>
 
-      {/* ─── Desktop: High-Velocity Infinite Scroll (No Fades) ─── */}
       <div className="hidden md:block relative w-full overflow-hidden">
         <div className="flex gap-8 animate-infinite-scroll w-max hover:[animation-play-state:paused] py-12 px-8">
           {[...testimonials, ...testimonials].map((t, i) => (
@@ -86,7 +78,7 @@ export const Testimonials = () => {
             >
               <div>
                 <div className="flex gap-1.5 mb-6 opacity-40">
-                  {[1, 2, 3, 4, 5].map(star => (
+                  {[1, 2, 3, 4, 5].map((star) => (
                     <div key={star} className="w-3 h-3 fill-current text-current">★</div>
                   ))}
                 </div>
@@ -107,47 +99,44 @@ export const Testimonials = () => {
         </div>
       </div>
 
-      {/* ─── Mobile: Snap Carousel ─── */}
       <div className="md:hidden px-6">
         <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-12">
-            {testimonials.map((t, i) => (
-                <div 
-                    key={i}
-                    className={cn(
-                        "flex-shrink-0 w-[85vw] p-10 rounded-[40px] flex flex-col justify-between snap-center shadow-2xl",
-                        t.color
-                    )}
-                >
-                    <div>
-                        <div className="flex gap-1 mb-6 opacity-40">
-                            {[1, 2, 3, 4, 5].map(star => (
-                                <div key={star} className="w-3 h-3 fill-current text-current">★</div>
-                            ))}
-                        </div>
-                        <p className="text-xl leading-tight font-medium tracking-tight font-serif italic">"{t.quote}"</p>
-                    </div>
-
-                    <div className="flex items-center gap-4 pt-8 border-t border-white/10 mt-12">
-                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-base text-white/90">
-                            {t.author.charAt(0)}
-                        </div>
-                        <div>
-                            <div className="font-bold text-base leading-none mb-1">{t.author}</div>
-                            <div className="text-[9px] uppercase tracking-widest font-black opacity-40">{t.role}</div>
-                        </div>
-                    </div>
+          {testimonials.map((t, i) => (
+            <div
+              key={i}
+              className={cn(
+                "flex-shrink-0 w-[85vw] p-10 rounded-[40px] flex flex-col justify-between snap-center shadow-2xl",
+                t.color
+              )}
+            >
+              <div>
+                <div className="flex gap-1 mb-6 opacity-40">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <div key={star} className="w-3 h-3 fill-current text-current">★</div>
+                  ))}
                 </div>
-            ))}
+                <p className="text-xl leading-tight font-medium tracking-tight font-serif italic">"{t.quote}"</p>
+              </div>
+
+              <div className="flex items-center gap-4 pt-8 border-t border-white/10 mt-12">
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-base text-white/90">
+                  {t.author.charAt(0)}
+                </div>
+                <div>
+                  <div className="font-bold text-base leading-none mb-1">{t.author}</div>
+                  <div className="text-[9px] uppercase tracking-widest font-black opacity-40">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        
-        {/* Carousel Indicators */}
+
         <div className="flex justify-center gap-2">
-            {testimonials.map((_, i) => (
-                <div key={i} className={cn("w-1.5 h-1.5 rounded-full transition-all", i === activeSlide ? "bg-[#D94126] w-4" : "bg-slate-200")} />
-            ))}
+          {testimonials.map((_, i) => (
+            <div key={i} className={cn("w-1.5 h-1.5 rounded-full transition-all", i === 0 ? "bg-[#D94126] w-4" : "bg-slate-200")} />
+          ))}
         </div>
       </div>
-
     </section>
   );
 };

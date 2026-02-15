@@ -221,7 +221,17 @@ export default function PricingPage() {
   );
 }
 
-function PricingSlab({ label, title, price, desc, features, variant, highlight }: any) {
+type PricingSlabProps = {
+  label: string;
+  title: string;
+  price: number | string;
+  desc: string;
+  features: string[];
+  variant: "obsidian" | "white";
+  highlight?: boolean;
+};
+
+function PricingSlab({ label, title, price, desc, features, variant, highlight }: PricingSlabProps) {
     const isObsidian = variant === 'obsidian';
     return (
         <div className={cn(
