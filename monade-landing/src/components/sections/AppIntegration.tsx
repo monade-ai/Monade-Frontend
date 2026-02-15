@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight, Bot, Zap, Plug
 } from "lucide-react";
@@ -15,6 +16,16 @@ export const AppIntegration = () => {
       {/* Subtle radial glow behind phone */}
       <div className="absolute top-1/2 right-[18%] -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute top-1/2 right-[22%] -translate-y-1/2 w-[300px] h-[300px] bg-primary/15 blur-[100px] rounded-full pointer-events-none" />
+
+      {/* ─── Background Art: The Claw ─── */}
+      <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-full max-w-4xl aspect-video pointer-events-none opacity-[0.15] grayscale hover:grayscale-0 transition-all duration-1000">
+        <Image 
+          src="/claw_art.png" 
+          alt="Claw Art" 
+          fill 
+          className="object-contain"
+        />
+      </div>
 
       <div className="max-w-[1400px] mx-auto px-8 lg:px-24 w-full relative z-30">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-center">

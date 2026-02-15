@@ -24,11 +24,25 @@ const OpenClawIcon = ({ className }: { className?: string }) => (
 
 const resourceLinks = [
   { 
-    href: "/company", 
-    label: "Company", 
+    href: "/blog", 
+    label: "Blog", 
+    icon: BookOpen, 
+    description: "Thoughts on voice, design, and AI.",
+    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=400" 
+  },
+  { 
+    href: "/case-studies", 
+    label: "Case Studies", 
     icon: Building2, 
-    description: "The mission and the people behind the machine.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=400" 
+    description: "Real results from real companies.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400" 
+  },
+  { 
+    href: "/release-notes", 
+    label: "Release Notes", 
+    icon: FileText, 
+    description: "A technical ledger of every system update.",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400"
   },
   { 
     href: "/careers", 
@@ -38,11 +52,11 @@ const resourceLinks = [
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400"
   },
   { 
-    href: "/release-notes", 
-    label: "Release Notes", 
-    icon: FileText, 
-    description: "A technical ledger of every system update.",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400"
+    href: "/about", 
+    label: "Company", 
+    icon: Building2, 
+    description: "The mission and the people behind the machine.",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=400" 
   },
 ];
 
@@ -61,7 +75,7 @@ export default function Navbar({ variant }: NavbarProps) {
   const closeMenu = () => setIsMenuOpen(false);
 
   // Determine if we're on a resources page
-  const isResourcesPage = ["/careers", "/company", "/release-notes"].some(
+  const isResourcesPage = ["/careers", "/about", "/release-notes", "/blog", "/case-studies"].some(
     (path) => pathname.startsWith(path)
   );
 
@@ -93,7 +107,9 @@ export default function Navbar({ variant }: NavbarProps) {
 
   return (
     <header className="fixed top-0 left-0 w-full z-[1000] pointer-events-none">
-      <OpenClawBanner />
+      <div className="pointer-events-auto">
+        <OpenClawBanner />
+      </div>
       <div className="max-w-[95%] mx-auto w-full pointer-events-auto mt-4 md:mt-6">
         <div
           className={cn(
@@ -277,7 +293,7 @@ export default function Navbar({ variant }: NavbarProps) {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                className="md:hidden overflow-hidden border-t border-slate-100"
+                className="md:hidden overflow-y-auto max-h-[75vh] border-t border-slate-100 no-scrollbar"
               >
                 <div className="px-6 pb-8 pt-4 space-y-1">
                   {navLinks.map((link) => (
