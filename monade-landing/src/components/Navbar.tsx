@@ -99,7 +99,7 @@ export default function Navbar({ variant }: NavbarProps) {
 
   const navLinks = [
     { href: "/#Experience", label: "Experience" },
-    { href: "/#HowItWorks", label: "How it works" },
+    
     { href: "/trust", label: "Trust" },
     { href: "/pricing", label: "Pricing" },
     { href: "/open-claw", label: "Open Claw", icon: OpenClawIcon },
