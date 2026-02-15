@@ -4,11 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, BookOpen, Building2, FileText, ChevronDown } from "lucide-react";
+import { Menu, X, BookOpen, Building2, FileText, ChevronDown, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { LiquidGlassCard } from "./LiquidGlassCard";
 import OpenClawBanner from "./sections/OpenClawBanner";
+import BookDemoDialog from "./BookDemoDialog";
 
 const OpenClawIcon = ({ className }: { className?: string }) => (
   <div className={cn("relative overflow-hidden", className)}>
@@ -22,9 +23,27 @@ const OpenClawIcon = ({ className }: { className?: string }) => (
 );
 
 const resourceLinks = [
-  { href: "/blog", label: "Blog", icon: BookOpen, description: "Thoughts on voice, design, and AI" },
-  { href: "/case-studies", label: "Case Studies", icon: Building2, description: "Real results from real companies" },
-  { href: "/release-notes", label: "Release Notes", icon: FileText, description: "What's new in Monade" },
+  { 
+    href: "/company", 
+    label: "Company", 
+    icon: Building2, 
+    description: "The mission and the people behind the machine.",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=400" 
+  },
+  { 
+    href: "/careers", 
+    label: "Careers", 
+    icon: User, 
+    description: "Join the lab and build the future of voice.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400"
+  },
+  { 
+    href: "/release-notes", 
+    label: "Release Notes", 
+    icon: FileText, 
+    description: "A technical ledger of every system update.",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400"
+  },
 ];
 
 interface NavbarProps {
@@ -35,12 +54,14 @@ export default function Navbar({ variant }: NavbarProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [isBookDemoOpen, setIsBookDemoOpen] = useState(false);
+  const [hoveredResource, setHoveredResource] = useState(resourceLinks[0]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
   // Determine if we're on a resources page
-  const isResourcesPage = ["/blog", "/case-studies", "/release-notes"].some(
+  const isResourcesPage = ["/careers", "/company", "/release-notes"].some(
     (path) => pathname.startsWith(path)
   );
 
@@ -116,7 +137,7 @@ export default function Navbar({ variant }: NavbarProps) {
                 </Link>
               ))}
 
-              {/* Resources - Minimalist dropdown */}
+              {/* Resources - Studio Flyout */}
               <div
                 className="relative"
                 onMouseEnter={() => setIsResourcesOpen(true)}
@@ -126,7 +147,7 @@ export default function Navbar({ variant }: NavbarProps) {
                   type="button"
                   className={cn(
                     "flex items-center gap-2 text-lg font-medium transition-colors duration-200",
-                    isResourcesPage ? "text-slate-900" : "text-slate-500 hover:text-slate-900",
+                    isResourcesOpen || isResourcesPage ? "text-slate-900" : "text-slate-500 hover:text-slate-900",
                     isBlackTheme && (isResourcesPage ? "text-white" : "text-slate-400 hover:text-white")
                   )}
                 >
@@ -137,35 +158,78 @@ export default function Navbar({ variant }: NavbarProps) {
                 <AnimatePresence>
                   {isResourcesOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 4, scale: 0.98 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.98 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                      transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
+                      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
                     >
-                      <div className="w-64 bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/60 shadow-xl p-2">
-                        {resourceLinks.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setIsResourcesOpen(false)}
-                            className={cn(
-                              "group flex items-start gap-3 p-3 rounded-xl transition-colors duration-200",
-                              pathname.startsWith(item.href) ? "bg-slate-50" : "hover:bg-slate-50"
-                            )}
-                          >
-                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-900 transition-colors">
-                              <item.icon className="w-6 h-6" />
+                      <LiquidGlassCard
+                        className="w-[640px] bg-white/90 border border-slate-200 shadow-2xl p-2"
+                        borderRadius="32px"
+                        blurIntensity="xl"
+                        shadowIntensity="lg"
+                        glowIntensity="none"
+                      >
+                        <div className="flex gap-2">
+                          {/* Links Side */}
+                          <div className="w-1/2 space-y-1 p-2">
+                            {resourceLinks.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                onMouseEnter={() => setHoveredResource(item)}
+                                onClick={() => setIsResourcesOpen(false)}
+                                className={cn(
+                                  "group flex items-start gap-4 p-4 rounded-2xl transition-all duration-300",
+                                  hoveredResource.href === item.href ? "bg-slate-50 shadow-sm scale-[1.02]" : "hover:bg-slate-50/50"
+                                )}
+                              >
+                                <div className={cn(
+                                    "flex items-center justify-center w-10 h-10 rounded-xl transition-colors",
+                                    hoveredResource.href === item.href ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-400"
+                                )}>
+                                  <item.icon className="w-5 h-5" />
+                                </div>
+                                <div>
+                                  <span className="block text-base font-bold text-slate-900">{item.label}</span>
+                                  <p className="text-xs text-slate-500 mt-1 font-medium leading-tight">
+                                    {item.description}
+                                  </p>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+
+                          {/* Preview Side */}
+                          <div className="w-1/2 p-2">
+                            <div className="relative h-full w-full rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={hoveredResource.href}
+                                        initial={{ opacity: 0, scale: 1.1 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 1.05 }}
+                                        transition={{ duration: 0.4 }}
+                                        className="absolute inset-0"
+                                    >
+                                        <Image 
+                                            src={hoveredResource.image} 
+                                            alt="Preview" 
+                                            fill 
+                                            className="object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                        <div className="absolute bottom-6 left-6 text-white">
+                                            <div className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1 opacity-60">Featured</div>
+                                            <div className="text-lg font-bold tracking-tight">{hoveredResource.label}</div>
+                                        </div>
+                                    </motion.div>
+                                </AnimatePresence>
                             </div>
-                            <div className="pt-0.5">
-                              <span className="block text-base font-bold text-slate-900">{item.label}</span>
-                              <p className="text-sm text-slate-500 mt-0.5 font-medium leading-tight">
-                                {item.description}
-                              </p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
+                          </div>
+                        </div>
+                      </LiquidGlassCard>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -182,6 +246,7 @@ export default function Navbar({ variant }: NavbarProps) {
               </Link>
               <button
                 type="button"
+                onClick={() => setIsBookDemoOpen(true)}
                 className="px-6 py-2.5 rounded-full text-lg font-bold transition-all shadow-lg hover:scale-105 active:scale-95 bg-[#1A1A1A] text-white hover:bg-black"
               >
                 Book Demo
@@ -262,7 +327,7 @@ export default function Navbar({ variant }: NavbarProps) {
                                 onClick={closeMenu}
                                 className={cn(
                                   "flex items-center gap-4 p-4 rounded-xl transition-all",
-                                  pathname.startsWith(item.href) ? "text-slate-900" : "text-slate-500"
+                                  pathname.startsWith(item.href) ? "bg-slate-100 text-slate-900" : "text-slate-500"
                                 )}
                               >
                                 <item.icon className="w-8 h-8" />

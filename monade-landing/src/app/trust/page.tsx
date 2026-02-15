@@ -38,7 +38,7 @@ export default function TrustPage() {
     <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-primary/10">
       <Navbar variant="light" />
 
-      <main className="pt-32 pb-20">
+      <main className="pt-56 pb-20">
         {/* ─── Hero: The Statement ─── */}
         <section className="max-w-5xl mx-auto px-6 mb-24">
           <h1 className="text-6xl md:text-[80px] font-semibold tracking-tight leading-[1.05] mb-8 text-slate-900">
