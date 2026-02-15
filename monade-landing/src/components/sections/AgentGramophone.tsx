@@ -88,8 +88,9 @@ const AGENTS = [
   }
 ];
 
-const SchematicRecord = ({ isPlaying, image }: { isPlaying: boolean, image: string }) => (
+const SchematicRecord = ({ isPlaying, image, activeId }: { isPlaying: boolean, image: string, activeId: string }) => (
   <div className="relative w-64 h-64 md:w-[320px] md:h-[320px] flex items-center justify-center">
+    {/* Persistent Disk Container */}
     <motion.div
       animate={{ rotate: isPlaying ? 360 : 0 }}
       transition={{ rotate: { duration: 4, repeat: Infinity, ease: "linear" } }}
@@ -99,26 +100,45 @@ const SchematicRecord = ({ isPlaying, image }: { isPlaying: boolean, image: stri
         <div key={i} className="absolute rounded-full border border-black/10" style={{ inset: `${(i + 1) * 24}px` }} />
       ))}
       <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full border border-black/20 bg-white p-1 shadow-sm overflow-hidden">
-        <img src={image} alt="Label" className="w-full h-full object-cover rounded-full opacity-80" />
+        {/* Disk Label changes with agent but container is persistent */}
+        <motion.img 
+          key={activeId}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.8 }}
+          src={image} 
+          alt="Label" 
+          className="w-full h-full object-cover rounded-full" 
+        />
         <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-4 h-4 bg-[#1E293B] rounded-full border border-white/20 shadow-inner" />
         </div>
       </div>
     </motion.div>
 
-    <motion.div
-      initial={{ rotate: -25 }}
-      animate={isPlaying ? { rotate: [-10, 15] } : { rotate: -25 }}
-      transition={isPlaying ? { rotate: { duration: 60, ease: "linear" } } : { type: "spring", stiffness: 100, damping: 15 }}
-      className="absolute -top-8 right-4 w-10 h-56 origin-top z-20 pointer-events-none"
-    >
-        <div className="w-10 h-10 border border-black/40 bg-[#1E293B] rounded-full mb-1 shadow-lg" />
-        <div className="w-1 h-44 bg-black/20 mx-auto relative shadow-sm">
-            <div className="absolute bottom-[-2px] left-[-4px] w-3 h-7 border border-black/40 bg-[#1E293B] flex items-center justify-center shadow-lg">
-                <div className="w-[1px] h-3 bg-white/30" />
+    {/* Fading Tonearm */}
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={activeId}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        transition={{ duration: 0.4 }}
+        className="absolute -top-8 right-4 w-10 h-56 origin-top z-20 pointer-events-none"
+      >
+        <motion.div
+          animate={isPlaying ? { rotate: [-10, 15] } : { rotate: -25 }}
+          transition={isPlaying ? { rotate: { duration: 60, ease: "linear" } } : { type: "spring", stiffness: 100, damping: 15 }}
+          className="w-full h-full origin-top"
+        >
+            <div className="w-10 h-10 border border-black/40 bg-[#1E293B] rounded-full mb-1 shadow-lg" />
+            <div className="w-1 h-44 bg-black/20 mx-auto relative shadow-sm">
+                <div className="absolute bottom-[-2px] left-[-4px] w-3 h-7 border border-black/40 bg-[#1E293B] flex items-center justify-center shadow-lg">
+                    <div className="w-[1px] h-3 bg-white/30" />
+                </div>
             </div>
-        </div>
-    </motion.div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   </div>
 );
 
@@ -128,6 +148,7 @@ export const AgentGramophone = () => {
   const [activeTab, setActiveTab] = useState<'transcript' | 'script'>('transcript');
   const [showCallPopup, setShowCallPopup] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [userName, setUserName] = useState("");
   const [turnIndex, setTurnIndex] = useState(-1);
   const transcriptScrollRef = useRef<HTMLDivElement>(null);
 
@@ -263,21 +284,30 @@ export const AgentGramophone = () => {
             {/* Right Column: Record Player & Console */}
             <div className="lg:col-span-7 flex flex-col gap-4">
                 <div className="hidden lg:flex bg-white/5 rounded-[24px] border border-black/10 flex items-center justify-center p-12 flex-1 min-h-[450px] shadow-inner relative overflow-hidden">
-                    <AnimatePresence mode="wait">
-                        <motion.div key={agent.id} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}>
-                            <SchematicRecord isPlaying={isPlaying} image={agent.recordLabel} />
-                        </motion.div>
-                    </AnimatePresence>
+                    <SchematicRecord isPlaying={isPlaying} image={agent.recordLabel} activeId={agent.id} />
                 </div>
 
-                <div className="bg-black/5 rounded-[24px] border border-black/10 p-2 flex gap-2">
-                    <button onClick={() => setIsPlaying(!isPlaying)} className="w-16 h-16 rounded-[18px] bg-black text-white flex items-center justify-center hover:bg-black/80 active:scale-95 shadow-lg">
+                <div className="bg-black/5 rounded-[24px] border border-black/10 p-2 flex gap-2 items-center">
+                    <button onClick={() => setIsPlaying(!isPlaying)} className="w-16 h-16 shrink-0 rounded-[18px] bg-black text-white flex items-center justify-center hover:bg-black/80 active:scale-95 shadow-lg transition-all">
                     {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current translate-x-0.5" />}
                     </button>
-                    <button onClick={() => setShowCallPopup(true)} className="flex-1 h-16 rounded-[18px] bg-black text-white font-bold text-[11px] uppercase tracking-widest flex items-center justify-center gap-3 active:scale-95 shadow-xl group">
-                    <Phone className="w-4 h-4 fill-current group-hover:animate-bounce" />
-                    <span>Initiate Call</span>
-                    </button>
+                    
+                    <div className="flex-1 h-16 bg-white rounded-[18px] border border-black/10 flex items-center overflow-hidden shadow-sm focus-within:border-black/30 transition-all">
+                        <input 
+                            type="text" 
+                            placeholder="Your name" 
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            className="flex-1 bg-transparent px-6 outline-none text-[14px] font-medium text-slate-900 placeholder:text-slate-300"
+                        />
+                        <button 
+                            onClick={() => setShowCallPopup(true)} 
+                            className="h-[calc(100%-16px)] mr-2 px-6 bg-black text-white rounded-[12px] font-bold text-[10px] uppercase tracking-[0.1em] flex items-center justify-center gap-2 hover:bg-slate-900 active:scale-[0.98] transition-all"
+                        >
+                            <Phone className="w-3 h-3 fill-current" />
+                            <span>Initiate Call</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -298,7 +328,7 @@ export const AgentGramophone = () => {
                     </div>
                     <div className="space-y-3 mb-10">
                         <h3 className="text-4xl font-bold tracking-tight text-slate-900 leading-tight">Establish Connection</h3>
-                        <p className="text-lg text-slate-500 font-serif italic max-w-[320px] mx-auto">Connect with {agent.name} to demonstrate the {agent.category} workflow.</p>
+                        <p className="text-lg text-slate-500 font-serif italic max-w-[320px] mx-auto">Connect with {agent.name} to demonstrate the {agent.category} workflow{userName ? `, starting with a greeting for ${userName}` : ''}.</p>
                     </div>
                     <div className="w-full space-y-5">
                         <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full px-8 py-6 rounded-3xl bg-slate-50 border-2 border-slate-100 focus:border-slate-900 focus:bg-white outline-none font-mono text-2xl text-center text-slate-900 transition-all" />

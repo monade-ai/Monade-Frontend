@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, BookOpen, Building2, FileText, ChevronDown } from "lucide-react";
@@ -9,28 +10,15 @@ import { cn } from "@/lib/utils";
 import { LiquidGlassCard } from "./LiquidGlassCard";
 import OpenClawBanner from "./sections/OpenClawBanner";
 
-const CrabIcon = ({ className }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-  >
-    <path d="M14 3a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1.5" />
-    <path d="M10 3a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1.5" />
-    <path d="M12.5 21a7.5 7.5 0 0 1-7.5-7.5c0-3.5 2.5-6.5 6-7.2" />
-    <path d="M11.5 21a7.5 7.5 0 0 0 7.5-7.5c0-3.5-2.5-6.5-6-7.2" />
-    <path d="M15 16l2 2" />
-    <path d="M9 16l-2 2" />
-    <path d="M16 13l3 1" />
-    <path d="M8 13l-3 1" />
-  </svg>
+const OpenClawIcon = ({ className }: { className?: string }) => (
+  <div className={cn("relative overflow-hidden", className)}>
+    <Image
+      src="/openclaw-color.png"
+      alt="Open Claw"
+      fill
+      className="object-contain"
+    />
+  </div>
 );
 
 const resourceLinks = [
@@ -79,7 +67,7 @@ export default function Navbar({ variant }: NavbarProps) {
     { href: "/#HowItWorks", label: "How it works" },
     { href: "/trust", label: "Trust" },
     { href: "/pricing", label: "Pricing" },
-    { href: "/open-claw", label: "Open Claw", icon: CrabIcon },
+    { href: "/open-claw", label: "Open Claw", icon: OpenClawIcon },
   ];
 
   return (
@@ -95,11 +83,16 @@ export default function Navbar({ variant }: NavbarProps) {
         >
           <div className="flex justify-between items-center px-6 md:px-10 py-6 w-full">
             {/* Logo - Precise and balanced */}
-            <Link href="/" className="flex items-center gap-2 group transition-all">
-              <div className="w-7 h-7 bg-slate-900 rounded-md flex items-center justify-center transition-transform group-hover:scale-105">
-                <span className="text-white font-bold text-sm">M</span>
+            <Link href="/" className="flex items-center gap-0.5 group transition-all text-3xl">
+              <div className="w-[2.35em] h-[2.35em] relative overflow-hidden transition-transform group-hover:scale-105">
+                <Image
+                  src="/monade-new-logo.png"
+                  alt="Monade"
+                  fill
+                  className="object-contain"
+                />
               </div>
-              <span className={cn("font-bold tracking-tight text-2xl", textColorClass)}>
+              <span className={cn("font-bold tracking-tight", textColorClass)}>
                 monade
               </span>
             </Link>
@@ -181,12 +174,12 @@ export default function Navbar({ variant }: NavbarProps) {
 
             {/* Desktop CTAs */}
             <div className="hidden md:flex items-center gap-5">
-              <button
-                type="button"
+              <Link
+                href="https://dashboard.monade.ai/login"
                 className={cn("text-lg font-bold transition-opacity hover:opacity-70", textColorClass)}
               >
                 Log In
-              </button>
+              </Link>
               <button
                 type="button"
                 className="px-6 py-2.5 rounded-full text-lg font-bold transition-all shadow-lg hover:scale-105 active:scale-95 bg-[#1A1A1A] text-white hover:bg-black"
@@ -289,9 +282,12 @@ export default function Navbar({ variant }: NavbarProps) {
 
                   {/* Mobile CTAs */}
                   <div className="pt-8 mt-4 border-t border-black/5 space-y-4">
-                    <button type="button" className={cn("w-full py-4 text-3xl font-bold", textColorClass)}>
+                    <Link
+                      href="https://dashboard.monade.ai/login"
+                      className={cn("block w-full py-4 text-3xl font-bold text-center", textColorClass)}
+                    >
                       Log In
-                    </button>
+                    </Link>
                     <button
                       type="button"
                       className="w-full py-5 rounded-full text-3xl font-bold shadow-lg bg-[#1A1A1A] text-white active:scale-95 transition-transform"
