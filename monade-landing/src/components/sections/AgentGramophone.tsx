@@ -88,6 +88,10 @@ const AGENTS = [
   }
 ];
 
+const DEFAULT_TRUNK_NAME = process.env.NEXT_PUBLIC_CALLING_TRUNK_NAME ?? "Monade Test";
+const DEFAULT_ASSISTANT_ID = process.env.NEXT_PUBLIC_CALLING_ASSISTANT_ID ?? "";
+const DEFAULT_API_KEY = process.env.NEXT_PUBLIC_CALLING_API_KEY ?? "";
+
 const SchematicRecord = ({ isPlaying, image, activeId }: { isPlaying: boolean, image: string, activeId: string }) => (
   <div className="relative w-64 h-64 md:w-[320px] md:h-[320px] flex items-center justify-center">
     {/* Persistent Disk Container */}
@@ -146,22 +150,112 @@ export const AgentGramophone = () => {
   const [showCallPopup, setShowCallPopup] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [userName, setUserName] = useState("");
+  const [isCalling, setIsCalling] = useState(false);
+  const [callError, setCallError] = useState<string | null>(null);
+  const [callSuccess, setCallSuccess] = useState<string | null>(null);
   const [turnIndex, setTurnIndex] = useState(-1);
   const transcriptScrollRef = useRef<HTMLDivElement>(null);
 
   const agent = AGENTS[currentAgentIndex];
 
+  const openCallPopup = () => {
+    setCallError(null);
+    setCallSuccess(null);
+    setShowCallPopup(true);
+  };
+
+  const closeCallPopup = () => {
+    if (isCalling) {
+      return;
+    }
+    setShowCallPopup(false);
+    setCallError(null);
+    setCallSuccess(null);
+  };
+
+  const handleInitiateConnection = async () => {
+    setCallError(null);
+    setCallSuccess(null);
+
+    const trimmedName = userName.trim();
+    const trimmedPhoneNumber = phoneNumber.trim();
+
+    if (!trimmedName) {
+      setCallError("Please enter your name before initiating a call.");
+      return;
+    }
+
+    if (!trimmedPhoneNumber) {
+      setCallError("Please enter a phone number.");
+      return;
+    }
+
+    if (!DEFAULT_ASSISTANT_ID) {
+      setCallError("Missing NEXT_PUBLIC_CALLING_ASSISTANT_ID.");
+      return;
+    }
+
+    if (!DEFAULT_API_KEY) {
+      setCallError("Missing NEXT_PUBLIC_CALLING_API_KEY.");
+      return;
+    }
+
+    setIsCalling(true);
+    try {
+      const response = await fetch("/api/calling", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone_number: trimmedPhoneNumber,
+          assistant_id: DEFAULT_ASSISTANT_ID,
+          trunk_name: DEFAULT_TRUNK_NAME,
+          api_key: DEFAULT_API_KEY,
+          callee_info: {
+            name: trimmedName,
+          },
+        }),
+      });
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        const message =
+          typeof responseData?.error === "string"
+            ? responseData.error
+            : "Failed to initiate call.";
+        throw new Error(message);
+      }
+
+      setCallSuccess("Call initiated successfully.");
+      setPhoneNumber("");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Failed to initiate call.";
+      setCallError(message);
+    } finally {
+      setIsCalling(false);
+    }
+  };
+
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isPlaying) {
       interval = setInterval(() => {
         setTurnIndex(prev => (prev + 1) % agent.transcript.length);
       }, 2000); 
     } else {
       setTurnIndex(-1);
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [isPlaying, agent]);
 
   useEffect(() => {
@@ -298,7 +392,7 @@ export const AgentGramophone = () => {
                             className="flex-1 bg-transparent px-6 outline-none text-[14px] font-medium text-slate-900 placeholder:text-slate-300"
                         />
                         <button 
-                            onClick={() => setShowCallPopup(true)} 
+                            onClick={openCallPopup} 
                             className="h-[calc(100%-16px)] mr-2 px-6 bg-black text-white rounded-[12px] font-bold text-[10px] uppercase tracking-[0.1em] flex items-center justify-center gap-2 hover:bg-slate-900 active:scale-[0.98] transition-all"
                         >
                             <Phone className="w-3 h-3 fill-current" />
@@ -316,9 +410,9 @@ export const AgentGramophone = () => {
       <AnimatePresence>
         {showCallPopup && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[2000] flex items-center justify-center px-6">
-            <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onClick={() => setShowCallPopup(false)} />
+            <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onClick={closeCallPopup} />
             <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }} className="relative w-full max-w-lg bg-white rounded-[40px] shadow-2xl overflow-hidden">
-                <button onClick={() => setShowCallPopup(false)} className="absolute top-8 right-8 p-2.5 rounded-full hover:bg-slate-50 text-slate-400 hover:text-slate-900 transition-all z-20 border border-slate-100"><X className="w-5 h-5" /></button>
+                <button onClick={closeCallPopup} className="absolute top-8 right-8 p-2.5 rounded-full hover:bg-slate-50 text-slate-400 hover:text-slate-900 transition-all z-20 border border-slate-100 disabled:opacity-50" disabled={isCalling}><X className="w-5 h-5" /></button>
                 <div className="p-12 flex flex-col items-center text-center">
                     <div className={cn("w-20 h-20 rounded-[28px] flex items-center justify-center mb-8 bg-opacity-10", agent.color)}>
                         <Mic2 className={cn("w-10 h-10 stroke-[1.5px]", agent.color.replace('bg-', 'text-'))} />
@@ -328,8 +422,10 @@ export const AgentGramophone = () => {
                         <p className="text-lg text-slate-500 font-serif italic max-w-[320px] mx-auto">Connect with {agent.name} to demonstrate the {agent.category} workflow{userName ? `, starting with a greeting for ${userName}` : ''}.</p>
                     </div>
                     <div className="w-full space-y-5">
-                        <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full px-8 py-6 rounded-3xl bg-slate-50 border-2 border-slate-100 focus:border-slate-900 focus:bg-white outline-none font-mono text-2xl text-center text-slate-900 transition-all" />
-                        <button className={cn("w-full py-6 rounded-3xl font-bold text-lg text-white shadow-xl hover:shadow-2xl flex items-center justify-center gap-3", agent.color)}>Initiate Connection <ChevronRight className="w-5 h-5" /></button>
+                        <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} disabled={isCalling} className="w-full px-8 py-6 rounded-3xl bg-slate-50 border-2 border-slate-100 focus:border-slate-900 focus:bg-white outline-none font-mono text-2xl text-center text-slate-900 transition-all disabled:opacity-60" />
+                        {callError && <p className="text-sm text-red-600 font-medium">{callError}</p>}
+                        {callSuccess && <p className="text-sm text-emerald-700 font-medium">{callSuccess}</p>}
+                        <button onClick={handleInitiateConnection} disabled={isCalling} className={cn("w-full py-6 rounded-3xl font-bold text-lg text-white shadow-xl hover:shadow-2xl flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed", agent.color)}>{isCalling ? "Initiating..." : "Initiate Connection"} <ChevronRight className="w-5 h-5" /></button>
                     </div>
                 </div>
             </motion.div>
