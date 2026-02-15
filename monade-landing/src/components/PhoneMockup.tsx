@@ -190,6 +190,81 @@ export const PhoneMockup = () => {
                 text: "I find these leads promising. Particularly the ones with scores above 90—they're ready for immediate conversion. I'll follow up with them via text messages now.",
                 time: "10:05"
             }]);
+
+            // Stage 6: Agent feedback on conversion rates / analysis
+            await new Promise(r => setTimeout(r, 4000));
+            setIsTyping(true);
+            await new Promise(r => setTimeout(r, 4000));
+            setIsTyping(false);
+            setMessages(prev => [...prev, {
+                role: "agent",
+                text: "I've noticed our conversion rates have dropped. An analysis shows the agent isn't able to respond to queries about RERA status, and some customers are asking for nearest landmarks. I need these details to improve the script.",
+                time: "10:15"
+            }]);
+
+            // Stage 7: Agent requests documents
+            await new Promise(r => setTimeout(r, 2000));
+            setIsTyping(true);
+            await new Promise(r => setTimeout(r, 3000));
+            setIsTyping(false);
+            setMessages(prev => [...prev, {
+                role: "agent",
+                text: "I see. That's a a critical gap. To ensure I handle these specific objections correctly, could you please upload the RERA documentation and a list of key landmarks? I can integrate them into the script's knowledge base.",
+                time: "10:16"
+            }]);
+
+            // Stage 8: User uploads documents
+            await new Promise(r => setTimeout(r, 2000));
+            setMessages(prev => [...prev, {
+                role: "user",
+                text: "sure",
+                time: "10:17"
+            }]);
+            await new Promise(r => setTimeout(r, 1000));
+            setMessages(prev => [...prev, 
+                { role: "user", text: "RERA_Allotment_Letter.pdf", time: "10:17", type: "file", fileName: "RERA_Allotment_Letter.pdf" },
+                { role: "user", text: "Agreement_for_Sale.pdf", time: "10:17", type: "file", fileName: "Agreement_for_Sale.pdf" },
+                { role: "user", text: "Project_Layout_Plan.pdf", time: "10:17", type: "file", fileName: "Project_Layout_Plan.pdf" }
+            ]);
+
+            // Stage 9: Agent confirms script update and campaign pause
+            await new Promise(r => setTimeout(r, 4000));
+            setIsTyping(true);
+            await new Promise(r => setTimeout(r, 3500));
+            setIsTyping(false);
+            setMessages(prev => [...prev, {
+                role: "agent",
+                text: "Thanks. I've analyzed the documents and updated the script's knowledge base to handle RERA and landmark queries. The new script version is ready. I've paused the current campaign. Shall I resume it with the updated script?",
+                time: "10:20"
+            }]);
+
+            // Stage 10: User approves
+            await new Promise(r => setTimeout(r, 2000));
+            setMessages(prev => [...prev, {
+                role: "user",
+                text: "sure",
+                time: "10:21"
+            }]);
+
+            // Stage 11: Agent reports success
+            await new Promise(r => setTimeout(r, 2000));
+            setIsTyping(true);
+            await new Promise(r => setTimeout(r, 3000)); // Simulate "resuming campaign"
+            setIsTyping(false);
+            setMessages(prev => [...prev, {
+                role: "agent",
+                text: "Campaign resumed with the new script.",
+                time: "10:21"
+            }]);
+            await new Promise(r => setTimeout(r, 5000)); // Simulate campaign running
+            setIsTyping(true);
+            await new Promise(r => setTimeout(r, 4000));
+            setIsTyping(false);
+            setMessages(prev => [...prev, {
+                role: "agent",
+                text: "The campaign is complete. We've increased the conversion rate for site visits by 3%. I'm emailing you and the team the full reports now.",
+                time: "10:26"
+            }]);
         };
 
         runSequence();
