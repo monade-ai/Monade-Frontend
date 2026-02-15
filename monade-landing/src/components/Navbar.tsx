@@ -56,78 +56,72 @@ export default function Navbar({ variant }: NavbarProps) {
   );
 
   // Determine effective theme
-  const isDarkBg = variant === "black";
+  let isLightTheme = false;
+  let isBlackTheme = false;
 
-  const textColorClass = isDarkBg ? "text-white" : "text-slate-900";
-  const mutedTextColorClass = isDarkBg ? "text-white/60 hover:text-white" : "text-slate-500 hover:text-slate-900";
+  if (variant === "light") {
+    isLightTheme = true;
+  } else if (variant === "black") {
+    isBlackTheme = true;
+  } else if (variant === "transparent") {
+    // defaults
+  } else {
+    // Auto-detect
+    isLightTheme = isResourcesPage;
+  }
+
+  const textColorClass = "text-[#1A1A1A]";
+  const mutedTextColorClass = "text-[#1A1A1A]/70 hover:text-[#1A1A1A]";
 
   const navLinks = [
-    { href: "/#Product", label: "Product" },
-    { href: "/#Workflows", label: "Workflows" },
-    { href: "/#Compliance", label: "Compliance" },
+    { href: "/#Experience", label: "Experience" },
+    { href: "/#HowItWorks", label: "How it works" },
+    { href: "/#Trust", label: "Trust" },
     { href: "/pricing", label: "Pricing" },
-    { href: "/open-claw", label: "Open Claw", icon: CrabIcon },
+    { href: "/open-claw", label: "Open source", icon: CrabIcon },
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[1000] px-6 py-6 pointer-events-none">
-      <div className="max-w-5xl mx-auto w-full pointer-events-auto">
-        <LiquidGlassCard
+    <header className="fixed top-0 left-0 w-full z-[1000] px-4 py-4 md:px-6 md:py-6 pointer-events-none">
+      <div className="max-w-[95%] mx-auto w-full pointer-events-auto">
+        <div
           className={cn(
-            "w-full transition-all duration-500 ease-[0.16,1,0.3,1] overflow-visible border",
-            isDarkBg ? "bg-black/80 border-white/10" : "bg-white/80 border-slate-200/50"
+            "w-full transition-all duration-500 rounded-2xl border border-slate-200/50 shadow-sm overflow-visible",
+            isLightTheme ? "bg-white/70" : isBlackTheme ? "bg-black/70 text-white" : "bg-white/80",
+            "backdrop-blur-xl"
           )}
-          borderRadius={isMenuOpen ? "32px" : "9999px"}
-          blurIntensity="xl"
-          shadowIntensity="none"
-          glowIntensity="none"
         >
-          <div className="flex justify-between items-center px-6 md:px-8 py-4 w-full">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group relative z-10">
-              <div className={cn(
-                "w-7 h-7 rounded-lg flex items-center justify-center font-bold text-sm transition-colors",
-                isDarkBg ? "bg-white text-black" : "bg-slate-900 text-white"
-              )}>
-                M
+          <div className="flex justify-between items-center px-6 md:px-10 py-6 w-full">
+            {/* Logo - Precise and balanced */}
+            <Link href="/" className="flex items-center gap-2 group transition-all">
+              <div className="w-7 h-7 bg-slate-900 rounded-md flex items-center justify-center transition-transform group-hover:scale-105">
+                <span className="text-white font-bold text-sm">M</span>
               </div>
-              <span className={cn("font-bold tracking-tight text-lg transition-colors", textColorClass)}>
+              <span className={cn("font-bold tracking-tight text-2xl", textColorClass)}>
                 monade
               </span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-1.5">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href || (link.href.startsWith('/#') && pathname === '/');
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={cn(
-                      "relative flex items-center gap-1.5 px-4 py-2 text-sm font-semibold transition-colors duration-200 rounded-full",
-                      isActive ? (isDarkBg ? "text-white" : "text-slate-900") : mutedTextColorClass
-                    )}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeNavPill"
-                        className={cn(
-                          "absolute inset-0 rounded-full z-0",
-                          isDarkBg ? "bg-white/10" : "bg-slate-100/80"
-                        )}
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                    <span className="relative z-10 flex items-center gap-1.5">
-                      {link.icon && <link.icon className="w-3.5 h-3.5 stroke-[1.5]" />}
-                      {link.label}
-                    </span>
-                  </Link>
-                );
-              })}
+            <nav className="hidden md:flex items-center gap-7">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "flex items-center gap-1.5 text-lg font-medium transition-colors duration-200",
+                    pathname === link.href || (link.href.startsWith('/#') && pathname === '/')
+                      ? "text-slate-900"
+                      : "text-slate-500 hover:text-slate-900",
+                    isBlackTheme && (pathname === link.href ? "text-white" : "text-slate-400 hover:text-white")
+                  )}
+                >
+                  {link.icon && <link.icon className="w-5 h-5" />}
+                  {link.label}
+                </Link>
+              ))}
 
-              {/* Resources Dropdown */}
+              {/* Resources - Minimalist dropdown */}
               <div
                 className="relative"
                 onMouseEnter={() => setIsResourcesOpen(true)}
@@ -136,53 +130,43 @@ export default function Navbar({ variant }: NavbarProps) {
                 <button
                   type="button"
                   className={cn(
-                    "flex items-center gap-1 px-4 py-2 text-sm font-semibold transition-colors duration-200 rounded-full",
-                    isResourcesOpen ? (isDarkBg ? "bg-white/10 text-white" : "bg-slate-100/80 text-slate-900") : mutedTextColorClass
+                    "flex items-center gap-2 text-lg font-medium transition-colors duration-200",
+                    isResourcesPage ? "text-slate-900" : "text-slate-500 hover:text-slate-900",
+                    isBlackTheme && (isResourcesPage ? "text-white" : "text-slate-400 hover:text-white")
                   )}
                 >
                   Resources
-                  <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-300", isResourcesOpen && "rotate-180")} />
+                  <ChevronDown className={cn("w-5 h-5 transition-transform duration-300", isResourcesOpen && "rotate-180")} />
                 </button>
 
                 <AnimatePresence>
                   {isResourcesOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                      initial={{ opacity: 0, y: 4, scale: 0.98 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
+                      exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                      transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
                     >
-                      <div className={cn(
-                        "w-64 backdrop-blur-xl border rounded-2xl shadow-2xl p-1.5 overflow-hidden",
-                        isDarkBg ? "bg-black/90 border-white/10" : "bg-white/95 border-slate-200/60"
-                      )}>
+                      <div className="w-64 bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/60 shadow-xl p-2">
                         {resourceLinks.map((item) => (
                           <Link
                             key={item.href}
                             href={item.href}
                             onClick={() => setIsResourcesOpen(false)}
                             className={cn(
-                              "flex items-center gap-3 p-3 rounded-xl transition-colors group",
-                              isDarkBg ? "hover:bg-white/5" : "hover:bg-slate-50"
+                              "group flex items-start gap-3 p-3 rounded-xl transition-colors duration-200",
+                              pathname.startsWith(item.href) ? "bg-slate-50" : "hover:bg-slate-50"
                             )}
                           >
-                            <div className={cn(
-                              "flex items-center justify-center w-8 h-8 rounded-lg transition-colors",
-                              isDarkBg ? "bg-white/10 text-white/60 group-hover:text-white" : "bg-slate-50 text-slate-400 group-hover:text-primary"
-                            )}>
-                              <item.icon className="w-4 h-4" />
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-900 transition-colors">
+                              <item.icon className="w-6 h-6" />
                             </div>
-                            <div className="flex flex-col text-left">
-                              <span className={cn(
-                                "text-sm font-semibold transition-colors",
-                                isDarkBg ? "text-white/80 group-hover:text-white" : "text-slate-900 group-hover:text-primary"
-                              )}>
-                                {item.label}
-                              </span>
-                              <span className="text-[11px] text-slate-500 font-medium">
+                            <div className="pt-0.5">
+                              <span className="block text-base font-bold text-slate-900">{item.label}</span>
+                              <p className="text-sm text-slate-500 mt-0.5 font-medium leading-tight">
                                 {item.description}
-                              </span>
+                              </p>
                             </div>
                           </Link>
                         ))}
@@ -194,19 +178,16 @@ export default function Navbar({ variant }: NavbarProps) {
             </nav>
 
             {/* Desktop CTAs */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-5">
               <button
                 type="button"
-                className={cn("px-4 py-2 text-sm font-semibold transition-colors", mutedTextColorClass)}
+                className={cn("text-lg font-bold transition-opacity hover:opacity-70", textColorClass)}
               >
                 Log In
               </button>
               <button
                 type="button"
-                className={cn(
-                  "px-5 py-2 rounded-full text-sm font-bold transition-all active:scale-[0.98]",
-                  isDarkBg ? "bg-white text-black hover:bg-slate-100" : "bg-slate-900 text-white hover:bg-black"
-                )}
+                className="px-6 py-2.5 rounded-full text-lg font-bold transition-all shadow-lg hover:scale-105 active:scale-95 bg-[#1A1A1A] text-white hover:bg-black"
               >
                 Book Demo
               </button>
@@ -216,46 +197,41 @@ export default function Navbar({ variant }: NavbarProps) {
             <button
               type="button"
               onClick={toggleMenu}
-              className={cn(
-                "md:hidden p-2 rounded-full transition-colors",
-                isDarkBg ? "hover:bg-white/10" : "hover:bg-slate-100"
-              )}
+              className="md:hidden p-2 rounded-full hover:bg-black/5 transition-colors"
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? (
-                <X className={cn("w-6 h-6", textColorClass)} />
+                <X className={cn("w-8 h-8", textColorClass)} />
               ) : (
-                <Menu className={cn("w-6 h-6", textColorClass)} />
+                <Menu className={cn("w-8 h-8", textColorClass)} />
               )}
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu - Minimalist slide */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="md:hidden overflow-hidden"
+                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                className="md:hidden overflow-hidden border-t border-slate-100"
               >
-                <div className={cn(
-                  "px-6 pb-10 pt-4 space-y-1 border-t",
-                  isDarkBg ? "border-white/10" : "border-slate-100/50"
-                )}>
+                <div className="px-6 pb-8 pt-4 space-y-1">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={closeMenu}
                       className={cn(
-                        "flex items-center gap-3 py-4 text-2xl font-semibold tracking-tight transition-all",
-                        pathname === link.href ? "text-primary" : textColorClass
+                        "flex items-center gap-3 py-4 text-3xl font-bold transition-all",
+                        pathname === link.href ? "text-slate-900" : "text-slate-500 hover:text-slate-900",
+                        isBlackTheme && (pathname === link.href ? "text-white" : "text-slate-400 hover:text-white")
                       )}
                     >
-                      {link.icon && <link.icon className="w-6 h-6 text-primary/80" />}
+                      {link.icon && <link.icon className="w-8 h-8 text-[#FF4D00]" />}
                       {link.label}
                     </Link>
                   ))}
@@ -265,12 +241,13 @@ export default function Navbar({ variant }: NavbarProps) {
                     <button
                       onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                       className={cn(
-                        "flex items-center justify-between w-full py-4 text-2xl font-semibold tracking-tight transition-all",
-                        isResourcesPage ? "text-primary" : textColorClass
+                        "flex items-center justify-between w-full py-4 text-3xl font-bold transition-all",
+                        isResourcesPage ? "text-slate-900" : "text-slate-500",
+                        isBlackTheme && (isResourcesPage ? "text-white" : "text-slate-400")
                       )}
                     >
                       Resources
-                      <ChevronDown className={cn("w-6 h-6 transition-transform duration-300", isResourcesOpen && "rotate-180")} />
+                      <ChevronDown className={cn("w-8 h-8 transition-transform", isResourcesOpen && "rotate-180")} />
                     </button>
 
                     <AnimatePresence>
@@ -280,10 +257,7 @@ export default function Navbar({ variant }: NavbarProps) {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className={cn(
-                            "overflow-hidden rounded-2xl mx-[-0.5rem] px-4",
-                            isDarkBg ? "bg-white/5" : "bg-slate-50"
-                          )}
+                          className="overflow-hidden bg-slate-50 rounded-xl px-4"
                         >
                           <div className="py-4 space-y-1">
                             {resourceLinks.map((item) => (
@@ -292,14 +266,16 @@ export default function Navbar({ variant }: NavbarProps) {
                                 href={item.href}
                                 onClick={closeMenu}
                                 className={cn(
-                                  "flex items-center gap-4 p-4 rounded-xl",
-                                  pathname.startsWith(item.href) ? "text-primary" : (isDarkBg ? "text-white/60" : "text-slate-500")
+                                  "flex items-center gap-4 p-4 rounded-xl transition-all",
+                                  pathname.startsWith(item.href) ? "text-slate-900" : "text-slate-500"
                                 )}
                               >
-                                <item.icon className="w-5 h-5" />
+                                <item.icon className="w-8 h-8" />
                                 <div className="flex flex-col">
-                                  <span className="text-lg font-semibold">{item.label}</span>
-                                  <span className="text-xs font-medium opacity-60">{item.description}</span>
+                                  <span className="text-xl font-bold">{item.label}</span>
+                                  <p className="text-sm text-[#1A1A1A]/60 mt-0.5 font-medium">
+                                    {item.description}
+                                  </p>
                                 </div>
                               </Link>
                             ))}
@@ -310,22 +286,13 @@ export default function Navbar({ variant }: NavbarProps) {
                   </div>
 
                   {/* Mobile CTAs */}
-                  <div className={cn(
-                    "pt-8 mt-6 border-t flex flex-col gap-4",
-                    isDarkBg ? "border-white/10" : "border-slate-100/50"
-                  )}>
-                    <button type="button" className={cn(
-                      "w-full py-5 rounded-2xl text-xl font-semibold",
-                      isDarkBg ? "bg-white/5 text-white" : "bg-slate-50 text-slate-900"
-                    )}>
+                  <div className="pt-8 mt-4 border-t border-black/5 space-y-4">
+                    <button type="button" className={cn("w-full py-4 text-3xl font-bold", textColorClass)}>
                       Log In
                     </button>
                     <button
                       type="button"
-                      className={cn(
-                        "w-full py-5 rounded-2xl text-xl font-bold transition-all active:scale-[0.98]",
-                        isDarkBg ? "bg-white text-black" : "bg-slate-900 text-white"
-                      )}
+                      className="w-full py-5 rounded-full text-3xl font-bold shadow-lg bg-[#1A1A1A] text-white active:scale-95 transition-transform"
                     >
                       Book Demo
                     </button>
@@ -334,8 +301,8 @@ export default function Navbar({ variant }: NavbarProps) {
               </motion.div>
             )}
           </AnimatePresence>
-        </LiquidGlassCard>
-      </div >
-    </header >
+        </div>
+      </div>
+    </header>
   );
 }

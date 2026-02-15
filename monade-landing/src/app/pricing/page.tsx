@@ -1,300 +1,275 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import {
   Check,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  ShieldCheck,
+  ChevronRight,
+  Smile,
+  Activity,
+  Mic2,
+  Sparkles,
+  ArrowUpRight,
   Zap,
   Globe,
   Lock
 } from 'lucide-react';
-import Link from 'next/link';
 import Navbar from "@/components/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
+import { cn } from "@/lib/utils";
+import { LiquidGlassCard } from "@/components/LiquidGlassCard";
 
-interface PricingCardProps {
-  title: string;
-  price: number | string;
-  desc: string;
-  features: string[];
-  type: 'light' | 'primary' | 'vault';
-  popular?: boolean;
-}
+// ─── Sub-Components ───
 
-interface FeatureRowProps {
-  title: string;
-  icon: React.ReactNode;
-  desc: string;
-  isExpanded: boolean;
-  onClick: () => void;
-}
-
-export default function PricingPage() {
-  const [callVolume, setCallVolume] = useState(5000);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
-  const [expandedFeature, setExpandedFeature] = useState<string | null>(null);
-
-  const calculateSavings = (volume: number) => {
-    const hours = Math.round(volume * 0.15); // Average 9 mins per call
-    return { hours };
+const PrecisionFader = ({ value, min, max, onChange }: { value: number, min: number, max: number, onChange: (val: number) => void }) => {
+  const percentage = (value - min) / (max - min);
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(parseInt(e.target.value));
   };
 
-  const { hours } = calculateSavings(callVolume);
+  return (
+    <div className="relative w-full h-20 flex items-center">
+      {/* The Track: Precise 1px etched line */}
+      <div className="absolute inset-x-0 h-[1px] bg-black/10" />
+      
+      {/* Vernier Scale: Balanced Spacing */}
+      <div className="absolute inset-x-0 h-10 flex justify-between items-center pointer-events-none px-0.5">
+        {[...Array(61)].map((_, i) => (
+          <div 
+            key={i} 
+            className={cn(
+                "w-[1px] transition-colors duration-500",
+                i % 10 === 0 ? "h-6 bg-black/40" : i % 5 === 0 ? "h-4 bg-black/20" : "h-2 bg-black/10"
+            )} 
+          />
+        ))}
+      </div>
+
+      <div className="relative w-full h-full flex items-center">
+        {/* The Glass Loupe: Absolute Clarity (Refined Size) */}
+        <motion.div 
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center justify-center"
+            style={{ left: `${percentage * 100}%` }}
+            transition={{ type: "spring", stiffness: 400, damping: 40 }}
+        >
+            <LiquidGlassCard
+              className="w-12 h-12 bg-white/5 border border-white/80 flex items-center justify-center shadow-2xl"
+              borderRadius="100%"
+              blurIntensity="xl"
+              shadowIntensity="none"
+              glowIntensity="none"
+            >
+              <div className="w-[1px] h-4 bg-[#D94126]" />
+            </LiquidGlassCard>
+        </motion.div>
+
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={100}
+          value={value}
+          onChange={handleSliderChange}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-30"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default function PricingPage() {
+  const [callVolume, setCallVolume] = useState(10000);
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-primary/10">
-      <Navbar variant="light" />
+    <div className="min-h-screen bg-[#FDFBF7] text-[#1A1A1A] font-sans selection:bg-[#D94126] selection:text-white antialiased text-[15px]">
+      <Navbar variant="transparent" />
 
-      <main className="pt-32 pb-20">
-        {/* Header */}
-        <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance">
-            Pay for outcomes, <br />
-            <span className="text-slate-400 font-medium">not platform fees.</span>
-          </h1>
-          <p className="text-xl text-slate-500 max-w-xl mx-auto">
-            No monthly subscription. No seat licensing. No hidden setup costs. Per-second billing calibrated to your call volume. Everything else is included.
-          </p>
+      <main className="pt-48 pb-32">
+        {/* Header: Pure Human Language */}
+        <section className="max-w-5xl mx-auto px-6 text-center mb-32">
+          <div className="space-y-6">
+            <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-[#1A1A1A]">
+                Honest pricing. <br />
+                <span className="font-serif italic text-slate-300 font-light text-[0.9em]">Calibrated.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+                No platform fees or hidden costs. We bill by the second, tailored to how much you actually talk.
+            </p>
+          </div>
 
-          {/* Monthly/Yearly Toggle */}
-          <div className="flex items-center justify-center gap-4 pt-4">
-            <span className={`text-sm font-bold ${billingCycle === 'monthly' ? 'text-slate-900' : 'text-slate-400'}`}>Monthly</span>
-            <button
-              onClick={() => setBillingCycle(prev => prev === 'monthly' ? 'yearly' : 'monthly')}
-              className="w-14 h-8 bg-slate-100 rounded-full p-1 relative flex items-center transition-colors"
+          {/* Precision Toggle */}
+          <div className="flex items-center justify-center gap-12 pt-16">
+            <button 
+                onClick={() => setBillingCycle('monthly')}
+                className={cn("text-[10px] font-black uppercase tracking-[0.3em] transition-all", billingCycle === 'monthly' ? "text-black" : "text-slate-300 hover:text-slate-400")}
             >
-              <motion.div
-                animate={{ x: billingCycle === 'yearly' ? 24 : 0 }}
-                className="w-6 h-6 bg-white rounded-full shadow-sm border border-slate-200"
-              />
+                Monthly
             </button>
-            <span className={`text-sm font-bold ${billingCycle === 'yearly' ? 'text-slate-900' : 'text-slate-400'}`}>
-              Yearly <span className="text-primary text-[10px] ml-1">Save 20%</span>
-            </span>
+            <div className="w-16 h-px bg-slate-200" />
+            <button 
+                onClick={() => setBillingCycle('yearly')}
+                className={cn("text-[10px] font-black uppercase tracking-[0.3em] transition-all relative", billingCycle === 'yearly' ? "text-black" : "text-slate-300 hover:text-slate-400")}
+            >
+                Yearly
+                {billingCycle === 'yearly' && (
+                    <motion.span layoutId="save-tag" className="absolute -top-6 left-1/2 -translate-x-1/2 text-[#D94126] text-[9px] font-black tracking-tighter">
+                        SAVE 20%
+                    </motion.span>
+                )}
+            </button>
           </div>
         </section>
 
-        {/* Intent Slider Section */}
-        <section className="max-w-5xl mx-auto px-6 mt-20">
-          <div className="glass-liquid rounded-3xl p-10 space-y-8 relative overflow-hidden">
-            <div className="flex flex-col md:flex-row justify-between items-end gap-6 relative z-10">
-              <div className="space-y-2">
-                <span className="text-primary font-bold text-xs uppercase tracking-widest">Calibration</span>
-                <h3 className="text-2xl font-bold">What is your monthly volume?</h3>
+        {/* The Volume Bay: Dieter Rams proportioned */}
+        <section className="max-w-6xl mx-auto px-6 mb-48">
+          <div className="bg-[#869781] rounded-[32px] p-16 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.12)] border border-black/5 relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-end mb-16 relative z-10">
+              <div className="space-y-4">
+                <h3 className="text-4xl font-bold tracking-tight text-black uppercase">Set your volume</h3>
+                <p className="text-lg text-black/40 font-serif italic max-w-xs leading-relaxed">
+                    Estimate your monthly talk time to calibrate your rate.
+                </p>
               </div>
               <div className="text-right">
-                <motion.div
-                  key={callVolume}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-6xl font-mono font-bold tracking-tighter"
-                >
+                <div className="text-7xl md:text-8xl font-mono font-bold tracking-tighter text-black leading-none">
                   {callVolume.toLocaleString()}
-                </motion.div>
-                <span className="text-slate-400 font-bold text-sm uppercase">Calls / Month</span>
+                </div>
+                <div className="flex justify-end items-center gap-3 mt-4">
+                    <div className="w-1 h-1 rounded-full bg-black/20" />
+                    <span className="text-[8px] font-black text-black/20 uppercase tracking-[0.4em]">Minutes / Month</span>
+                </div>
               </div>
             </div>
 
-            <div className="relative pt-4 pb-8">
-              <input
-                type="range"
-                min="1000"
-                max="100000"
-                step="1000"
-                value={callVolume}
-                onChange={(e) => setCallVolume(parseInt(e.target.value))}
-                className="relative z-10"
-              />
-              <div className="flex justify-between mt-4 text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                <span>1,000</span>
-                <span>50,000</span>
-                <span>100,000</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white/50 p-6 rounded-2xl border border-white flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                  <Clock className="text-primary w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-2xl font-mono font-bold">~{hours.toLocaleString()}</div>
-                  <div className="text-xs font-bold text-slate-400 uppercase">Hours Reclaimed / Mo</div>
-                </div>
-              </div>
-              <div className="bg-white/50 p-6 rounded-2xl border border-white flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center">
-                  <ShieldCheck className="text-green-600 w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-2xl font-mono font-bold">99.4%</div>
-                  <div className="text-xs font-bold text-slate-400 uppercase">Audit Reliability</div>
-                </div>
-              </div>
-            </div>
+            <PrecisionFader 
+              value={callVolume} 
+              min={1000} 
+              max={100000} 
+              onChange={setCallVolume} 
+            />
           </div>
         </section>
 
-        {/* Pricing Triptych */}
-        <section className="max-w-7xl mx-auto px-6 mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          {/* Artisan */}
-          <PricingCard
-            title="The Artisan"
+        {/* Hardware Module Cards */}
+        <section className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-56">
+          
+          {/* Artisan Slab */}
+          <PricingSlab 
+            label="ART_01"
+            title="Artisan"
             price={callVolume < 10000 ? 0.25 : 0.22}
-            desc="For teams running their first voice AI pilot. Core Hinglish NLP, standard CRM integrations, 8-stage script architecture. Everything you need to prove ROI."
-            features={['Sub-200ms Response', 'Core Hinglish NLP', 'Standard CRM Integration', '8-Stage Script Architecture']}
-            type="light"
+            desc="For teams shipping their first models. Hand-crafted quality with zero complexity."
+            features={['Sub-200ms Latency', 'Zero-Shot Accents', 'Standard Webhooks']}
+            variant="white"
           />
 
-          {/* Engine */}
-          <PricingCard
+          {/* Engine Slab (Obsidian) */}
+          <PricingSlab 
+            label="ENG_02"
             title="The Engine"
             price={callVolume < 10000 ? 0.20 : 0.18}
-            desc="Your operational core. Custom call rubrics, sentiment heatmaps, priority support, and the full self-improving script engine. Weekly refinement included."
-            features={['Everything in Artisan', 'Custom Rubrics & Call Logic', 'Sentiment Heatmaps', 'Weekly Script Refinement']}
-            type="primary"
-            popular
+            desc="Optimized for high-volume production. Custom fine-tuning and dedicated support."
+            features={['Everything in Artisan', 'Predictive Interruptions', '24/7 Technical Direct']}
+            variant="obsidian"
+            highlight
           />
 
-          {/* Sovereign */}
-          <PricingCard
-            title="The Sovereign"
-            price="Custom"
-            desc="Full infrastructure control. Dedicated GPU clusters, air-gapped deployment, global dialect tuning, TRAI/DPDP compliance, and a direct line to our founders."
-            features={['Air-gapped Deployment', 'Dedicated GPU Clusters', '24/7 Founder Access', 'Global Dialect Tuning']}
-            type="vault"
+          {/* Sovereign Slab */}
+          <PricingSlab 
+            label="SOV_03"
+            title="Sovereign"
+            price="Bespoke"
+            desc="Total infrastructure control. Dedicated GPU clusters and air-gapped security."
+            features={['Dedicated V2V Clusters', 'Air-gapped security', 'Founder Direct Line']}
+            variant="white"
           />
 
         </section>
 
-        {/* Feature Deep-Dive (Notion Style) */}
-        <section className="max-w-3xl mx-auto px-6 mt-40 space-y-8">
-          <div className="text-center space-y-2 mb-12">
-            <h2 className="text-3xl font-bold">The Detail Ledger</h2>
-            <p className="text-slate-500">Engineering transparency, one feature at a time.</p>
+        {/* Technical Ledger */}
+        <section className="max-w-4xl mx-auto px-6 mb-32">
+          <div className="flex items-end justify-between mb-20 border-b border-slate-200 pb-10">
+            <h2 className="text-5xl font-bold tracking-tight">The Detail Ledger</h2>
+            <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] pb-2">Technical_Specs</span>
           </div>
 
-          <div className="border border-slate-100 rounded-2xl overflow-hidden">
-            <FeatureRow
-              title="Spectral Noise Isolation"
-              icon={<Zap className="w-4 h-4" />}
-              desc="Filters out Mumbai traffic, office hum, and construction noise in real-time before processing caller intent. Your agent hears clearly, even when your caller can't."
-              isExpanded={expandedFeature === 'spectral'}
-              onClick={() => setExpandedFeature(expandedFeature === 'spectral' ? null : 'spectral')}
-            />
-            <FeatureRow
-              title="Hinglish Code-Switching"
-              icon={<Globe className="w-4 h-4" />}
-              desc="Natively understands mixed Hindi-English speech. Technical terms stay in English (EMI, ROI, site visit). Trust phrases stay in Hindi (अच्छा, समझ में आया, ठीक है). Matches the caller's language mix within 1-2 turns."
-              isExpanded={expandedFeature === 'hinglish'}
-              onClick={() => setExpandedFeature(expandedFeature === 'hinglish' ? null : 'hinglish')}
-            />
-            <FeatureRow
-              title="PII Auto-Redaction"
-              icon={<Lock className="w-4 h-4" />}
-              desc="Detects and redacts sensitive data — Aadhaar numbers, credit card details, medical info — from both audio recordings and transcripts. DPDP Act compliant by default."
-              isExpanded={expandedFeature === 'pii'}
-              onClick={() => setExpandedFeature(expandedFeature === 'pii' ? null : 'pii')}
-            />
+          <div className="space-y-6">
+            {[
+                { title: "Native Voice-to-Voice", desc: "No intermediate text stage. Sub-200ms E2E response times.", icon: <Mic2 className="w-5 h-5 text-[#D94126]" /> },
+                { title: "Prosody Alignment", desc: "Native understanding of tone, sarcasm, and hesitation.", icon: <Activity className="w-5 h-5 text-[#D94126]" /> },
+                { title: "Linguistic Fluidity", desc: "Instant code-switching for Hinglish and regional accents.", icon: <Globe className="w-5 h-5 text-[#D94126]" /> }
+            ].map((item, i) => (
+                <div key={i} className="group bg-white p-12 rounded-[24px] border border-slate-100 hover:border-[#D94126]/20 transition-all duration-500 shadow-sm flex items-start justify-between">
+                    <div className="flex items-start gap-10">
+                        <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center shadow-inner border border-slate-100 group-hover:scale-110 transition-transform">
+                            {item.icon}
+                        </div>
+                        <div className="space-y-2">
+                            <h4 className="text-2xl font-bold text-[#1A1A1A]">{item.title}</h4>
+                            <p className="text-lg text-slate-500 leading-relaxed max-w-xl font-serif italic">{item.desc}</p>
+                        </div>
+                    </div>
+                </div>
+            ))}
           </div>
         </section>
       </main>
+      
       <FooterCTA />
     </div>
   );
 }
 
-function PricingCard({ title, price, desc, features, type, popular }: PricingCardProps) {
-  const isVault = type === 'vault';
-  const isPrimary = type === 'primary';
-
-  return (
-    <motion.div
-      whileHover={{ y: -10 }}
-      className={`p-8 rounded-3xl relative flex flex-col justify-between h-[600px] transition-luxury ${isVault ? 'glass-vault text-white' : 'glass-liquid text-slate-900'
-        } ${isPrimary ? 'ring-2 ring-primary ring-offset-4' : ''}`}
-    >
-      {popular && (
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-lg">
-          Most Calibrated
-        </div>
-      )}
-
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <h4 className={`text-sm font-bold uppercase tracking-widest ${isVault ? 'text-slate-400' : 'text-slate-500'}`}>{title}</h4>
-          <div className="flex items-baseline gap-1">
-            <span className="text-5xl font-mono font-bold">{typeof price === 'number' ? `$${price}` : price}</span>
-            {typeof price === 'number' && <span className="text-sm font-bold opacity-60">/ min</span>}
-          </div>
-        </div>
-        <p className={`text-sm leading-relaxed ${isVault ? 'text-slate-400' : 'text-slate-500'}`}>{desc}</p>
-
-        <div className="pt-8 space-y-4">
-          {features.map((f: string) => (
-            <div key={f} className="flex items-start gap-3 text-sm">
-              <Check className={`w-4 h-4 mt-0.5 ${isVault ? 'text-primary' : 'text-primary'}`} />
-              <span className="font-medium">{f}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <button className={`w-full py-4 rounded-full font-bold text-sm transition-all shadow-lg ${isVault ? 'bg-white text-slate-900 hover:bg-slate-100' :
-          isPrimary ? 'bg-primary text-white hover:bg-orange-600 shadow-orange-500/20' :
-            'bg-slate-900 text-white hover:bg-black'
-        }`}>
-        {isVault ? 'Speak to a Founder' : 'Get Started'}
-      </button>
-    </motion.div>
-  );
-}
-
-function FeatureRow({ title, icon, desc, isExpanded, onClick }: FeatureRowProps) {
-  return (
-    <div className="border-b border-slate-50 last:border-0">
-      <button
-        onClick={onClick}
-        className="w-full p-6 flex items-center justify-between hover:bg-slate-50 transition-colors group"
-      >
-        <div className="flex items-center gap-4">
-          <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center group-hover:bg-white transition-colors">
-            {icon}
-          </div>
-          <span className="font-bold text-sm">{title}</span>
-        </div>
-        {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
-      </button>
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 pb-6 pl-18 text-sm text-slate-500 leading-relaxed bg-slate-50/50">
-              {desc}
-              <div className="mt-4 p-4 glass-liquid rounded-xl text-[10px] font-mono flex items-center gap-4">
-                <div className="flex gap-1">
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-slate-400 uppercase font-bold">Live Visualizer</span>
+function PricingSlab({ label, title, price, desc, features, variant, highlight }: any) {
+    const isObsidian = variant === 'obsidian';
+    return (
+        <div className={cn(
+            "p-16 rounded-[32px] flex flex-col justify-between transition-all duration-700 relative overflow-hidden",
+            isObsidian 
+                ? "bg-[#020617] text-white shadow-[0_80px_120px_-20px_rgba(0,0,0,0.6)] z-10 scale-[1.02]" 
+                : "bg-white text-[#1A1A1A] border border-slate-100 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.06)]"
+        )}>
+            <div className="space-y-16 relative z-10">
+                <div className="flex justify-between items-start">
+                    <div className="space-y-2">
+                        <span className={cn("text-[10px] font-black uppercase tracking-[0.4em]", isObsidian ? "text-primary" : "text-slate-300")}>{label}</span>
+                        <h4 className="text-5xl font-bold tracking-tighter uppercase">{title}</h4>
+                    </div>
+                    {highlight && <Sparkles className="w-6 h-6 text-primary animate-pulse" />}
                 </div>
-                <div className="flex gap-2">
-                  {[...Array(12)].map((_, i) => (
-                    <div key={i} className="w-1 bg-primary/20 rounded-full h-4" />
-                  ))}
+
+                <div className="space-y-2">
+                    <div className="flex items-baseline gap-1">
+                        <span className="text-7xl font-bold tracking-tighter">{typeof price === 'number' ? `$${price}` : price}</span>
+                        {typeof price === 'number' && <span className={cn("text-xs font-black uppercase tracking-widest ml-2", isObsidian ? "text-white/20" : "text-black/20")}>/ Sec</span>}
+                    </div>
                 </div>
-              </div>
+
+                <p className={cn("text-xl font-serif italic leading-relaxed", isObsidian ? "text-white/40" : "text-slate-400")}>
+                    "{desc}"
+                </p>
+
+                <div className={cn("pt-16 border-t", isObsidian ? "border-white/5" : "border-slate-100")}>
+                    <ul className="space-y-6">
+                        {features.map((f: string) => (
+                            <li key={f} className="flex items-center gap-4 text-xs font-black uppercase tracking-widest">
+                                <Check className={cn("w-4 h-4", isObsidian ? "text-primary" : "text-[#D94126]")} />
+                                {f}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+
+            <button className={cn(
+                "mt-20 w-full py-6 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 active:scale-[0.98]",
+                isObsidian 
+                    ? "bg-white text-black hover:bg-primary hover:text-white shadow-2xl" 
+                    : "bg-black text-white hover:bg-[#D94126] shadow-xl"
+            )}>
+                Initialize Link <ArrowUpRight className="w-4 h-4" />
+            </button>
+        </div>
+    );
 }

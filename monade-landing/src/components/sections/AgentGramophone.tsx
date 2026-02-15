@@ -3,11 +3,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Play, Pause, Phone, X, ChevronRight, Music, Mic2,
-  Car, Building, ShoppingBag, Utensils, FileText, MessageSquare
+  Play, Pause, Phone, X, ChevronRight, Mic2,
+  Car, Building, ShoppingBag, Utensils
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LiquidGlassCard } from "@/components/LiquidGlassCard";
 
 // ─── Data Layer: Industrial B2B Protocols ───
 const AGENTS = [
@@ -89,8 +88,6 @@ const AGENTS = [
   }
 ];
 
-// ─── Sub-Components ───
-
 const SchematicRecord = ({ isPlaying, image }: { isPlaying: boolean, image: string }) => (
   <div className="relative w-64 h-64 md:w-[320px] md:h-[320px] flex items-center justify-center">
     <motion.div
@@ -160,27 +157,16 @@ export const AgentGramophone = () => {
   }, [turnIndex]);
 
   return (
-    <section className="py-24 px-6 bg-[#FDFBF7] overflow-hidden relative selection:bg-black/10 font-sans antialiased text-black">
+    <section className="pb-32 px-6 bg-white overflow-visible relative selection:bg-black/10 font-sans antialiased text-black border-t border-slate-100">
       <div className="max-w-6xl mx-auto">
         
-        {/* Header */}
-        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-black/40 font-bold uppercase text-[10px] tracking-widest">
-              <Music className="w-3 h-3" /> Field Intelligence v4.6
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900">
-              Agent <span className="font-serif italic text-slate-400 font-medium">Listening</span> Station.
-            </h2>
-          </div>
-        </div>
-
-        {/* ─── Track Selector (Restore: Short Labels + Tooltips + Clear Lens) ─── */}
-        <div className="mb-10 relative flex justify-center">
-          <div className="bg-slate-200/40 p-1.5 rounded-[24px] flex flex-wrap items-center justify-center gap-1 relative border border-white">
+        {/* ─── Track Selector - Minimalist Pill Pushed Up ─── */}
+        <div className="relative flex justify-center -translate-y-1/2 z-50">
+          <div className="bg-white/70 backdrop-blur-xl p-1 rounded-2xl flex flex-wrap items-center justify-center gap-1 border border-slate-200 shadow-sm">
             {AGENTS.map((track, idx) => (
               <div key={track.id} className="relative group">
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 bg-[#0F172A] text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-lg opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 whitespace-nowrap">
+                {/* Descriptive Tooltip */}
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 bg-[#0F172A] text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-lg opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 whitespace-nowrap shadow-2xl scale-95 group-hover:scale-100 origin-bottom">
                     {track.description}
                     <div className="absolute top-full left-1/2 -translate-x-1/2 border-[4px] border-transparent border-t-[#0F172A]" />
                 </div>
@@ -191,37 +177,27 @@ export const AgentGramophone = () => {
                         setIsPlaying(false);
                         setTurnIndex(-1);
                     }}
-                    className="relative flex items-center gap-3 px-5 py-3 rounded-[18px] z-10 transition-all active:scale-95"
+                    className="relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl z-10 transition-all active:scale-95 group/btn"
                 >
                     <div className={cn(
                         "transition-colors duration-300",
-                        currentAgentIndex === idx ? "text-slate-900" : "text-slate-900/30 group-hover:text-slate-900"
+                        currentAgentIndex === idx ? "text-slate-900" : "text-slate-400 group-hover/btn:text-slate-600"
                     )}>
                     {track.icon}
                     </div>
                     <span className={cn(
-                        "text-[11px] font-bold uppercase tracking-widest transition-colors duration-300",
-                        currentAgentIndex === idx ? "text-slate-900" : "text-slate-900/30 group-hover:text-slate-900"
+                        "text-[13px] font-semibold tracking-tight transition-colors duration-300",
+                        currentAgentIndex === idx ? "text-slate-900" : "text-slate-400 group-hover/btn:text-slate-600"
                     )}>
                         {track.category}
                     </span>
                     
                     {currentAgentIndex === idx && (
                     <motion.div
-                        layoutId="glass-selector"
-                        className="absolute inset-0 z-[-1] pointer-events-none"
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                    >
-                        <LiquidGlassCard
-                        className="w-full h-full bg-white/5 border border-white/60"
-                        borderRadius="18px"
-                        blurIntensity="xl"
-                        shadowIntensity="md"
-                        glowIntensity="none"
-                        >
-                        <div className="w-full h-full" />
-                        </LiquidGlassCard>
-                    </motion.div>
+                        layoutId="nav-pill"
+                        className="absolute inset-0 z-[-1] bg-slate-100/80 rounded-xl"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
                     )}
                 </button>
               </div>
@@ -229,7 +205,7 @@ export const AgentGramophone = () => {
           </div>
         </div>
 
-        {/* ─── The Main Engineering Deck (Pure Solid Color) ─── */}
+        {/* ─── The Main Engineering Deck ─── */}
         <div className={cn(
             "rounded-[32px] border border-black/10 transition-colors duration-700 p-4 shadow-sm",
             agent.color
