@@ -85,7 +85,7 @@ export default function PricingPage() {
     <div className="min-h-screen bg-[#FDFBF7] text-[#1A1A1A] font-sans selection:bg-[#D94126] selection:text-white antialiased text-[15px]">
       <Navbar variant="transparent" />
 
-      <main className="pt-48 pb-32">
+      <main className="pt-56 pb-32">
         {/* Header: Pure Human Language */}
         <section className="max-w-5xl mx-auto px-6 text-center mb-32">
           <div className="space-y-6">

@@ -355,6 +355,10 @@ export default function Navbar({ variant }: NavbarProps) {
                     </Link>
                     <button
                       type="button"
+                      onClick={() => {
+                        setIsBookDemoOpen(true);
+                        closeMenu();
+                      }}
                       className="w-full py-5 rounded-full text-3xl font-bold shadow-lg bg-[#1A1A1A] text-white active:scale-95 transition-transform"
                     >
                       Book Demo
@@ -366,6 +370,8 @@ export default function Navbar({ variant }: NavbarProps) {
           </AnimatePresence>
         </div>
       </div>
+
+      <BookDemoDialog isOpen={isBookDemoOpen} onClose={() => setIsBookDemoOpen(false)} />
     </header>
   );
 }

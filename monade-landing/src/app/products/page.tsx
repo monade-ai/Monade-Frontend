@@ -4,26 +4,22 @@ import FooterCTA from "@/components/sections/FooterCTA";
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Navbar variant="black" />
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-orange-900/50 via-black to-orange-900/50">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-900/30 via-black to-orange-900/30"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center px-4 py-2 bg-green-600/20 border border-green-500/30 rounded-full text-green-400 text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-            Live Production Platform
+    <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-primary/10">
+      <Navbar variant="light" />
+
+      <main className="pt-56 pb-20">
+        {/* Hero Section */}
+        <section className="max-w-5xl mx-auto px-6 mb-24">
+          <div className="flex flex-col items-start space-y-6">
+            <h1 className="text-6xl md:text-[80px] font-semibold tracking-tight leading-[1.05] text-slate-900">
+                One platform. <br />
+                <span className="font-serif italic text-slate-400 font-medium text-5xl md:text-[70px]">Every interaction.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
+                Voice, email, and WhatsApp agents that share a single memory. Your customer never repeats themselves — no matter which channel they reach you on.
+            </p>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              One Platform. Every Conversation.
-            </span>
-          </h1>
-          <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            Voice, email, and WhatsApp agents that share a single memory. Your customer never repeats themselves — no matter which channel they reach you on.
-          </p>
-        </div>
-      </section>
+        </section>
 
       {/* Platform Status */}
       <section className="py-12 bg-gradient-to-r from-gray-900/50 to-black">
