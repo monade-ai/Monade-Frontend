@@ -35,7 +35,7 @@ export default function Navbar() {
         left: 0,
         width: "100%",
         zIndex: 1000,
-        background: "transparent",
+        background: "yellow",
       }}
     >
       <div
