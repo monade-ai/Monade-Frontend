@@ -58,7 +58,7 @@ export const BentoGrid = () => {
           <div className="pt-12 border-t border-white/10 flex justify-between items-baseline">
             <div className="space-y-1">
               <span className="text-[9px] font-bold uppercase tracking-widest text-white/20">Active Rate</span>
-              <div className="text-5xl font-mono font-bold tracking-tighter italic">₹3.00</div>
+              <div className="text-5xl font-mono font-bold tracking-tighter italic">₹8.00</div>
             </div>
             <div className="text-right space-y-1">
               <span className="text-[9px] font-bold uppercase tracking-widest text-white/20">Setup</span>
