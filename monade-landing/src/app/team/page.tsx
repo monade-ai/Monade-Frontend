@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import Navbar from "@/components/Navbar";
+import FooterCTA from "@/components/sections/FooterCTA";
 import "../about/about.css";
 
 export default function TeamPage() {
@@ -44,6 +46,7 @@ export default function TeamPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Navbar variant="black" />
       {/* Hero Section */}
       <section className="relative pt-12 pb-16 bg-gradient-to-br from-orange-900/50 via-black to-orange-900/50">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-900/30 via-black to-orange-900/30"></div>
@@ -64,6 +67,7 @@ export default function TeamPage() {
       {/* Team Members */}
       <section className="py-12 bg-black">
         <div className="max-w-7xl mx-auto px-6">
+          <h2 className="sr-only">Team members</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {teamMembers.map((member, index) => (
               <div key={index} className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30 shadow-2xl hover:shadow-orange-500/10 transition-all duration-300">
@@ -148,6 +152,7 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
+      <FooterCTA />
     </div>
   );
 }

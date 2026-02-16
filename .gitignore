@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+monade-landing/node_modules/
 
 # Build output
 .next/
@@ -30,3 +31,9 @@ Thumbs.db
 # Misc
 *.swp
 *.swo
+*.md
+!README.md
+!docs/**/*.md
+!conductor/**/*.md
+!conductor/**/*.json
+
