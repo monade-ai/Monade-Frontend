@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllPosts } from '@/lib/markdown';
+import { getAllPostsCached } from '@/lib/markdown';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -9,6 +9,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
   }
 
-  const posts = getAllPosts(type);
+  const posts = await getAllPostsCached(type);
   return NextResponse.json(posts);
 }

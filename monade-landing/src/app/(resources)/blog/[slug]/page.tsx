@@ -1,65 +1,29 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import { formatDate, Post } from '@/lib/markdown.types';
+import { formatDate } from '@/lib/markdown.types';
+import { getAllPostsCached, getPostBySlugCached } from '@/lib/markdown';
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [post, setPost] = useState<Post | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export async function generateStaticParams() {
+  const posts = await getAllPostsCached('blog');
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
-  useEffect(() => {
-    if (params.slug) {
-      fetch(`/api/posts/${params.slug}?type=blog`)
-        .then(res => {
-          if (!res.ok) throw new Error('Not found');
-          return res.json();
-        })
-        .then(data => {
-          setPost(data);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          router.push('/blog');
-        });
-    }
-  }, [params.slug, router]);
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = await getPostBySlugCached('blog', slug);
 
-  if (isLoading) {
-    return (
-      <main className="min-h-screen bg-[#FDFBF7]">
-        <div className="pt-32 pb-20 px-6">
-          <div className="max-w-3xl mx-auto animate-pulse">
-            <div className="h-4 w-24 bg-[#E5E5E5] rounded mb-8" />
-            <div className="h-12 w-3/4 bg-[#E5E5E5] rounded mb-6" />
-            <div className="h-6 w-1/2 bg-[#E5E5E5] rounded mb-12" />
-            <div className="space-y-4">
-              <div className="h-4 w-full bg-[#E5E5E5] rounded" />
-              <div className="h-4 w-full bg-[#E5E5E5] rounded" />
-              <div className="h-4 w-2/3 bg-[#E5E5E5] rounded" />
-            </div>
-          </div>
-        </div>
-      </main>
-    );
+  if (!post) {
+    notFound();
   }
-
-  if (!post) return null;
 
   return (
     <main className="min-h-screen bg-[#FDFBF7]">
-      {/* Back Navigation */}
-      <motion.div
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.4 }}
-        className="fixed top-8 left-8 z-50"
-      >
+      <div className="fixed top-8 left-8 z-50">
         <Link
           href="/blog"
           className="group flex items-center gap-2 text-sm text-[#888] hover:text-[#1A1A1A] transition-colors duration-300"
@@ -69,17 +33,11 @@ export default function BlogPostPage() {
           </span>
           <span className="hidden md:inline">Back to Blog</span>
         </Link>
-      </motion.div>
+      </div>
 
-      {/* Article Header */}
       <article className="pt-32 pb-20 px-6">
         <header className="max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-4 text-sm text-[#888] mb-6"
-          >
+          <div className="flex items-center gap-4 text-sm text-[#888] mb-6">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
             {post.readTime && (
               <>
@@ -87,34 +45,25 @@ export default function BlogPostPage() {
                 <span>{post.readTime}</span>
               </>
             )}
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-medium text-[#1A1A1A] tracking-tight leading-[1.15] mb-8"
-          >
+          <h1 className="text-4xl md:text-5xl font-medium text-[#1A1A1A] tracking-tight leading-[1.15] mb-8">
             {post.title}
-          </motion.h1>
+          </h1>
 
           {(post.author || post.tags) && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex flex-wrap items-center gap-6"
-            >
+            <div className="flex flex-wrap items-center gap-6">
               {post.author && (
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF4D00] to-[#FF8C00] flex items-center justify-center text-white font-medium text-sm">
-                    {post.author.split(' ').map(n => n[0]).join('')}
+                    {post.author
+                      .split(' ')
+                      .map((n) => n[0])
+                      .join('')}
                   </div>
                   <div>
                     <p className="text-sm font-medium text-[#1A1A1A]">{post.author}</p>
-                    {post.authorRole && (
-                      <p className="text-xs text-[#888]">{post.authorRole}</p>
-                    )}
+                    {post.authorRole && <p className="text-xs text-[#888]">{post.authorRole}</p>}
                   </div>
                 </div>
               )}
@@ -130,22 +79,15 @@ export default function BlogPostPage() {
                   ))}
                 </div>
               )}
-            </motion.div>
+            </div>
           )}
         </header>
 
-        {/* Divider */}
         <div className="max-w-3xl mx-auto mb-16">
           <div className="h-px bg-[#E5E5E5]" />
         </div>
 
-        {/* Article Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="max-w-3xl mx-auto"
-        >
+        <div className="max-w-3xl mx-auto">
           <div
             className="prose prose-lg prose-slate max-w-none
               prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-[#1A1A1A]
@@ -161,10 +103,9 @@ export default function BlogPostPage() {
               prose-pre:bg-[#1A1A1A] prose-pre:text-[#F5F5F5]"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-        </motion.div>
+        </div>
       </article>
 
-      {/* Footer */}
       <footer className="border-t border-[#E5E5E5] py-16 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-sm text-[#888]">

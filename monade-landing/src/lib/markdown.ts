@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { unstable_cache } from 'next/cache';
 import { PostMeta, Post } from './markdown.types';
 
 const contentDirectory = path.join(process.cwd(), 'content');
@@ -85,6 +86,32 @@ export async function getPostBySlug(
     results: data.results,
     content: contentHtml,
   };
+}
+
+const getAllPostsCachedInternal = unstable_cache(
+  async (type: 'blog' | 'case-studies' | 'release-notes') => getAllPosts(type),
+  ['content-posts-list'],
+  { revalidate: 300 }
+);
+
+export async function getAllPostsCached(
+  type: 'blog' | 'case-studies' | 'release-notes'
+): Promise<PostMeta[]> {
+  return getAllPostsCachedInternal(type);
+}
+
+const getPostBySlugCachedInternal = unstable_cache(
+  async (type: 'blog' | 'case-studies' | 'release-notes', slug: string) =>
+    getPostBySlug(type, slug),
+  ['content-post-by-slug'],
+  { revalidate: 300 }
+);
+
+export async function getPostBySlugCached(
+  type: 'blog' | 'case-studies' | 'release-notes',
+  slug: string
+): Promise<Post | null> {
+  return getPostBySlugCachedInternal(type, slug);
 }
 
 export { formatDate } from './markdown.types';

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getPostBySlug } from '@/lib/markdown';
+import { getPostBySlugCached } from '@/lib/markdown';
 
 export async function GET(
   request: Request,
@@ -13,7 +13,7 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
   }
 
-  const post = await getPostBySlug(type, slug);
+  const post = await getPostBySlugCached(type, slug);
 
   if (!post) {
     return NextResponse.json({ error: 'Post not found' }, { status: 404 });
