@@ -1,12 +1,42 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { formatDate } from '@/lib/markdown.types';
 import { getAllPostsCached, getPostBySlugCached } from '@/lib/markdown';
+import { buildPageMetadata } from '@/lib/seo';
 
 export async function generateStaticParams() {
   const posts = await getAllPostsCached('blog');
   return posts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlugCached('blog', slug);
+
+  if (!post) {
+    return buildPageMetadata({
+      title: 'Blog',
+      description: 'Blog post not found.',
+      path: `/blog/${slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildPageMetadata({
+    title: post.title,
+    description: post.excerpt || 'Monade blog post',
+    path: `/blog/${post.slug}`,
+    openGraphType: 'article',
+    publishedTime: post.date,
+    tags: post.tags,
+    section: 'Blog',
+  });
 }
 
 export default async function BlogPostPage({

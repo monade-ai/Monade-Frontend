@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { formatDate } from '@/lib/markdown.types';
 import { getAllPostsCached } from '@/lib/markdown';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Blog',
+  description:
+    'Read Monade insights on voice AI, conversational design, and building scalable customer operations.',
+  path: '/blog',
+});
 
 export default async function BlogPage() {
   const posts = await getAllPostsCached('blog');

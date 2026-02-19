@@ -1,6 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { getAllPostsCached } from '@/lib/markdown';
+import { buildPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Case Studies',
+  description:
+    'See how teams use Monade to improve conversion, retention, and customer operations outcomes.',
+  path: '/case-studies',
+});
 
 export default async function CaseStudiesPage() {
   const studies = await getAllPostsCached('case-studies');

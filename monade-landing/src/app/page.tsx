@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
 import AgentGramophone from "@/components/sections/AgentGramophone";
@@ -10,6 +11,14 @@ import Verticals from "@/components/sections/Verticals";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
 import FooterCTA from "@/components/sections/FooterCTA";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Building Voice-Enabled Businesses",
+  description:
+    "Launch voice workflows that qualify leads, automate operations, and scale customer conversations with Monade.",
+  path: "/",
+});
 
 export default function Home() {
   return (

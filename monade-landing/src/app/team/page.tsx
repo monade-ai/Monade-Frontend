@@ -1,8 +1,17 @@
 import React from "react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
 import "../about/about.css";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Team",
+  description:
+    "Meet the Monade founding team building enterprise-ready voice AI systems and customer operations software.",
+  path: "/team",
+});
 
 export default function TeamPage() {
   const teamMembers = [

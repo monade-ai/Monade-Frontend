@@ -1,12 +1,42 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { formatDate } from '@/lib/markdown.types';
 import { getAllPostsCached, getPostBySlugCached } from '@/lib/markdown';
+import { buildPageMetadata } from '@/lib/seo';
 
 export async function generateStaticParams() {
   const studies = await getAllPostsCached('case-studies');
   return studies.map((study) => ({ slug: study.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const study = await getPostBySlugCached('case-studies', slug);
+
+  if (!study) {
+    return buildPageMetadata({
+      title: 'Case Study',
+      description: 'Case study not found.',
+      path: `/case-studies/${slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildPageMetadata({
+    title: study.title,
+    description: study.excerpt || 'Monade case study',
+    path: `/case-studies/${study.slug}`,
+    openGraphType: 'article',
+    publishedTime: study.date,
+    tags: [study.industry || 'Case Study', 'Voice AI'],
+    section: 'Case Studies',
+  });
 }
 
 export default async function CaseStudyPage({

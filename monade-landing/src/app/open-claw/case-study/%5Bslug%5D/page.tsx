@@ -1,9 +1,17 @@
 import React from 'react';
+import type { Metadata } from "next";
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Zap, Share2 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { CASE_STUDIES } from '@/lib/case-studies';
+
+export const metadata: Metadata = {
+    robots: {
+        index: false,
+        follow: false,
+    },
+};
 
 export async function generateStaticParams() {
     return CASE_STUDIES.map((study) => ({

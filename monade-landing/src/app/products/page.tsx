@@ -1,6 +1,15 @@
 import React from "react";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Products",
+  description:
+    "Explore Monade's voice, email, and WhatsApp products for sales, support, and business operations.",
+  path: "/products",
+});
 
 export default function ProductsPage() {
   return (
