@@ -3,95 +3,214 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { 
   Play, Pause, Phone, X, ChevronRight, Mic2,
   Car, Building, ShoppingBag, Utensils
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// ─── Data Layer: Industrial B2B Protocols ───
-const AGENTS = [
+type TranscriptLine = {
+  speaker: "agent" | "customer";
+  startSec: number;
+  text: string;
+};
+
+type AgentProfile = {
+  id: "taxi" | "realestate" | "ecommerce" | "restaurant";
+  name: string;
+  category: string;
+  description: string;
+  icon: React.ReactNode;
+  role: string;
+  specialty: string;
+  color: string;
+  recordLabel: string;
+  audioSrc: string;
+  instructionSummary: string[];
+  transcript: TranscriptLine[];
+};
+
+const DEFAULT_TRUNK_NAME = process.env.NEXT_PUBLIC_CALLING_TRUNK_NAME ?? "Monade Test";
+const DEFAULT_ASSISTANT_ID = process.env.NEXT_PUBLIC_CALLING_ASSISTANT_ID ?? "";
+
+function formatClock(seconds: number): string {
+  const safeSeconds = Math.max(0, Math.floor(seconds));
+  const mins = Math.floor(safeSeconds / 60);
+  const secs = safeSeconds % 60;
+
+  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+}
+
+function findActiveTranscriptIndex(lines: TranscriptLine[], currentTimeSec: number): number {
+  for (let i = lines.length - 1; i >= 0; i -= 1) {
+    if (currentTimeSec >= lines[i].startSec) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+const AGENTS: AgentProfile[] = [
   {
     id: "taxi",
-    name: "Ravi",
+    name: "Maya",
     category: "Logistics",
-    description: "Night Dispatch Automation",
+    description: "Delivery Reschedule Support",
     icon: <Car className="w-4 h-4" />,
-    role: "Automated Fleet Dispatcher",
-    specialty: "Route Optimization",
+    role: "Parcel Delivery Coordinator",
+    specialty: "Slot Confirmation and Rescheduling",
     color: "bg-[#D97757]", // Burnt Clay
     recordLabel: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=200&h=200",
-    instructionScript: "1. Capture pickup/drop coordinates. 2. Query Driver Webhook. 3. Confirm Vehicle MH-02-CD.",
+    audioSrc: "/audio/gramophone/taxi.mp3",
+    instructionSummary: [
+      "Confirm shipment and original ETA first.",
+      "Offer fallback options: reschedule or alternate recipient.",
+      "Reconfirm revised slot, address, and proactive SMS update.",
+    ],
     transcript: [
-      { speaker: 'agent', text: "Namaste, GoFleet. Pune drop?" },
-      { speaker: 'customer', text: "Yes, just landed at T2. Need a ride to Pune." },
-      { speaker: 'agent', text: "One moment... Found one. Suresh is 4 mins away." },
-      { speaker: 'customer', text: "Great, what's the car number?" },
-      { speaker: 'agent', text: "White Ertiga, MH-02-CD-5512. Details sent via WhatsApp." }
+      { speaker: "agent", startSec: 0, text: "Hello Narayan, hi! This is Maya calling from Stayflo Parcel. I'm calling about your delivery today. Do you have just a moment?" },
+      { speaker: "customer", startSec: 8, text: "Sure Maya, go ahead." },
+      { speaker: "agent", startSec: 12, text: "Great. So your LED ring light is out for delivery and should reach you between 2:00 and 3:00 PM today. Just wanted to check, will you be available at that time?" },
+      { speaker: "customer", startSec: 22, text: "No Maya. 2:00 to 3:00? I won't be available in the afternoon today." },
+      { speaker: "agent", startSec: 29, text: "No problem. We can reschedule for another day or we could leave it with someone else at your address like a neighbor or security. What works best for you?" },
+      { speaker: "customer", startSec: 39, text: "If we reschedule, then what could be the expected timeline for delivery?" },
+      { speaker: "agent", startSec: 45, text: "We could reschedule for tomorrow. Would morning or afternoon work for you then?" },
+      { speaker: "customer", startSec: 51, text: "Do we have any evening slots around 5:00 or 6:00?" },
+      { speaker: "agent", startSec: 57, text: "Yes, I can schedule it for an evening slot tomorrow around 5:00 to 6:00 PM. Does that work?" },
+      { speaker: "customer", startSec: 64, text: "Yeah, that sounds awesome. And will the delivery boy arrive at the same time, right? Not after it or before, because I'll be available only for that one-hour slot window." },
+      { speaker: "agent", startSec: 80, text: "I'll definitely note that as a priority for the delivery partner, so they arrive within that window. You'll also get an SMS when they're about 30 minutes away. And just to confirm, the delivery is still to your registered address, right?" },
+      { speaker: "customer", startSec: 92, text: "Yeah, yeah. It's to my registered address." },
+      { speaker: "agent", startSec: 96, text: "Perfect, Narayan. So we're all set for tomorrow between 5:00 to 6:00 PM. Is there anything else I can help you with?" },
+      { speaker: "customer", startSec: 105, text: "Not really, Maya. Thanks a lot." },
+      { speaker: "agent", startSec: 109, text: "Wonderful. Have a great day. Bye." },
+      { speaker: "customer", startSec: 112, text: "Yeah, bye." },
     ]
   },
   {
     id: "realestate",
-    name: "Ananya",
+    name: "Ria",
     category: "Real Estate",
-    description: "High-Intent Lead Qual",
+    description: "Property Lead Qualification",
     icon: <Building className="w-4 h-4" />,
-    role: "Luxury Property Consultant",
-    specialty: "High-Intent Filtering",
+    role: "Sales Relationship Advisor",
+    specialty: "Project Pitch and Visit Booking",
     color: "bg-[#708894]", // Steel Blue
     recordLabel: "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=200&h=200",
-    instructionScript: "1. Filter for Research vs Investment. 2. Qualify budget (>₹5Cr). 3. Book site visit via API.",
+    audioSrc: "/audio/gramophone/realestate.mp3",
+    instructionSummary: [
+      "Lead with location and financing hook in plain language.",
+      "Handle objections with concrete construction and pricing facts.",
+      "Convert interest to a firm site-visit slot with WhatsApp follow-up.",
+    ],
     transcript: [
-      { speaker: 'agent', text: "Honestly, most people are just browsing—are you actively looking?" },
-      { speaker: 'customer', text: "Looking for investment options in Worli." },
-      { speaker: 'agent', text: "Perfect. pre-launch offer ends Tuesday. Site visit?" },
-      { speaker: 'customer', text: "Can you arrange pickup for Sunday 4 PM?" },
-      { speaker: 'agent', text: "Confirmed. Triggering driver assignment protocol." }
+      { speaker: "agent", startSec: 0, text: "Hello sir?" },
+      { speaker: "customer", startSec: 4, text: "Hello, kaun?" },
+      { speaker: "agent", startSec: 6, text: "Namaste Narayan ji, kaise hain aap?" },
+      { speaker: "customer", startSec: 11, text: "Haan madam, main badhiya. Aap kaun bol rahe ho?" },
+      { speaker: "agent", startSec: 15, text: "Bahut achhe. Narayan ji, main Ria bol rahi thi. Actually, aapko ek property opportunity ke baare mein call kiya tha. Ek minute hai aapke paas?" },
+      { speaker: "customer", startSec: 27, text: "Theek hai bolo." },
+      { speaker: "agent", startSec: 30, text: "Hum ek naya project leke aaye hain, Manikya, Mahim West mein. Yeh South Bombay ka prime location hai, station se sirf 5-6 minute door, 2 BHK apartments hain. Aur abhi special offer chal raha hai, sirf 50 lakh dekar aap book kar sakte hain aur possession tak koi payment nahi." },
+      { speaker: "customer", startSec: 51, text: "Haan batao matlab aur kya-kya hai isme, aur kya-kya benefits vagerah kya hain?" },
+      { speaker: "agent", startSec: 79, text: "Isme construction quality bahut achhi hai, Mivan technology se ban raha hai aur possession next year June-September tak expected hai. Early bird phase chal raha hai toh additional discounts bhi mil sakte hain. Ek baar site visit karna chahenge?" },
+      { speaker: "customer", startSec: 91, text: "Site visit kar sakte hain around Sunday. Building kitne floor ka hai, aur kitna construction complete hua hai?" },
+      { speaker: "agent", startSec: 109, text: "Yeh G+22 storey tower hai aur construction abhi 9th floor tak complete ho gaya hai. Sunday ka plan karte hain. Morning ya evening?" },
+      { speaker: "customer", startSec: 115, text: "Afternoon mein ho sakta hai kya 2-3 baje ke around?" },
+      { speaker: "agent", startSec: 120, text: "Ji bilkul. 2-3 baje perfect rahega. Main Sunday ke liye confirm kar dungi. Location hai Mahim West, Jimmy Boy Bakery ke paas. WhatsApp pe details bhej deti hoon." },
+      { speaker: "customer", startSec: 127, text: "Haan chalega. Payment plan ka 50 lakh wala aur total cost kya hai?" },
+      { speaker: "agent", startSec: 140, text: "Total costing approx 2.5 to 2.6 crores hai, depending on size. Abhi 50 lakhs dekar book kar sakte hain, baaki possession ke time dena hai." },
+      { speaker: "customer", startSec: 148, text: "Isme kuch negotiable hai kya pricing vagerah?" },
+      { speaker: "agent", startSec: 159, text: "Site visit par definitely baat ho sakti hai, kyunki early bird discounts chal rahe hain. Sunday final karein?" },
+      { speaker: "customer", startSec: 164, text: "Haan chalega, Sunday ka dopahar mein final karte hain." },
+      { speaker: "agent", startSec: 174, text: "Perfect. Sunday 2-3 baje confirm karti hoon aur details WhatsApp pe bhej deti hoon. Thank you Narayan ji." },
     ]
   },
   {
     id: "ecommerce",
-    name: "Priya",
-    category: "E-Commerce",
-    description: "Post-Purchase Support",
+    name: "Neha",
+    category: "Hiring",
+    description: "Recruitment Screening Call",
     icon: <ShoppingBag className="w-4 h-4" />,
-    role: "Support Automation Hero",
-    specialty: "Shopify API / WISMO",
+    role: "Talent Outreach Specialist",
+    specialty: "Role Briefing and Slot Confirmation",
     color: "bg-[#869781]", // Sage Green
     recordLabel: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=200&h=200",
-    instructionScript: "1. Authenticate Order ID. 2. Pull Shopify status. 3. Process priority return labels.",
+    audioSrc: "/audio/gramophone/ecommerce.mp3",
+    instructionSummary: [
+      "Qualify candidate interest quickly with role, shift, salary, and location.",
+      "Answer clarifying questions without overpromising compensation.",
+      "Drive toward a confirmed interview slot and WhatsApp confirmation.",
+    ],
     transcript: [
-      { speaker: 'agent', text: "Hi Priya! Calling about your order for the Blue Linen Shirt?" },
-      { speaker: 'customer', text: "Yes! It was supposed to be here yesterday." },
-      { speaker: 'agent', text: "Delayed at Bhiwandi due to rain. Delivery expected tomorrow." },
-      { speaker: 'customer', text: "Can you make it urgent?" },
-      { speaker: 'agent', text: "Already flagged for priority. Check your WhatsApp now." }
+      { speaker: "agent", startSec: 0, text: "Hi Raj, main Neha Monad ki taraf se call kar rahi hoon. Kaise ho?" },
+      { speaker: "customer", startSec: 6, text: "Kidhar se bol rahe ho?" },
+      { speaker: "agent", startSec: 10, text: "Monad sir, Monad customer service ke liye hire kar raha hai, usi ke baare mein baat karni thi. Aapke paas 30 seconds hain?" },
+      { speaker: "customer", startSec: 17, text: "Haan theek hai boliye." },
+      { speaker: "agent", startSec: 21, text: "Yeh customer service ka role hai, voice process. Aapko Monad ke customers ke calls handle karne hain. Day shift 10:00 se 7:00 hai, Sunday off milega. Salary 16,000 in-hand hai. Location Navi Mumbai hai." },
+      { speaker: "customer", startSec: 37, text: "Role ke baare mein thoda aur batao?" },
+      { speaker: "agent", startSec: 41, text: "Yeh customer queries aur complaints call par resolve karna hota hai. Communication skills important hain. Training hum denge, aur growth chances bhi achhe hain. Interview ke liye try karna chahenge?" },
+      { speaker: "customer", startSec: 70, text: "Location kidhar hai interview ka?" },
+      { speaker: "agent", startSec: 76, text: "Interview ke liye Navi Mumbai aana padega. Hum poora address share kar denge. Kab jaana chahenge?" },
+      { speaker: "customer", startSec: 87, text: "Slot kab-kab available hai?" },
+      { speaker: "agent", startSec: 94, text: "Slots regularly available rehte hain. Aap kaun se din prefer karenge?" },
+      { speaker: "customer", startSec: 100, text: "Kal nahi, parson shaam ke time available hoon. Ho payega?" },
+      { speaker: "agent", startSec: 113, text: "Parson shaam ko kitne baje, jaise 3:00-4:00 ke aas-paas?" },
+      { speaker: "customer", startSec: 119, text: "5 baje madam." },
+      { speaker: "agent", startSec: 123, text: "Theek hai, main 5 baje ka slot dekhne ki koshish karti hoon. Aapka confirmation chahiye bas." },
+      { speaker: "customer", startSec: 132, text: "Haan chalega, 5 baje chalega." },
+      { speaker: "agent", startSec: 136, text: "Bahut badhiya. Main interview ki details WhatsApp par bhej deti hoon. Kuch aur poochna hai?" },
+      { speaker: "customer", startSec: 145, text: "Salary negotiable hai kya ya fixed 16,000?" },
+      { speaker: "agent", startSec: 151, text: "Freshers ke liye 16,000 in-hand hi rehti hai. Monad mein growth ke chances achhe hain, par abhi ke liye yahi rahega." },
+      { speaker: "customer", startSec: 164, text: "Okay, theek hai." },
+      { speaker: "agent", startSec: 169, text: "Theek hai Raj. Main aapko confirmation bhejti hoon. All the best." },
+      { speaker: "customer", startSec: 177, text: "Yeah, thanks a lot ma'am." },
     ]
   },
   {
     id: "restaurant",
-    name: "Vikram",
+    name: "Maya",
     category: "Hospitality",
-    description: "Reservation & Host Control",
+    description: "Hotel Reservation Desk",
     icon: <Utensils className="w-4 h-4" />,
-    role: "Cloud Kitchen Sales Host",
-    specialty: "Upselling / POS Sync",
+    role: "Booking and Concierge Assistant",
+    specialty: "Package Clarification and Add-ons",
     color: "bg-[#C2A370]", // Muted Ochre
     recordLabel: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&q=80&w=200&h=200",
-    instructionScript: "1. Sync with Petpooja POS. 2. Mandatory upsell: Dessert. 3. Print KOT in kitchen.",
+    audioSrc: "/audio/gramophone/restaurant.mp3",
+    instructionSummary: [
+      "Capture stay dates, nights, and occupancy before pricing.",
+      "Compare room tiers clearly and answer amenity questions.",
+      "Bundle add-ons, then restate final estimate and booking summary.",
+    ],
     transcript: [
-      { speaker: 'agent', text: "Biryani Blues, Namaste. Two Chicken Dum?" },
-      { speaker: 'customer', text: "Yes, for delivery." },
-      { speaker: 'agent', text: "Typically people order Double Ka Meetha with that. Add one for ₹150?" },
-      { speaker: 'customer', text: "Sure, add one." },
-      { speaker: 'agent', text: "Done. Your order is at the kitchen station now." }
+      { speaker: "agent", startSec: 0, text: "Good morning, thank you for calling Stayflo Hotel. This is Maya, how can I help you today?" },
+      { speaker: "customer", startSec: 8, text: "Hey Maya, I wanted to book a room. Can you help me with that?" },
+      { speaker: "agent", startSec: 14, text: "Of course, happy to help. When are you looking to check in and how many nights are you thinking?" },
+      { speaker: "customer", startSec: 20, text: "Planning check-in on 15th March and leaving on 18th. So three nights." },
+      { speaker: "agent", startSec: 33, text: "Got it. Checking in on 15th and leaving on 18th, that's three nights, right?" },
+      { speaker: "customer", startSec: 43, text: "Yeah, correct." },
+      { speaker: "agent", startSec: 46, text: "And how many guests will be staying? Just the two of you?" },
+      { speaker: "customer", startSec: 52, text: "Me and my wife. Also can children be accommodated in the same room?" },
+      { speaker: "agent", startSec: 69, text: "We have two room types. Standard is Rs 4,500 per night with Wi-Fi, housekeeping, and breakfast for two. Luxury is Rs 8,500 with city or pool view, premium amenities, and turn-down service. Both can take a rollaway bed for a child." },
+      { speaker: "customer", startSec: 101, text: "Standard works. Can you confirm the standard rate once?" },
+      { speaker: "agent", startSec: 115, text: "Standard room is Rs 4,500 plus taxes, roughly Rs 5,040 with taxes. We can arrange a rollaway bed there as well." },
+      { speaker: "customer", startSec: 134, text: "Okay that sounds good. Around 5,000 with taxes, cool." },
+      { speaker: "agent", startSec: 146, text: "Perfect. Standard room for three nights from 15th March, with rollaway bed noted. Anything else?" },
+      { speaker: "customer", startSec: 160, text: "Do you also do airport pick-up and drop?" },
+      { speaker: "agent", startSec: 168, text: "Yes, we can arrange airport transfer. Would you like me to book that?" },
+      { speaker: "customer", startSec: 176, text: "Sure. How much does that cost?" },
+      { speaker: "agent", startSec: 180, text: "Taxi transfer is around Rs 1,500 to Rs 1,800 depending on time. Shall I schedule it?" },
+      { speaker: "customer", startSec: 190, text: "Probably, yeah please do that." },
+      { speaker: "agent", startSec: 205, text: "Great. Confirming standard room for three nights, rollaway bed, and airport transfer. Is that right?" },
+      { speaker: "customer", startSec: 215, text: "Yeah. What is the final total for three nights plus transfer?" },
+      { speaker: "agent", startSec: 238, text: "Room total with taxes is about Rs 5,040 per night, so Rs 15,120 for three nights. Taxi transfer around Rs 1,500. Total is approximately Rs 16,620." },
+      { speaker: "customer", startSec: 243, text: "Okay, that works." },
+      { speaker: "agent", startSec: 254, text: "Perfect, you're all set. I'll send confirmation email and SMS shortly. Anything else?" },
+      { speaker: "customer", startSec: 259, text: "Not really, thanks a lot." },
     ]
   }
 ];
-
-const DEFAULT_TRUNK_NAME = process.env.NEXT_PUBLIC_CALLING_TRUNK_NAME ?? "Monade Test";
-const DEFAULT_ASSISTANT_ID = process.env.NEXT_PUBLIC_CALLING_ASSISTANT_ID ?? "";
-const DEFAULT_API_KEY = process.env.NEXT_PUBLIC_CALLING_API_KEY ?? "";
 
 const SchematicRecord = ({ isPlaying, image, activeId }: { isPlaying: boolean, image: string, activeId: string }) => (
   <div className="relative w-64 h-64 md:w-[320px] md:h-[320px] flex items-center justify-center">
@@ -156,14 +275,20 @@ export const AgentGramophone = () => {
   const [isCalling, setIsCalling] = useState(false);
   const [callError, setCallError] = useState<string | null>(null);
   const [callSuccess, setCallSuccess] = useState<string | null>(null);
-  const [turnIndex, setTurnIndex] = useState(-1);
+  const [callConsent, setCallConsent] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
+  const [playbackTimeSec, setPlaybackTimeSec] = useState(0);
+  const [activeLineIndex, setActiveLineIndex] = useState(-1);
   const transcriptScrollRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const agent = AGENTS[currentAgentIndex];
 
   const openCallPopup = () => {
     setCallError(null);
     setCallSuccess(null);
+    setCallConsent(false);
     setShowCallPopup(true);
   };
 
@@ -198,8 +323,8 @@ export const AgentGramophone = () => {
       return;
     }
 
-    if (!DEFAULT_API_KEY) {
-      setCallError("Missing NEXT_PUBLIC_CALLING_API_KEY.");
+    if (!callConsent) {
+      setCallError("Please confirm consent before initiating a call.");
       return;
     }
 
@@ -214,7 +339,7 @@ export const AgentGramophone = () => {
           phone_number: trimmedPhoneNumber,
           assistant_id: DEFAULT_ASSISTANT_ID,
           trunk_name: DEFAULT_TRUNK_NAME,
-          api_key: DEFAULT_API_KEY,
+          use_case: agent.id,
           callee_info: {
             name: trimmedName,
           },
@@ -242,34 +367,101 @@ export const AgentGramophone = () => {
     }
   };
 
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | undefined;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setTurnIndex(prev => (prev + 1) % agent.transcript.length);
-      }, 2000); 
-    } else {
-      setTurnIndex(-1);
-      if (interval) {
-        clearInterval(interval);
-      }
+  const toggleAudioPlayback = async () => {
+    const audioEl = audioRef.current;
+    if (!audioEl) {
+      return;
     }
-    return () => {
-      if (interval) {
-        clearInterval(interval);
+
+    setAudioError(null);
+
+    if (audioEl.paused) {
+      try {
+        await audioEl.play();
+      } catch {
+        setAudioError("Could not play this audio preview.");
       }
-    };
-  }, [isPlaying, agent]);
+
+      return;
+    }
+
+    audioEl.pause();
+  };
 
   useEffect(() => {
-    if (transcriptScrollRef.current) {
-        if (turnIndex === -1) {
-            transcriptScrollRef.current.scrollTop = 0;
-        } else if (turnIndex > 1) {
-            transcriptScrollRef.current.scrollTop = (turnIndex - 1) * 80;
-        }
+    const audioEl = audioRef.current;
+    if (!audioEl) {
+      return;
     }
-  }, [turnIndex]);
+
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    audioEl.load();
+    setPlaybackTimeSec(0);
+    setActiveLineIndex(-1);
+    setIsPlaying(false);
+    setAudioError(null);
+    lineRefs.current = [];
+  }, [agent.id]);
+
+  useEffect(() => {
+    const audioEl = audioRef.current;
+    if (!audioEl) {
+      return;
+    }
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => {
+      setIsPlaying(false);
+      setPlaybackTimeSec(0);
+      setActiveLineIndex(-1);
+    };
+    const onTimeUpdate = () => {
+      const currentTime = audioEl.currentTime;
+      setPlaybackTimeSec(currentTime);
+      const transcriptSpanSec = agent.transcript[agent.transcript.length - 1]?.startSec ?? 0;
+      const audioDurationSec =
+        Number.isFinite(audioEl.duration) && audioEl.duration > 0
+          ? audioEl.duration
+          : transcriptSpanSec;
+
+      const normalizedTranscriptTime =
+        transcriptSpanSec > 0 && audioDurationSec > 0
+          ? (currentTime / audioDurationSec) * transcriptSpanSec
+          : currentTime;
+
+      setActiveLineIndex(findActiveTranscriptIndex(agent.transcript, normalizedTranscriptTime));
+    };
+    const onError = () => {
+      setAudioError("Could not load this audio preview.");
+      setIsPlaying(false);
+    };
+
+    audioEl.addEventListener("play", onPlay);
+    audioEl.addEventListener("pause", onPause);
+    audioEl.addEventListener("ended", onEnded);
+    audioEl.addEventListener("timeupdate", onTimeUpdate);
+    audioEl.addEventListener("error", onError);
+
+    return () => {
+      audioEl.removeEventListener("play", onPlay);
+      audioEl.removeEventListener("pause", onPause);
+      audioEl.removeEventListener("ended", onEnded);
+      audioEl.removeEventListener("timeupdate", onTimeUpdate);
+      audioEl.removeEventListener("error", onError);
+    };
+  }, [agent.transcript]);
+
+  useEffect(() => {
+    if (activeLineIndex === -1) {
+      transcriptScrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const lineEl = lineRefs.current[activeLineIndex];
+    lineEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [activeLineIndex]);
 
   return (
     <section className="pb-32 px-6 bg-white overflow-visible relative selection:bg-black/10 font-sans antialiased text-black border-t border-slate-100">
@@ -289,8 +481,6 @@ export const AgentGramophone = () => {
                 <button
                     onClick={() => {
                         setCurrentAgentIndex(idx);
-                        setIsPlaying(false);
-                        setTurnIndex(-1);
                     }}
                     className="relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl z-10 transition-all active:scale-95 group/btn"
                 >
@@ -342,10 +532,22 @@ export const AgentGramophone = () => {
                             <motion.div key="transcript" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-full">
                                 <div ref={transcriptScrollRef} className="h-[300px] overflow-y-auto scroll-smooth no-scrollbar space-y-6">
                                     {agent.transcript.map((line, i) => (
-                                        <div key={i} className={cn(
-                                            "flex flex-col gap-1 transition-all duration-700",
-                                            i <= turnIndex ? "opacity-100" : "opacity-10"
-                                        )}>
+                                        <div
+                                            key={i}
+                                            ref={(el) => {
+                                              lineRefs.current[i] = el;
+                                            }}
+                                            className={cn(
+                                                "flex flex-col gap-1 transition-all duration-500",
+                                                activeLineIndex === -1
+                                                  ? "opacity-100"
+                                                  : i === activeLineIndex
+                                                    ? "opacity-100 scale-[1.01]"
+                                                    : i < activeLineIndex
+                                                      ? "opacity-45"
+                                                      : "opacity-15"
+                                            )}
+                                        >
                                             <div className="flex items-center gap-2">
                                                 <span className={cn(
                                                     "text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border border-black/20 shadow-sm",
@@ -353,7 +555,7 @@ export const AgentGramophone = () => {
                                                 )}>
                                                     {line.speaker === 'agent' ? "Agent" : "User"}
                                                 </span>
-                                                <span className="text-[8px] font-mono text-black/20 font-bold tracking-tighter">00:0{i}:00</span>
+                                                <span className="text-[9px] font-mono text-black/35 font-bold tracking-tighter">{formatClock(line.startSec)}</span>
                                             </div>
                                             <p className="text-xl font-bold tracking-tight text-black leading-tight">
                                                 "{line.text}"
@@ -364,10 +566,17 @@ export const AgentGramophone = () => {
                             </motion.div>
                         ) : (
                             <motion.div key="script" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
-                                <div className="text-[11px] font-bold text-black/20 uppercase tracking-widest mb-4">Internal instructions</div>
-                                <p className="text-xl font-serif italic text-black/60 leading-relaxed font-medium">
-                                    "{agent.instructionScript}"
-                                </p>
+                                <div className="text-[11px] font-bold text-black/20 uppercase tracking-widest mb-4">Call playbook summary</div>
+                                <div className="space-y-3">
+                                  {agent.instructionSummary.map((item, idx) => (
+                                    <div key={item} className="flex items-start gap-3">
+                                      <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/80 text-[10px] font-bold text-white">
+                                        {idx + 1}
+                                      </span>
+                                      <p className="text-[17px] font-medium text-black/70 leading-relaxed">{item}</p>
+                                    </div>
+                                  ))}
+                                </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -382,11 +591,15 @@ export const AgentGramophone = () => {
                 </div>
 
                 <div className="bg-black/5 rounded-[24px] border border-black/10 p-2 flex gap-2 items-center">
-                    <button onClick={() => setIsPlaying(!isPlaying)} className="w-16 h-16 shrink-0 rounded-[18px] bg-black text-white flex items-center justify-center hover:bg-black/80 active:scale-95 shadow-lg transition-all">
+                    <audio ref={audioRef} src={agent.audioSrc} preload="metadata" className="hidden" />
+                    <button onClick={toggleAudioPlayback} className="w-16 h-16 shrink-0 rounded-[18px] bg-black text-white flex items-center justify-center hover:bg-black/80 active:scale-95 shadow-lg transition-all">
                     {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current translate-x-0.5" />}
                     </button>
                     
                     <div className="flex-1 h-16 bg-white rounded-[18px] border border-black/10 flex items-center overflow-hidden shadow-sm focus-within:border-black/30 transition-all">
+                        <div className="pl-4 pr-2 text-[11px] font-mono text-slate-500 min-w-[52px]">
+                          {formatClock(playbackTimeSec)}
+                        </div>
                         <input 
                             type="text" 
                             placeholder="Your name" 
@@ -403,6 +616,7 @@ export const AgentGramophone = () => {
                         </button>
                     </div>
                 </div>
+                {audioError ? <p className="text-xs text-red-600 px-1">{audioError}</p> : null}
             </div>
 
           </div>
@@ -426,6 +640,19 @@ export const AgentGramophone = () => {
                     </div>
                     <div className="w-full space-y-5">
                         <input type="tel" placeholder="+91 00000 00000" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} disabled={isCalling} className="w-full px-8 py-6 rounded-3xl bg-slate-50 border-2 border-slate-100 focus:border-slate-900 focus:bg-white outline-none font-mono text-2xl text-center text-slate-900 transition-all disabled:opacity-60" />
+                        <label className="flex items-start gap-2 text-left text-xs text-slate-600">
+                          <input
+                            type="checkbox"
+                            checked={callConsent}
+                            onChange={(event) => setCallConsent(event.target.checked)}
+                            className="mt-0.5 h-4 w-4 rounded border-slate-300"
+                          />
+                          <span>
+                            I consent to Monade processing my phone number and call metadata to schedule this demo. See{' '}
+                            <Link href="/privacy" className="underline">Privacy Policy</Link> and{' '}
+                            <Link href="/terms" className="underline">Terms</Link>.
+                          </span>
+                        </label>
                         {callError && <p className="text-sm text-red-600 font-medium">{callError}</p>}
                         {callSuccess && <p className="text-sm text-emerald-700 font-medium">{callSuccess}</p>}
                         <button 
