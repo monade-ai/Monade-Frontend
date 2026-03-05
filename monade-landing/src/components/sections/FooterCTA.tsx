@@ -1,5 +1,8 @@
+"use client";
+
 import { Twitter, Linkedin, Github } from "lucide-react";
 import Link from "next/link";
+import { openCookieSettings } from "@/components/consent/ConsentManager";
 
 const footerLinks = [
   {
@@ -24,7 +27,7 @@ const footerLinks = [
     title: "Support",
     links: [
       { label: "Help center", href: "#" },
-      { label: "Trust center", href: "#" },
+      { label: "Trust center", href: "/trust" },
       { label: "Status", href: "#" },
       { label: "Contact us", href: "#" },
     ],
@@ -97,9 +100,16 @@ export const FooterCTA = () => {
           <div className="text-sm text-slate-400 font-medium">© 2026 Monade AI Inc. All rights reserved.</div>
 
           <div className="flex gap-8 text-sm text-slate-400 font-medium">
-            <Link href="#" className="hover:text-slate-900 transition-colors">Privacy</Link>
-            <Link href="#" className="hover:text-slate-900 transition-colors">Terms</Link>
-            <Link href="#" className="hover:text-slate-900 transition-colors">Cookies</Link>
+            <Link href="/privacy" className="hover:text-slate-900 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-slate-900 transition-colors">Terms</Link>
+            <Link href="/cookies" className="hover:text-slate-900 transition-colors">Cookies</Link>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="hover:text-slate-900 transition-colors"
+            >
+              Cookie settings
+            </button>
           </div>
         </div>
       </div>

@@ -1,7 +1,11 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, EB_Garamond } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
+import { ConsentProvider } from "@/components/consent/ConsentManager";
+import { GoogleAnalytics } from "@/components/consent/GoogleAnalytics";
+import { CONSENT_COOKIE_NAME } from "@/lib/consent/constants";
 import {
   DEFAULT_SITE_DESCRIPTION,
   DEFAULT_SITE_TITLE,
@@ -76,17 +80,23 @@ export const viewport: Viewport = {
   themeColor: "#D94126",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const initialConsentCookie = cookieStore.get(CONSENT_COOKIE_NAME)?.value ?? null;
+
   return (
     <html lang="en" className="light">
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} ${ebGaramond.variable} antialiased font-sans bg-white text-foreground`}
       >
-        {children}
+        <ConsentProvider initialConsentCookie={initialConsentCookie}>
+          {children}
+          <GoogleAnalytics />
+        </ConsentProvider>
       </body>
     </html>
   );

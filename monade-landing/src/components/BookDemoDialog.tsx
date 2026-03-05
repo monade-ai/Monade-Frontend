@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, ChevronRight, Building2, Heart, ShoppingBag, 
   Utensils, Car, Shield, Plus, PhoneIncoming, PhoneOutgoing,
-  Calendar, Check
+  Calendar
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { LiquidGlassCard } from "./LiquidGlassCard";
@@ -29,6 +30,7 @@ export const BookDemoDialog = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
     otherSector: '',
     volume: 10000
   });
+  const [privacyConsent, setPrivacyConsent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -210,6 +212,21 @@ export const BookDemoDialog = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
               <button type="submit" className="w-full py-5 rounded-2xl bg-black text-white font-bold text-sm uppercase tracking-widest hover:bg-[#D94126] transition-all shadow-xl active:scale-[0.98] flex items-center justify-center gap-3 group">
                 Continue to Scheduler <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
+
+              <label className="flex items-start gap-2 text-xs text-slate-500 leading-relaxed">
+                <input
+                  required
+                  type="checkbox"
+                  checked={privacyConsent}
+                  onChange={(event) => setPrivacyConsent(event.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-slate-300"
+                />
+                <span>
+                  I agree to Monade contacting me about this demo request and to the{' '}
+                  <Link href="/privacy" className="underline">Privacy Policy</Link> and{' '}
+                  <Link href="/terms" className="underline">Terms</Link>.
+                </span>
+              </label>
 
               <p className="text-center text-[9px] font-bold text-slate-300 uppercase tracking-widest">
                 Privacy Protected • Secure Connection
