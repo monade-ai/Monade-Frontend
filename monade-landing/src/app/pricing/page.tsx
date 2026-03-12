@@ -94,7 +94,7 @@ export default function PricingPage() {
                 <span className="font-serif italic text-slate-300 font-light text-[0.9em]">Calibrated.</span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-                No platform fees or hidden costs. We bill by the second, tailored to how much you actually talk.
+                No platform fees or hidden costs. We bill by the minute, tailored to how much you actually talk.
             </p>
           </div>
 
@@ -158,7 +158,7 @@ export default function PricingPage() {
           <PricingSlab 
             label="ART 01"
             title="Artisan"
-            price={callVolume < 10000 ? 0.25 : 0.22}
+            price={8}
             desc="For teams shipping their first models. Hand-crafted quality with zero complexity."
             features={['Sub-200ms Latency', 'Zero-Shot Accents', 'Standard Webhooks']}
             variant="white"
@@ -168,7 +168,7 @@ export default function PricingPage() {
           <PricingSlab 
             label="ENG 02"
             title="The Engine"
-            price={callVolume < 10000 ? 0.20 : 0.18}
+            price={callVolume < 10000 ? 7.5 : 7}
             desc="Optimized for high-volume production. Custom fine-tuning and dedicated support."
             features={['Everything in Artisan', 'Predictive Interruptions', '24/7 Technical Direct']}
             variant="obsidian"
@@ -251,8 +251,8 @@ function PricingSlab({ label, title, price, desc, features, variant, highlight }
 
                 <div className="space-y-2">
                     <div className="flex items-baseline gap-1">
-                        <span className="text-7xl font-bold tracking-tighter">{typeof price === 'number' ? `$${price}` : price}</span>
-                        {typeof price === 'number' && <span className={cn("text-xs font-black uppercase tracking-widest ml-2", isObsidian ? "text-white/20" : "text-black/20")}>/ Sec</span>}
+                        <span className="text-7xl font-bold tracking-tighter">{typeof price === 'number' ? `Rs ${price}` : price}</span>
+                        {typeof price === 'number' && <span className={cn("text-xs font-black uppercase tracking-widest ml-2", isObsidian ? "text-white/20" : "text-black/20")}>/ Minute</span>}
                     </div>
                 </div>
 
