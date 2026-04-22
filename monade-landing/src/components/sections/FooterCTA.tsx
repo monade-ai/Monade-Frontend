@@ -52,7 +52,7 @@ export const FooterCTA = () => {
               Get started for free
             </Link>
             <Link
-              href="https://calendly.com/monade-ai/demo"
+              href="https://calendly.com/adhiraj-n1labs/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-slate-50 text-slate-900 rounded-xl font-semibold text-lg hover:bg-slate-100 transition-all"

@@ -28,7 +28,7 @@ export const Hero = () => {
               Get started for free
             </Link>
             <Link
-              href="https://calendly.com/monade-ai/demo"
+              href="https://calendly.com/adhiraj-n1labs/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="px-10 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all active:scale-[0.98]"

@@ -283,8 +283,8 @@ function PricingSlab({ label, title, price, desc, features, variant, highlight, 
                 </div>
             </div>
 
-            <button
-                onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+            <button 
+                onClick={() => window.open('https://calendly.com/adhiraj-n1labs/30min', '_blank')}
                 className={cn(
                 "mt-20 w-full py-6 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-3 active:scale-[0.98]",
                 isObsidian

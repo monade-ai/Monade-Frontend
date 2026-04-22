@@ -150,7 +150,7 @@ export const Verticals = () => {
         {/* Minimal Footer */}
         <div className="mt-16 flex justify-center pt-8 border-t border-black/5">
             <button 
-                onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+                onClick={() => window.open('https://calendly.com/adhiraj-n1labs/30min', '_blank')}
                 className="flex items-center gap-3 px-8 py-3 text-sm font-bold text-slate-900 hover:opacity-70 transition-all group"
             >
                 Deploy for your industry 

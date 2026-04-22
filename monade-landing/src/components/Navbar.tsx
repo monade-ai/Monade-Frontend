@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 import { LiquidGlassCard } from "./LiquidGlassCard";
 import OpenClawBanner from "./sections/OpenClawBanner";
-import BookDemoDialog from "./BookDemoDialog";
+// import BookDemoDialog from "./BookDemoDialog";
 
 const OpenClawIcon = ({ className }: { className?: string }) => (
   <div className={cn("relative overflow-hidden", className)}>
@@ -68,7 +68,8 @@ export default function Navbar({ variant }: NavbarProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-  const [isBookDemoOpen, setIsBookDemoOpen] = useState(false);
+  // Book demo currently routes straight to Calendly instead of opening the custom modal.
+  // const [isBookDemoOpen, setIsBookDemoOpen] = useState(false);
   const [hoveredResource, setHoveredResource] = useState(resourceLinks[0]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -262,7 +263,7 @@ export default function Navbar({ variant }: NavbarProps) {
               </Link>
               <button
                 type="button"
-                onClick={() => setIsBookDemoOpen(true)}
+                onClick={() => window.open("https://calendly.com/adhiraj-n1labs/30min", "_blank")}
                 className="px-6 py-2.5 rounded-full text-lg font-bold transition-all shadow-lg hover:scale-105 active:scale-95 bg-[#1A1A1A] text-white hover:bg-black"
               >
                 Book Demo
@@ -372,7 +373,7 @@ export default function Navbar({ variant }: NavbarProps) {
                     <button
                       type="button"
                       onClick={() => {
-                        setIsBookDemoOpen(true);
+                        window.open("https://calendly.com/adhiraj-n1labs/30min", "_blank");
                         closeMenu();
                       }}
                       className="w-full py-5 rounded-full text-3xl font-bold shadow-lg bg-[#1A1A1A] text-white active:scale-95 transition-transform"
@@ -387,7 +388,8 @@ export default function Navbar({ variant }: NavbarProps) {
         </div>
       </div>
 
-      <BookDemoDialog isOpen={isBookDemoOpen} onClose={() => setIsBookDemoOpen(false)} />
+      {/* BookDemoDialog kept disabled for now since Book Demo goes directly to Calendly. */}
+      {/* <BookDemoDialog isOpen={isBookDemoOpen} onClose={() => setIsBookDemoOpen(false)} /> */}
     </header>
   );
 }

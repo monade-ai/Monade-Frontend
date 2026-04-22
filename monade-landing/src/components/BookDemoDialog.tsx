@@ -34,7 +34,7 @@ export const BookDemoDialog = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    window.open('https://calendly.com/monade-ai/demo', '_blank');
+    window.open('https://calendly.com/adhiraj-n1labs/30min', '_blank');
     onClose();
   };
 

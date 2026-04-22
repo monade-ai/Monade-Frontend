@@ -109,7 +109,7 @@ export const HowItWorks = () => {
         {/* Call to Action */}
         <div className="mt-12 flex justify-center pt-10 border-t border-black/5">
             <button 
-                onClick={() => window.open('https://calendly.com/monade-ai/demo', '_blank')}
+                onClick={() => window.open('https://calendly.com/adhiraj-n1labs/30min', '_blank')}
                 className="flex items-center gap-3 px-10 py-4 bg-black text-white rounded-xl font-bold text-lg hover:bg-slate-900 transition-all shadow-lg active:scale-0.98 group"
             >
                 Start your pilot <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
