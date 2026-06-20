@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import { ConsentProvider } from "@/components/consent/ConsentManager";
 import { GoogleAnalytics } from "@/components/consent/GoogleAnalytics";
+import { PostHogAnalytics } from "@/components/consent/PostHogAnalytics";
 import { CONSENT_COOKIE_NAME } from "@/lib/consent/constants";
 import {
   DEFAULT_SITE_DESCRIPTION,
@@ -96,6 +97,7 @@ export default async function RootLayout({
         <ConsentProvider initialConsentCookie={initialConsentCookie}>
           {children}
           <GoogleAnalytics />
+          <PostHogAnalytics />
         </ConsentProvider>
       </body>
     </html>
