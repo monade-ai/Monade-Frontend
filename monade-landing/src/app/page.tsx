@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@/lib/seo";
 import "./home.css";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Voice That Earns the Next Sentence",
+  title: "Voice that earns the next sentence",
   description:
     "Monade runs phone agents that listen, adapt, and move real work forward across India.",
   path: "/",

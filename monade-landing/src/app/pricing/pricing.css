@@ -260,44 +260,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.price-calc__presets {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 34px;
-}
-
-.price-calc__presets button {
-  min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid var(--home-line);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--home-muted);
-  font: inherit;
-  font-size: 0.8rem;
-  font-weight: 560;
-  cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease,
-    transform 160ms ease;
-}
-
-.price-calc__presets button:hover,
-.price-calc__presets button:focus-visible {
-  border-color: var(--home-ink);
-  color: var(--home-ink);
-}
-
-.price-calc__presets button:active {
-  transform: scale(0.97);
-}
-
-.price-calc__presets button.is-active {
-  border-color: var(--home-ink);
-  background: var(--home-ink);
-  color: var(--home-bg);
-}
-
 .price-calc__threshold {
   display: flex;
   align-items: center;
@@ -332,25 +294,8 @@
   position: relative;
   min-height: 610px;
   overflow: hidden;
-  isolation: isolate;
-  background:
-    radial-gradient(circle at 16% 18%, #c8442f 0, transparent 42%),
-    radial-gradient(circle at 78% 76%, #37324f 0, transparent 44%),
-    #272725;
+  background: #272725;
   color: #fffaf4;
-}
-
-.price-calc__shader {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-
-.price-calc__shader::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(19, 20, 18, 0.2), rgba(19, 20, 18, 0.7));
-  content: "";
 }
 
 .price-calc__result-content {

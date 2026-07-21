@@ -6,7 +6,7 @@ import Image from "next/image";
 import { 
     MoreVertical, CheckCheck, Smile, Paperclip, 
     Camera, Mic, Phone, Video, ChevronLeft,
-    FileText, X, Download, Share2, Search
+    FileText, X, Download, Share2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

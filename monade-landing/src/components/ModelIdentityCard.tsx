@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { StaticMeshGradient } from '@paper-design/shaders-react';
 import { cn } from '@/lib/utils';
 

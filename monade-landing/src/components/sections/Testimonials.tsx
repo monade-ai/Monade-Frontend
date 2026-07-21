@@ -53,9 +53,10 @@ const testimonials = [
 
 export const Testimonials = () => {
   return (
-    <section className="py-32 bg-[#FDFBF7] overflow-hidden">
-      <div className="text-center mb-24 px-6">
-        <h2 className="text-5xl md:text-8xl font-serif italic text-slate-900 tracking-tight relative inline-block">
+    <section className="py-24 md:py-32 bg-background overflow-hidden">
+      <div className="text-center mb-16 md:mb-24 px-6">
+        <div className="machine-label text-ink/40 mb-6">06 — Testimony</div>
+        <h2 className="serif-accent text-5xl md:text-8xl text-ink tracking-tight relative inline-block">
           Love letters to Monade
           <svg className="absolute -right-12 -top-8 w-24 h-24 text-[#D94126] opacity-80 -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M50,10 q10,-30 40,0 t-40,0 z" fill="none" />
@@ -133,7 +134,7 @@ export const Testimonials = () => {
 
         <div className="flex justify-center gap-2">
           {testimonials.map((_, i) => (
-            <div key={i} className={cn("w-1.5 h-1.5 rounded-full transition-all", i === 0 ? "bg-[#D94126] w-4" : "bg-slate-200")} />
+            <div key={i} className={cn("w-2 h-2 rounded-full transition-all", i === 0 ? "bg-primary w-5" : "bg-ink/15")} />
           ))}
         </div>
       </div>

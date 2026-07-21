@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
-import "../about/about.css";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -13,154 +12,120 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/team",
 });
 
-export default function TeamPage() {
-  const teamMembers = [
-    {
-      name: "Amol Soans",
-      role: "Co-Founder & CEO",
-      image: "/team/Amol%20Photo.jpg",
-      bio: "Amol is a 2x founder who leads Monade's vision and strategic direction, bringing 3 years of leadership experience from Bajaj where he led offshore teams and managed complex technical projects. As CEO, he later specialized in voice AI technologies and combines his proven leadership skills with deep AI expertise to drive Monade's growth and deliver transformative customer experiences.",
-      expertise: ["Team Leadership", "Voice AI Technology", "Executive Strategy"],
-      linkedin: "https://www.linkedin.com/in/amoldericksoans/",
-      twitter: "https://x.com/AmolSoans"
-    },
-    {
-      name: "Narayan Thakur",
-      role: "Co-Founder & COO",
-      image: "/team/Narayan%20Photo.jpg",
-      bio: "Narayan brings exceptional entrepreneurial drive as Joint Secretary of E-Cell at IIIT Ranchi and achieved his first major business milestone by closing his first sale at just 19 years old. As COO, he leverages his early entrepreneurial success and leadership experience to oversee operations, drive business strategy, and ensure Monade's rapid market expansion.",
-      expertise: ["Entrepreneurship", "Operations Management", "Business Development"],
-      linkedin: "https://www.linkedin.com/in/narayan-thakur-b63b55281/",
-      twitter: "https://x.com/thakurnarayan49"
-    },
-    {
-      name: "Aaditya Rangarajan",
-      role: "Co-Founder & CTO",
-      image: "/team/Screenshot%202025-08-18%20141219.png",
-      bio: "Aaditya brings robust technical expertise with 2 years of experience at Philips and current role as Software Engineer at Helios. As CTO, he combines his enterprise software development background with cutting-edge AI engineering to build Monade's scalable platform architecture that handles enterprise-level deployments with exceptional reliability and performance.",
-      expertise: ["Enterprise Software", "Technical Leadership", "Platform Engineering"],
-      linkedin: "https://www.linkedin.com/in/aaditya2200/",
-      twitter: "https://x.com/ADR_ad22"
-    },
-    {
-      name: "Shashwat Yashasvi",
-      role: "Co-Founder & Head of AI",
-      image: "/team/shashwat.jpg",
-      bio: "Shashwat leads the ML Wing at IIIT Ranchi and drives AI innovation at Monade, focusing on advancing our conversational AI capabilities and natural language processing. As Head of AI, he combines his academic ML leadership with cutting-edge research to ensure our voice agents deliver increasingly human-like interactions, pushing the boundaries of conversational AI technology.",
-      expertise: ["ML Research Leadership", "Natural Language Processing", "Conversational AI"],
-      linkedin: "https://www.linkedin.com/in/shashwat-yashasvi-4082562a1/",
-      twitter: "https://x.com/shashwatya71079"
-    }
-  ];
+const FOUNDERS = [
+  {
+    name: "Amol Soans",
+    role: "Co-founder — CEO",
+    image: "/team/Amol%20Photo.jpg",
+    line: "I own the direction. Every product bet and every client promise stops with me.",
+    linkedin: "https://www.linkedin.com/in/amoldericksoans/",
+  },
+  {
+    name: "Narayan Thakur",
+    role: "Co-founder — COO",
+    image: "/team/Narayan%20Photo.jpg",
+    line: "I run the operation — from the first call to the signed contract, I keep it moving.",
+    linkedin: "https://www.linkedin.com/in/narayan-thakur-b63b55281/",
+  },
+  {
+    name: "Aaditya Rangarajan",
+    role: "Co-founder — CTO",
+    image: "/team/Screenshot%202025-08-18%20141219.png",
+    line: "I build the platform — the architecture that keeps every call fast and every deployment steady.",
+    linkedin: "https://www.linkedin.com/in/aaditya2200/",
+  },
+  {
+    name: "Shashwat Yashasvi",
+    role: "Co-founder — Head of AI",
+    image: "/team/shashwat.jpg",
+    line: "I train the voice — the models that make our agents sound like people, not software.",
+    linkedin: "https://www.linkedin.com/in/shashwat-yashasvi-4082562a1/",
+  },
+];
 
+function LinkedInIcon({ className }: { className?: string }) {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Navbar variant="black" />
-      {/* Hero Section */}
-      <section className="relative pt-12 pb-16 bg-gradient-to-br from-orange-900/50 via-black to-orange-900/50">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-900/30 via-black to-orange-900/30"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              Meet Our Team
-            </span>
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+
+export default function TeamPage() {
+  return (
+    <div className="min-h-screen bg-background text-ink">
+      <Navbar variant="transparent" />
+
+      {/* Hero */}
+      <section className="pt-44 md:pt-52 pb-24 md:pb-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="machine-label text-ink/50 mb-6">01 — The founders</p>
+          <h1 className="font-display text-5xl md:text-7xl leading-[1.02] text-ink max-w-3xl">
+            The people behind the{" "}
+            <span className="serif-accent text-clay">voice.</span>
           </h1>
-          <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            The driving force behind Monade.ai is our talented team of founders, each bringing unique expertise in AI, engineering, and product development to create world-class conversational AI solutions.
+          <p className="mt-8 text-lg md:text-xl text-ink/60 leading-relaxed max-w-2xl">
+            Four founders, one instrument. We build the voice AI that answers
+            India&rsquo;s phones — and we ship it ourselves.
           </p>
         </div>
       </section>
 
-
-
-      {/* Team Members */}
-      <section className="py-12 bg-black">
+      {/* Founders grid */}
+      <section className="pb-24 md:pb-32">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="sr-only">Team members</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30 shadow-2xl hover:shadow-orange-500/10 transition-all duration-300">
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  {/* Profile Image */}
-                  <div className="flex-shrink-0">
-                    <div className="w-32 h-32 rounded-2xl overflow-hidden border-2 border-orange-500/30">
-                      <Image 
-                        src={member.image} 
-                        alt={member.name} 
-                        width={128} 
-                        height={128}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* Member Info */}
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
-                    <div className="inline-block px-3 py-1 bg-orange-600/20 border border-orange-500/30 rounded-full text-orange-400 text-sm font-medium mb-4">
-                      {member.role}
-                    </div>
-                    
-                    <p className="text-gray-300 leading-relaxed mb-4">
-                      {member.bio}
-                    </p>
-                    
-                    {/* Expertise Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {member.expertise.map((skill, skillIndex) => (
-                        <span key={skillIndex} className="px-3 py-1 bg-gray-700/50 border border-gray-600/30 rounded-full text-gray-300 text-xs">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    {/* Social Links */}
-                    <div className="flex items-center space-x-4">
-                      <a 
-                        href={member.linkedin} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        <span>LinkedIn</span>
-                      </a>
-                      <a 
-                        href={member.twitter} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-gray-400 hover:text-gray-300 transition-colors"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                        </svg>
-                        <span>Twitter</span>
-                      </a>
-                    </div>
+          <h2 className="sr-only">Founders</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
+            {FOUNDERS.map((founder) => (
+              <article key={founder.name}>
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] border border-[var(--hairline)] bg-ochre/20">
+                  <Image
+                    src={founder.image}
+                    alt={founder.name}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover sepia-[0.22] saturate-[0.88] contrast-[1.05]"
+                  />
+                </div>
+                <div className="hairline-b mt-6 pb-5">
+                  <p className="machine-label text-ink/50">{founder.role}</p>
+                  <div className="mt-2 flex items-start justify-between gap-3">
+                    <h3 className="font-display text-2xl text-ink">
+                      {founder.name}
+                    </h3>
+                    <a
+                      href={founder.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${founder.name} on LinkedIn`}
+                      className="mt-1.5 -m-2 p-2 text-ink/40 hover:text-ink transition-colors"
+                    >
+                      <LinkedInIcon className="w-4 h-4" />
+                    </a>
                   </div>
                 </div>
-              </div>
+                <p className="mt-5 text-[15px] leading-relaxed text-ink/70">
+                  &ldquo;{founder.line}&rdquo;
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Company Vision */}
-      <section className="py-16 bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Our Vision</h2>
-          <p className="text-xl text-gray-300 leading-relaxed mb-8">
-            We're building the future of business communication where AI agents are indistinguishable from human representatives, enabling companies to provide exceptional customer experiences at scale while reducing operational costs.
-          </p>
-          <div className="bg-gradient-to-r from-orange-900/30 via-orange-800/20 to-orange-900/30 rounded-2xl p-6 border border-orange-500/30">
-            <p className="text-lg text-orange-200 italic">
-              "Our mission is to democratize access to intelligent customer service through human-like AI voice agents that work 24/7 across multiple languages and industries."
-            </p>
+      {/* Vision — one pull-quote */}
+      <section className="pb-24 md:pb-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="hairline-t hairline-b py-16 md:py-20">
+            <p className="machine-label text-ink/50 mb-8">02 — Why we build</p>
+            <blockquote className="serif-accent text-3xl md:text-5xl leading-[1.2] text-ink max-w-4xl">
+              We&rsquo;re building voice agents good enough that the person on
+              the other end simply feels heard.
+            </blockquote>
           </div>
         </div>
       </section>
+
       <FooterCTA />
     </div>
   );

@@ -2,7 +2,6 @@
 
 import { type CSSProperties, useState } from "react";
 import Link from "next/link";
-import { StaticMeshGradient } from "@paper-design/shaders-react";
 
 const MIN_VOLUME = 1_000;
 const MAX_VOLUME = 100_000;
@@ -10,7 +9,6 @@ const VOLUME_BREAKPOINT = 10_000;
 const STANDARD_RATE = 8;
 const VOLUME_RATE = 6;
 const SLIDER_STEPS = 1_000;
-const PRESETS = [2_000, 5_000, 10_000, 25_000, 50_000, 100_000];
 
 function formatNumber(value: number) {
   return new Intl.NumberFormat("en-IN").format(value);
@@ -108,20 +106,6 @@ export default function PricingCalculator() {
           </div>
         </div>
 
-        <div className="price-calc__presets" aria-label="Volume presets">
-          {PRESETS.map((preset) => (
-            <button
-              type="button"
-              key={preset}
-              className={volume === preset ? "is-active" : ""}
-              aria-pressed={volume === preset}
-              onClick={() => setCommittedVolume(preset)}
-            >
-              {formatNumber(preset)}
-            </button>
-          ))}
-        </div>
-
         <div className={`price-calc__threshold ${activeRate === VOLUME_RATE ? "is-active" : ""}`}>
           <span className="price-calc__threshold-dot" aria-hidden="true" />
           <p>
@@ -133,20 +117,6 @@ export default function PricingCalculator() {
       </div>
 
       <aside className="price-calc__result" aria-label="Estimated price">
-        <div className="price-calc__shader" aria-hidden="true">
-          <StaticMeshGradient
-            width="100%"
-            height="100%"
-            colors={["#171816", "#D94126", "#847CD4", "#EFEAE1"]}
-            positions={34}
-            mixing={0.58}
-            waveX={0.52}
-            waveY={0.76}
-            scale={1.06}
-            rotation={205}
-            grainOverlay={0.08}
-          />
-        </div>
         <div className="price-calc__result-content">
           <div className="price-calc__result-topline">
             <span>Estimated monthly spend</span>

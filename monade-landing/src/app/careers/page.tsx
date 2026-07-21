@@ -1,114 +1,97 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Globe, Heart, Rocket, Coffee, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FooterCTA from '@/components/sections/FooterCTA';
-import { cn } from '@/lib/utils';
-
-const VALUES = [
-  { 
-    title: "Truth in every word", 
-    desc: "We believe in voice AI that's honest. We don't try to trick people; we build tools that make human connection clearer and more effective.",
-    icon: Heart 
-  },
-  { 
-    title: "Work that moves fast", 
-    desc: "The world changes quickly, and so do we. We value focus, speed, and the courage to ship something meaningful every single day.",
-    icon: Rocket 
-  },
-  { 
-    title: "Crafted with care", 
-    desc: "We are designers and engineers who care about the details. From the first line of code to the final voice prompt, quality is our baseline.",
-    icon: Sparkles 
-  }
-];
 
 const ROLES = [
   { title: "Voice Research Engineer", team: "Engineering", location: "Remote / Bangalore" },
   { title: "Product Designer", team: "Design", location: "Remote / London" },
-  { title: "Operations Lead", team: "Business", location: "Remote / Mumbai" }
+  { title: "Operations Lead", team: "Business", location: "Remote / Mumbai" },
 ];
 
 export default function CareersPage() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-primary/10">
+    <div className="min-h-screen bg-background text-ink font-sans antialiased selection:bg-primary/10">
       <Navbar variant="light" />
 
-      <main className="pt-56 pb-20">
-        {/* Header: Human-centric and welcoming */}
-        <section className="max-w-5xl mx-auto px-6 mb-24">
-          <div className="flex flex-col items-start space-y-6">
-            <h1 className="text-6xl md:text-[80px] font-semibold tracking-tight leading-[1.05] text-slate-900">
-                Help us build the <br />
-                <span className="font-serif italic text-slate-400 font-medium">future of voice.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
-                We're a small, focused team building the next generation of voice intelligence. We value craft, clarity, and the people who make it happen.
+      <main className="pt-44 md:pt-52">
+        {/* ─── Hero ─── */}
+        <section className="max-w-7xl mx-auto px-6 pb-24 md:pb-32">
+          <div className="machine-label text-ink/40 mb-6">
+            {ROLES.length} open roles — Bangalore · London · Mumbai
+          </div>
+          <h1 className="font-display text-6xl md:text-[80px] leading-[1.02] mb-8">
+            Help us build the <br />
+            <span className="serif-accent text-ink/40">future</span> of voice.
+          </h1>
+          <p className="text-lg md:text-xl text-ink/60 max-w-2xl leading-relaxed">
+            We&rsquo;re a small, focused team building the next generation of voice
+            intelligence. We value craft, clarity, and the people who make it happen.
+          </p>
+        </section>
+
+        {/* ─── Manifesto ─── */}
+        <section className="hairline-t">
+          <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
+            <div className="machine-label text-ink/40 mb-6">01 — How we work</div>
+            <p className="text-xl md:text-2xl text-ink/80 leading-relaxed max-w-2xl">
+              We build honest instruments. No tricks, no theater — voice AI that makes
+              human connection clearer. We move quickly and ship something meaningful
+              every day, but never at the expense of the details. From the first line
+              of code to the final voice prompt, quality is the baseline, not the goal.
             </p>
           </div>
         </section>
 
-        {/* Our Values: Clean Grid */}
-        <section className="max-w-7xl mx-auto px-6 py-24 border-t border-slate-100">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20">
-            {VALUES.map((val) => (
-              <div key={val.title} className="space-y-4">
-                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100">
-                    <val.icon className="w-5 h-5 text-slate-400" />
-                </div>
-                <h3 className="text-xl font-bold tracking-tight text-slate-900">{val.title}</h3>
-                <p className="text-base text-slate-500 leading-relaxed">
-                    {val.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* ─── Open roles: hairline-ruled table ─── */}
+        <section id="roles" className="hairline-t">
+          <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
+            <div className="mb-12">
+              <div className="machine-label text-ink/40 mb-6">02 — Open roles</div>
+              <h2 className="font-display text-3xl md:text-4xl">
+                Take a <span className="serif-accent text-ink/40">seat</span> at the bench.
+              </h2>
+            </div>
 
-        {/* Open Positions: Clean List */}
-        <section className="max-w-5xl mx-auto px-6 py-24 border-t border-slate-100">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Open roles</h2>
-            <p className="text-base text-slate-500">We're always looking for talented people who care about their craft.</p>
+            <div className="hairline-t">
+              {ROLES.map((role) => (
+                <a
+                  key={role.title}
+                  href={`mailto:careers@monade.ai?subject=${encodeURIComponent(`Application — ${role.title}`)}`}
+                  className="group grid grid-cols-1 md:grid-cols-12 items-center gap-2 md:gap-6 py-6 md:py-7 hairline-b transition-colors hover:bg-ink/[0.03]"
+                >
+                  <div className="md:col-span-6">
+                    <span className="font-display text-xl md:text-2xl group-hover:text-primary transition-colors">
+                      {role.title}
+                    </span>
+                  </div>
+                  <div className="md:col-span-3 text-[13px] font-medium text-ink/50 uppercase tracking-widest">
+                    {role.team}
+                  </div>
+                  <div className="md:col-span-2 text-[13px] font-medium text-ink/50">
+                    {role.location}
+                  </div>
+                  <div className="md:col-span-1 md:justify-self-end">
+                    <ArrowRight className="w-5 h-5 text-ink/40 group-hover:text-ink group-hover:translate-x-1 transition-all" />
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-
-          <div className="space-y-3">
-            {ROLES.map((role, i) => (
-                <div key={i} className="group flex flex-col md:flex-row md:items-center justify-between p-6 rounded-2xl border border-slate-100 hover:border-slate-200 hover:shadow-sm transition-all cursor-pointer">
-                    <div className="space-y-1">
-                        <h4 className="text-xl font-bold text-slate-900">{role.title}</h4>
-                        <div className="flex items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">
-                            <span>{role.team}</span>
-                            <div className="w-1 h-1 rounded-full bg-slate-200" />
-                            <span>{role.location}</span>
-                        </div>
-                    </div>
-                    <div className="mt-4 md:mt-0 flex items-center gap-2 text-sm font-bold text-slate-900 group-hover:translate-x-1 transition-transform">
-                        Apply now <ArrowRight className="w-4 h-4" />
-                    </div>
-                </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Culture Teaser */}
-        <section className="max-w-xl mx-auto px-6 text-center mt-20">
-          <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-slate-100">
-            <Coffee className="w-5 h-5 text-slate-400" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Not seeing a fit?</h3>
-          <p className="text-base text-slate-500 mb-8 leading-relaxed">
-            We are always happy to hear from interesting people. Tell us what you're working on and how you'd like to help.
-          </p>
-          <button className="text-slate-900 font-bold hover:opacity-70 transition-opacity flex items-center gap-2 mx-auto underline underline-offset-8">
-            Send us a note
-          </button>
         </section>
       </main>
 
-      <FooterCTA />
+      <FooterCTA
+        title="Come build the instrument."
+        description="No role that fits? Tell us what you're working on and how you'd like to help. We're always happy to hear from people who care about their craft."
+        primaryLabel="See open roles"
+        primaryHref="#roles"
+        secondaryLabel="Send us a note"
+        secondaryHref="mailto:careers@monade.ai"
+        secondaryExternal={false}
+      />
     </div>
   );
 }

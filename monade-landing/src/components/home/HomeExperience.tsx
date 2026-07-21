@@ -2,23 +2,8 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { MeshGradient, StaticMeshGradient } from "@paper-design/shaders-react";
+import { MeshGradient } from "@paper-design/shaders-react";
 import LivingCall from "@/components/home/LivingCall";
-
-const outcomes = [
-  {
-    title: "Qualify",
-    copy: "Ask the questions your best operator would ask, then write the answers back to your system.",
-  },
-  {
-    title: "Schedule",
-    copy: "Move from interest to a confirmed next step while the customer is still on the line.",
-  },
-  {
-    title: "Support",
-    copy: "Resolve the routine. Hand off the sensitive. Keep the full context attached.",
-  },
-];
 
 export default function HomeExperience() {
   const reduceMotion = useReducedMotion();
@@ -62,6 +47,9 @@ export default function HomeExperience() {
               Get a demo <span aria-hidden="true">↗</span>
             </Link>
           </div>
+          <p className="home-hero__proof">
+            First word in 0.4s · Hinglish and regional languages · from ₹8 a minute
+          </p>
         </motion.div>
 
         <motion.div
@@ -85,7 +73,6 @@ export default function HomeExperience() {
               rotation={18}
             />
           </div>
-          <p>A good call makes room for an answer.</p>
         </motion.div>
       </section>
 
@@ -96,46 +83,6 @@ export default function HomeExperience() {
         </motion.div>
 
         <LivingCall />
-      </section>
-
-      <section className="home-section home-shell home-loop">
-        <motion.div className="home-loop__visual" {...reveal} aria-hidden="true">
-          <StaticMeshGradient
-            width="100%"
-            height="100%"
-            colors={["#F2EFE8", "#D94126", "#C4BDF7", "#E8B6A4"]}
-            positions={36}
-            mixing={0.54}
-            waveX={0.42}
-            waveY={0.68}
-            scale={0.92}
-            rotation={248}
-            grainOverlay={0.08}
-          />
-          <span>Context becomes conversation.</span>
-        </motion.div>
-
-        <motion.div className="home-loop__content" {...reveal}>
-          <h2>Your knowledge becomes a better conversation.</h2>
-          <p>
-            Start with the facts. Monade designs the call, runs it, and tunes
-            what happens next.
-          </p>
-          <ol>
-            <li>
-              <strong>Give it context.</strong>
-              <span>Products, policies, calendars, and customer history.</span>
-            </li>
-            <li>
-              <strong>Launch the call.</strong>
-              <span>Inbound or outbound, with the right voice and register.</span>
-            </li>
-            <li>
-              <strong>Learn from every answer.</strong>
-              <span>Transcripts become the next script improvement.</span>
-            </li>
-          </ol>
-        </motion.div>
       </section>
 
       <section className="home-section home-shell home-india">
@@ -164,38 +111,34 @@ export default function HomeExperience() {
         </div>
       </section>
 
-      <section className="home-section home-shell home-outcomes">
-        <motion.div className="home-outcomes__heading" {...reveal}>
+      <section className="home-section home-shell home-loop">
+        <motion.div className="home-loop__content" {...reveal}>
           <h2>The call ends. The work keeps moving.</h2>
+          <p>
+            Monade qualifies the customer, books the next step, and writes the outcome back to your systems.
+          </p>
           <Link href="/products" className="home-text-link">
             See the product <span aria-hidden="true">↗</span>
           </Link>
         </motion.div>
-        <div className="home-outcomes__list">
-          {outcomes.map((outcome) => (
-            <div key={outcome.title}>
-              <h3>{outcome.title}</h3>
-              <p>{outcome.copy}</p>
-            </div>
-          ))}
-        </div>
+
+        <motion.dl className="home-loop__proof" {...reveal}>
+          <div>
+            <dt>Call outcome</dt>
+            <dd>Site visit booked</dd>
+          </div>
+          <div>
+            <dt>Follow-up</dt>
+            <dd>Confirmation sent on WhatsApp</dd>
+          </div>
+          <div>
+            <dt>System update</dt>
+            <dd>CRM record and transcript attached</dd>
+          </div>
+        </motion.dl>
       </section>
 
       <section className="home-final">
-        <div className="home-final__shader" aria-hidden="true">
-          <StaticMeshGradient
-            width="100%"
-            height="100%"
-            colors={["#F2EFE8", "#E2DDF9", "#D94126", "#F2EFE8"]}
-            positions={32}
-            mixing={0.62}
-            waveX={0.72}
-            waveY={0.35}
-            scale={1.12}
-            rotation={22}
-            grainOverlay={0.05}
-          />
-        </div>
         <motion.div className="home-shell home-final__content" {...reveal}>
           <h2>Make the next call count.</h2>
           <Link
@@ -216,12 +159,14 @@ export default function HomeExperience() {
             <p>Voice agents designed for real conversations.</p>
           </div>
           <nav aria-label="Footer navigation">
+            <strong className="home-footer__label">Explore</strong>
             <Link href="/trust">Trust</Link>
             <Link href="/pricing">Pricing</Link>
             <Link href="/case-studies">Case studies</Link>
             <Link href="/blog">Blog</Link>
           </nav>
           <nav aria-label="Legal navigation">
+            <strong className="home-footer__label">Legal</strong>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/cookies">Cookies</Link>

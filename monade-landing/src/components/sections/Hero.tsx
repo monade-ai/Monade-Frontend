@@ -1,76 +1,80 @@
-import { Phone, Target, Globe } from "lucide-react";
 import Link from "next/link";
+import Odometer from "@/components/ui/Odometer";
+
+const stats = [
+  { value: "10,000+", label: "Concurrent calls" },
+  { value: "0.4s", label: "Time to first word" },
+  { value: "24", label: "Languages spoken" },
+];
 
 export const Hero = () => {
   return (
-    <section className="relative pt-32 pb-16 px-6 overflow-hidden">
+    <section className="relative pt-48 md:pt-56 pb-20 px-6 overflow-hidden">
       <div className="max-w-[1400px] mx-auto text-center relative z-10">
-        <div className="space-y-8 max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1 bg-slate-50 border border-slate-100 rounded-full">
-            <div className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-slate-400"></span>
-            </div>
-            <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">Deploy your first agent in minutes</span>
+        <div className="space-y-9 max-w-5xl mx-auto">
+          <div className="inline-flex items-center gap-2.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
+            </span>
+            <span className="machine-label text-ink/50">
+              Not an IVR. Not a chatbot. A voice.
+            </span>
           </div>
 
-          <h1 className="text-6xl md:text-[90px] font-semibold tracking-tight leading-[1.05] text-slate-900 text-balance">
-            Voice AI that feels <br />
-            <span className="font-serif italic text-slate-400 font-medium">remarkably human.</span>
+          <h1 className="font-display text-6xl md:text-[96px] leading-[1.02] text-ink text-balance">
+            Your best call,
+            <br />
+            <span className="serif-accent text-clay text-[1.08em]">
+              ten thousand times at once.
+            </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            We&apos;ve built a platform that handles the details, so you can focus on the conversations that matter most to your business.
+          <p className="text-lg md:text-xl text-ink/60 max-w-2xl mx-auto leading-relaxed">
+            Monade agents answer, qualify, and follow up on real Indian phone
+            lines — fluent in 24 languages, at ₹8 a minute, with a human one
+            tap away.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Link href="/pricing" className="px-10 py-4 bg-slate-900 text-white rounded-xl font-bold text-lg transition-all hover:bg-black active:scale-[0.98]">
-              Get started for free
+            <Link
+              href="#listening-room"
+              className="key-physical w-full sm:w-auto text-center px-9 py-4 bg-ink text-manila font-semibold text-base tracking-tight"
+            >
+              Hear it live
             </Link>
             <Link
-              href="https://calendly.com/adhiraj-n1labs/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-10 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all active:scale-[0.98]"
+              href="/pricing"
+              className="w-full sm:w-auto text-center px-9 py-4 rounded-[0.875rem] text-ink border border-ink/15 font-semibold text-base tracking-tight hover:border-ink/40 hover:bg-ink/[0.03] transition-all"
             >
-              View the demo
+              Start for free
             </Link>
           </div>
 
-          <div className="pt-20 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
-            <div className="flex items-center gap-4 group cursor-default">
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-primary/5 transition-colors">
-                <Phone className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
-              </div>
-              <div className="text-left">
-                <div className="text-xl font-bold text-slate-900 tracking-tight leading-none">10,000+</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Concurrent Calls</div>
-              </div>
+          <div className="pt-16 max-w-2xl mx-auto">
+            <div className="grid grid-cols-3 hairline-t">
+              {stats.map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className={`pt-5 pb-1 ${i > 0 ? "border-l border-[var(--hairline)]" : ""}`}
+                >
+                  <div className="font-display text-2xl md:text-3xl text-ink leading-none">
+                    <Odometer value={stat.value} />
+                  </div>
+                  <div className="machine-label text-ink/40 mt-2">{stat.label}</div>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="w-px h-8 bg-slate-100 hidden md:block" />
-
-            <div className="flex items-center gap-4 group cursor-default">
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-primary/5 transition-colors">
-                <Target className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
-              </div>
-              <div className="text-left">
-                <div className="text-xl font-bold text-slate-900 tracking-tight leading-none">99.9%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Adherence</div>
-              </div>
-            </div>
-
-            <div className="w-px h-8 bg-slate-100 hidden md:block" />
-
-            <div className="flex items-center gap-4 group cursor-default">
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-primary/5 transition-colors">
-                <Globe className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
-              </div>
-              <div className="text-left">
-                <div className="text-xl font-bold text-slate-900 tracking-tight leading-none">24+</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Languages Supported</div>
-              </div>
-            </div>
+          <div className="pt-10">
+            <Link
+              href="#listening-room"
+              className="machine-label text-ink/35 hover:text-clay transition-colors inline-flex items-center gap-2"
+            >
+              01 — Drop the needle
+              <span aria-hidden="true" className="translate-y-px">↓</span>
+            </Link>
           </div>
         </div>
       </div>

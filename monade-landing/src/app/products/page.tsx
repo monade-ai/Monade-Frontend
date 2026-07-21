@@ -1,5 +1,5 @@
-import React from "react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import FooterCTA from "@/components/sections/FooterCTA";
 import { buildPageMetadata } from "@/lib/seo";
@@ -11,305 +11,151 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/products",
 });
 
+const CALENDLY_URL = "https://calendly.com/adhiraj-n1labs/30min";
+
+const channels = [
+  {
+    name: "Voice",
+    description:
+      "Answer, qualify, book, and hand off calls in Hindi, English, Hinglish, and regional languages.",
+    specs: ["First word in 0.4s", "Inbound and outbound", "Available 24/7"],
+  },
+  {
+    name: "WhatsApp",
+    description:
+      "Send confirmations, locations, brochures, reminders, and payment links with the call context attached.",
+    specs: ["Shared customer memory", "Rich media", "Template workflows"],
+  },
+  {
+    name: "Email",
+    description:
+      "Draft and send the follow-up while the conversation is still fresh, without manual copying or handover notes.",
+    specs: ["Call-aware drafts", "Scheduled follow-up", "CRM-connected"],
+  },
+];
+
+const recordings = [
+  {
+    title: "Site visit qualified and booked",
+    context: "Real estate · Hinglish",
+    src: "/audio/gramophone/realestate.mp3",
+  },
+  {
+    title: "Candidate briefed and scheduled",
+    context: "Hiring · Hindi and English",
+    src: "/audio/gramophone/ecommerce.mp3",
+  },
+  {
+    title: "Reservation handled end to end",
+    context: "Hospitality · English",
+    src: "/audio/gramophone/restaurant.mp3",
+  },
+];
+
+const platformSpecs = [
+  { value: "99.9%", label: "Target uptime" },
+  { value: "0.4s", label: "Time to first word" },
+  { value: "10,000+", label: "Concurrent calls" },
+  { value: "India", label: "Data residency" },
+];
+
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-primary/10">
-      <Navbar variant="light" />
+    <div className="min-h-screen bg-background text-ink">
+      <Navbar />
 
-      <main className="pt-56 pb-20">
-        {/* Hero Section */}
-        <section className="max-w-5xl mx-auto px-6 mb-24">
-          <div className="flex flex-col items-start space-y-6">
-            <h1 className="text-6xl md:text-[80px] font-semibold tracking-tight leading-[1.05] text-slate-900">
-                One platform. <br />
-                <span className="font-serif italic text-slate-400 font-medium text-5xl md:text-[70px]">Every interaction.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed">
-                Voice, email, and WhatsApp agents that share a single memory. Your customer never repeats themselves — no matter which channel they reach you on.
-            </p>
+      <main>
+        <section className="mx-auto max-w-7xl px-6 pb-24 pt-44 md:pb-32 md:pt-52">
+          <h1 className="max-w-5xl font-display text-5xl leading-[1.02] md:text-7xl">
+            One conversation across every channel.
+          </h1>
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink/65 md:text-xl">
+            Voice, WhatsApp, and email share the same customer context, so the next interaction starts where the last one ended.
+          </p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center bg-ink px-7 font-semibold text-background transition-colors hover:bg-primary"
+            >
+              Book a walkthrough
+            </Link>
+            <Link
+              href="/pricing"
+              className="inline-flex min-h-12 items-center justify-center border border-ink/20 px-7 font-semibold transition-colors hover:border-ink"
+            >
+              See pricing
+            </Link>
           </div>
         </section>
 
-      {/* Platform Status */}
-      <section className="py-12 bg-gradient-to-r from-gray-900/50 to-black">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="text-2xl font-bold text-green-400 mb-2">Production Ready</div>
-                <div className="text-gray-300 text-sm">Live with enterprise clients</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-orange-400 mb-2">Multi-Channel</div>
-                <div className="text-gray-300 text-sm">Voice, Email, WhatsApp integration</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-blue-400 mb-2">10+ Languages</div>
-                <div className="text-gray-300 text-sm">Hindi, English, Hinglish, Marathi, Tamil, Telugu</div>
-              </div>
+        <section className="border-t border-ink/10 py-24 md:py-32" aria-labelledby="channels-title">
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 id="channels-title" className="max-w-3xl font-display text-4xl leading-[1.04] md:text-6xl">
+              One memory. Three ways to respond.
+            </h2>
+            <div className="mt-16 border-b border-ink/10">
+              {channels.map((channel) => (
+                <article
+                  key={channel.name}
+                  className="grid gap-5 border-t border-ink/10 py-9 md:grid-cols-[0.55fr_1fr_0.75fr] md:gap-10"
+                >
+                  <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">{channel.name}</h3>
+                  <p className="max-w-xl leading-relaxed text-ink/65">{channel.description}</p>
+                  <ul className="space-y-2 text-sm text-ink/60">
+                    {channel.specs.map((spec) => <li key={spec}>{spec}</li>)}
+                  </ul>
+                </article>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Product Showcase with UI Mockups */}
-      <section className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            {/* Voice Agent */}
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl border border-gray-700/30 overflow-hidden hover:scale-105 transition-transform duration-300">
-              {/* UI Mockup */}
-              <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 p-6 border-b border-gray-700/30">
-                <div className="bg-black/50 rounded-lg p-4 mb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-green-400 text-sm font-medium">Live Call</span>
-                    </div>
-                    <span className="text-gray-400 text-sm">02:34</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="bg-blue-600/20 rounded-lg p-2">
-                      <p className="text-blue-300 text-sm">"Hi, I'm calling about your real estate listing..."</p>
-                    </div>
-                    <div className="bg-gray-700/50 rounded-lg p-2">
-                      <p className="text-gray-300 text-sm">"Great! I'd be happy to help. Which property interests you?"</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-green-600/20 rounded p-2 text-center">
-                    <div className="text-green-400 font-bold">95%</div>
-                    <div className="text-gray-400">Accuracy</div>
-                  </div>
-                  <div className="bg-blue-600/20 rounded p-2 text-center">
-                    <div className="text-blue-400 font-bold">&lt;200ms</div>
-                    <div className="text-gray-400">Response</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white mb-4">Voice Agent</h3>
-                <p className="text-gray-400 mb-4">
-                  Handles inbound and outbound calls with 8-stage conversation architecture. Qualifies leads, books appointments, and escalates to your team when the deal is hot. Sub-200ms response. 24/7. Hindi, English, and Hinglish.
-                </p>
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Natural conversation flow — not IVR menus
-                  </div>
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    43:57 talk ratio — your prospect talks more
-                  </div>
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Seamless warm transfer to human closers
-                  </div>
-                </div>
-                <p className="text-orange-400 font-semibold">Perfect for sales, support, and lead qualification.</p>
-              </div>
-            </div>
-
-            {/* Email Agent */}
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl border border-gray-700/30 overflow-hidden hover:scale-105 transition-transform duration-300">
-              {/* UI Mockup */}
-              <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/20 p-6 border-b border-gray-700/30">
-                <div className="bg-black/50 rounded-lg p-4 mb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-purple-400 text-sm font-medium">Draft Email</span>
-                    <span className="text-gray-400 text-sm">Auto-generated</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-xs text-gray-400">To: customer@example.com</div>
-                    <div className="text-xs text-gray-400">Subject: Follow-up on your inquiry</div>
-                    <div className="bg-gray-700/50 rounded-lg p-2 mt-2">
-                      <p className="text-gray-300 text-sm">Hi John, Thank you for your interest in our services. Based on our conversation...</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-purple-600/20 rounded p-2 text-center">
-                    <div className="text-purple-400 font-bold">85%</div>
-                    <div className="text-gray-400">Open Rate</div>
-                  </div>
-                  <div className="bg-green-600/20 rounded p-2 text-center">
-                    <div className="text-green-400 font-bold">45%</div>
-                    <div className="text-gray-400">Response Rate</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white mb-4">Email Agent</h3>
-                <p className="text-gray-400 mb-4">
-                  Auto-generates personalized follow-up emails from call context. Remembers past interactions, adapts tone to the recipient, and sends at optimal times. Your outbound never goes stale.
-                </p>
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Context-aware content from call transcripts
-                  </div>
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Smart scheduling and drip sequences
-                  </div>
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Full CRM integration — no manual drafting
-                  </div>
-                </div>
-                <p className="text-orange-400 font-semibold">Ideal for follow-ups, campaigns, and onboarding flows.</p>
-              </div>
-            </div>
-
-            {/* WhatsApp Agent */}
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl border border-gray-700/30 overflow-hidden hover:scale-105 transition-transform duration-300">
-              {/* UI Mockup */}
-              <div className="bg-gradient-to-br from-green-900/30 to-green-800/20 p-6 border-b border-gray-700/30">
-                <div className="bg-black/50 rounded-lg p-4 mb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span className="text-green-400 text-sm font-medium">WhatsApp Chat</span>
-                    </div>
-                    <span className="text-gray-400 text-sm">Online</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="bg-gray-600/50 rounded-lg p-2 max-w-[80%]">
-                      <p className="text-gray-300 text-sm">Hi, I need help with my order</p>
-                    </div>
-                    <div className="bg-green-600/30 rounded-lg p-2 max-w-[80%] ml-auto">
-                      <p className="text-green-200 text-sm">I'd be happy to help! Can you share your order number?</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-green-600/20 rounded p-2 text-center">
-                    <div className="text-green-400 font-bold">&lt;5s</div>
-                    <div className="text-gray-400">Response</div>
-                  </div>
-                  <div className="bg-blue-600/20 rounded p-2 text-center">
-                    <div className="text-blue-400 font-bold">24/7</div>
-                    <div className="text-gray-400">Available</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white mb-4">WhatsApp Agent</h3>
-                <p className="text-gray-400 mb-4">
-                  Instant, contextual responses on WhatsApp. Shares unified memory with voice and email — so when a customer calls about an order and then messages on WhatsApp, your agent already knows the full story.
-                </p>
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Rich media support (brochures, location, documents)
-                  </div>
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Cross-channel memory — zero context loss
-                  </div>
-                  <div className="flex items-center text-sm text-gray-300">
-                    <svg className="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    WhatsApp qualification (opportunity, not brush-off)
-                  </div>
-                </div>
-                <p className="text-orange-400 font-semibold">Built for quick support, appointment reminders, and order updates.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Demo Video Section */}
-      <section className="py-16 bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">See It In Action</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Listen to real voice agent conversations. Sales calls, support interactions, and lead qualification — in Hindi, English, and Hinglish.
-          </p>
-
-          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30">
-            <div className="aspect-video bg-black/50 rounded-lg overflow-hidden mb-6">
-              <iframe
-                src="https://www.loom.com/embed/3f9c7780719d4d48845fba5b056c9f98?sid=cdd31389-4283-414c-bef5-549156be1b4b"
-                frameBorder="0"
-                allowFullScreen
-                className="w-full h-full"
-                title="Monade AI Voice Agent Demo"
-              ></iframe>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div className="text-center">
-                <div className="text-lg font-bold text-orange-400 mb-1">Real Conversations</div>
-                <div className="text-gray-400">Actual customer interactions</div>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold text-orange-400 mb-1">Multiple Languages</div>
-                <div className="text-gray-400">Hindi, English, Hinglish, Marathi</div>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold text-orange-400 mb-1">Industry Scenarios</div>
-                <div className="text-gray-400">Real estate, healthcare, EdTech</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Specifications */}
-      <section className="py-16 bg-black">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Platform Specifications</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Production-grade infrastructure built on LiveKit + Gemini 2.5 Live. Designed for Indian market constraints.
+        <section className="bg-midnight py-24 text-manila md:py-32" aria-labelledby="recordings-title">
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 id="recordings-title" className="max-w-3xl font-display text-4xl leading-[1.04] md:text-6xl">
+              Hear real calls.
+            </h2>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-manila/70">
+              Three production-style conversations, with the pacing and interruptions left intact.
             </p>
+            <div className="mt-14 border-b border-manila/15">
+              {recordings.map((recording) => (
+                <article
+                  key={recording.title}
+                  className="grid gap-5 border-t border-manila/15 py-7 md:grid-cols-[1fr_0.7fr] md:items-center md:gap-10"
+                >
+                  <div>
+                    <h3 className="text-xl font-semibold">{recording.title}</h3>
+                    <p className="mt-2 text-sm text-manila/60">{recording.context}</p>
+                  </div>
+                  <audio className="w-full" controls preload="metadata" src={recording.src}>
+                    Your browser does not support audio playback.
+                  </audio>
+                </article>
+              ))}
+            </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-2">99.9%</div>
-              <div className="text-gray-300 text-sm">Uptime SLA</div>
-            </div>
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-2">&lt;200ms</div>
-              <div className="text-gray-300 text-sm">Response Time</div>
-            </div>
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-2">1000+</div>
-              <div className="text-gray-300 text-sm">Concurrent Calls</div>
-            </div>
-            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-2">DPDP</div>
-              <div className="text-gray-300 text-sm">Act Compliant</div>
-            </div>
+        <section className="py-24 md:py-32" aria-labelledby="platform-title">
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 id="platform-title" className="max-w-3xl font-display text-4xl leading-[1.04] md:text-6xl">
+              Built for production traffic.
+            </h2>
+            <dl className="mt-14 grid border-y border-ink/10 sm:grid-cols-2 lg:grid-cols-4">
+              {platformSpecs.map((spec) => (
+                <div key={spec.label} className="border-b border-ink/10 py-8 sm:px-6 lg:border-b-0 lg:border-r first:pl-0 last:border-r-0">
+                  <dd className="text-3xl font-semibold tracking-tight">{spec.value}</dd>
+                  <dt className="mt-2 text-sm text-ink/60">{spec.label}</dt>
+                </div>
+              ))}
+            </dl>
           </div>
-        </div>
-      </section>
+        </section>
       </main>
+
       <FooterCTA />
     </div>
   );

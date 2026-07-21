@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Activity, Cpu, Mic2, Globe, Shield, ArrowUpRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import FooterCTA from '@/components/sections/FooterCTA';

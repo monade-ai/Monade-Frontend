@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildPageMetadata({
   title: "About",
   description:
-    "Learn how Monade is building human-grade voice AI systems for modern customer operations.",
+    "Why we build voice AI in India, for India — and what we won't compromise to do it.",
   path: "/about",
 });
 

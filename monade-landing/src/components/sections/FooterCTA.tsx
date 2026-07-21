@@ -1,6 +1,6 @@
 "use client";
 
-import { Twitter, Linkedin, Github } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { openCookieSettings } from "@/components/consent/ConsentManager";
 
@@ -8,109 +8,124 @@ const footerLinks = [
   {
     title: "Product",
     links: [
-      { label: "Cockpit", href: "/products" },
-      { label: "Intelligence", href: "/products" },
-      { label: "Workflows", href: "/#Workflows" },
+      { label: "Products", href: "/products" },
       { label: "Pricing", href: "/pricing" },
+      { label: "Trust", href: "/trust" },
+      { label: "Open Claw", href: "/open-claw" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Team", href: "/team" },
+      { label: "Careers", href: "/careers" },
+      { label: "Contact", href: "https://calendly.com/adhiraj-n1labs/30min" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { label: "Documentation", href: "#" },
-      { label: "Open Claw", href: "/open-claw" },
       { label: "Blog", href: "/blog" },
       { label: "Case studies", href: "/case-studies" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "Help center", href: "#" },
+      { label: "Release notes", href: "/release-notes" },
       { label: "Trust center", href: "/trust" },
-      { label: "Status", href: "#" },
-      { label: "Contact us", href: "#" },
     ],
   },
 ];
 
-export const FooterCTA = () => {
+type FooterCTAProps = {
+  title?: string;
+  description?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  primaryExternal?: boolean;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  secondaryExternal?: boolean;
+};
+
+export const FooterCTA = ({
+  title = "Give your business a voice.",
+  description = "Launch a focused voice workflow, prove the outcome, then scale it.",
+  primaryLabel = "See pricing",
+  primaryHref = "/pricing",
+  primaryExternal = false,
+  secondaryLabel = "Talk to us",
+  secondaryHref = "https://calendly.com/adhiraj-n1labs/30min",
+  secondaryExternal = true,
+}: FooterCTAProps = {}) => {
   return (
-    <footer className="bg-white text-slate-900 pt-32 pb-16 font-sans antialiased border-t border-slate-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="max-w-3xl mb-40">
-          <h2 className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-slate-900 mb-8">
-            Ready to give your <br />business a voice?
-          </h2>
-
-          <p className="text-xl md:text-2xl text-slate-500 mb-10 leading-relaxed max-w-2xl">
-            Deploy your first agent in minutes. No complex setups, just clear conversations.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-start gap-4">
-            <Link href="/pricing" className="px-8 py-4 bg-primary text-white rounded-xl font-semibold text-lg hover:bg-orange-600 transition-all active:scale-[0.98]">
-              Get started for free
+    <footer className="border-t border-ink/10 bg-background text-ink">
+      <section className="bg-clay text-manila">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 md:grid-cols-[1fr_auto] md:items-end md:py-28">
+          <div className="max-w-3xl">
+            <h2 className="font-display text-5xl leading-[0.98] text-balance md:text-7xl">
+              {title}
+            </h2>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-manila/80">
+              {description}
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+            <Link
+              href={primaryHref}
+              target={primaryExternal ? "_blank" : undefined}
+              rel={primaryExternal ? "noopener noreferrer" : undefined}
+              className="inline-flex min-h-12 items-center justify-center bg-ink px-7 font-semibold text-manila transition-colors hover:bg-manila hover:text-ink"
+            >
+              {primaryLabel}
             </Link>
             <Link
-              href="https://calendly.com/adhiraj-n1labs/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 bg-slate-50 text-slate-900 rounded-xl font-semibold text-lg hover:bg-slate-100 transition-all"
+              href={secondaryHref}
+              target={secondaryExternal ? "_blank" : undefined}
+              rel={secondaryExternal ? "noopener noreferrer" : undefined}
+              className="inline-flex min-h-12 items-center justify-center border border-manila/50 px-7 font-semibold text-manila transition-colors hover:border-manila"
             >
-              Talk to us
+              {secondaryLabel}
             </Link>
           </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 py-20 border-t border-slate-100">
-          <div className="col-span-2 lg:col-span-2 space-y-6">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">M</div>
-              <span className="font-bold text-xl tracking-tight">monade</span>
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid gap-12 py-16 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-2 font-bold tracking-[-0.04em]">
+              <Image src="/monade-new-logo.png" alt="" width={28} height={28} />
+              <span className="text-lg">monade</span>
             </Link>
-            <p className="text-slate-400 text-base leading-relaxed max-w-sm">
-              Helping businesses run voice workflows with human-grade intelligence and absolute control.
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/60">
+              Voice agents designed for real conversations across India.
             </p>
-            <div className="flex gap-5 pt-2">
-              {[Twitter, Linkedin, Github].map((Icon, i) => (
-                <Link key={i} href="#" className="text-slate-400 hover:text-slate-900 transition-colors">
-                  <Icon className="w-5 h-5 stroke-[1.5]" />
-                </Link>
-              ))}
-            </div>
           </div>
 
           {footerLinks.map((category) => (
-            <div key={category.title} className="space-y-6">
-              <h3 className="font-semibold text-sm text-slate-900">{category.title}</h3>
-              <ul className="space-y-4">
+            <nav key={category.title} aria-label={`${category.title} links`}>
+              <h3 className="text-sm font-semibold text-ink">{category.title}</h3>
+              <ul className="mt-4 space-y-3">
                 {category.links.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-slate-500 hover:text-slate-900 transition-colors text-sm">
+                    <Link href={link.href} className="text-sm text-ink/60 transition-colors hover:text-ink">
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
         </div>
 
-        <div className="pt-10 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-sm text-slate-400 font-medium">© 2026 Monade AI Inc. All rights reserved.</div>
-
-          <div className="flex gap-8 text-sm text-slate-400 font-medium">
-            <Link href="/privacy" className="hover:text-slate-900 transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-slate-900 transition-colors">Terms</Link>
-            <Link href="/cookies" className="hover:text-slate-900 transition-colors">Cookies</Link>
-            <button
-              type="button"
-              onClick={openCookieSettings}
-              className="hover:text-slate-900 transition-colors"
-            >
+        <div className="flex flex-col gap-5 border-t border-ink/10 py-8 text-sm text-ink/55 md:flex-row md:items-center md:justify-between">
+          <span>© 2026 Monade AI Inc.</span>
+          <nav className="flex flex-wrap gap-x-6 gap-y-3" aria-label="Legal links">
+            <Link href="/privacy" className="hover:text-ink">Privacy</Link>
+            <Link href="/terms" className="hover:text-ink">Terms</Link>
+            <Link href="/cookies" className="hover:text-ink">Cookies</Link>
+            <button type="button" onClick={openCookieSettings} className="hover:text-ink">
               Cookie settings
             </button>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

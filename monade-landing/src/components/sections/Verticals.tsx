@@ -42,23 +42,24 @@ export const Verticals = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-32 bg-[#FDFBF7] overflow-hidden text-[#1A1A1A] border-y border-black/5">
+    <section className="py-24 md:py-32 bg-background overflow-hidden text-ink hairline-t">
       <div className="max-w-[1400px] mx-auto px-6">
         
         {/* Header */}
         <div className="mb-20 max-w-4xl">
-          <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-black leading-[0.85] uppercase">
-            Industries <br />
-            <span className="font-serif italic text-slate-300 font-light lowercase">mapped.</span>
+          <div className="machine-label text-ink/40 mb-5">05 — Industries</div>
+          <h2 className="font-display text-5xl md:text-8xl text-ink leading-[0.95]">
+            Industries, <span className="serif-accent text-clay">mapped.</span>
           </h2>
         </div>
 
         {/* ─── The Machined Registry ─── */}
         <div className="flex flex-col border-t border-black/5">
           {DATA.map((item, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               onMouseEnter={() => setActiveIndex(i)}
+              onClick={() => setActiveIndex(i)}
               className="relative transition-all duration-700 cursor-pointer overflow-hidden group"
             >
               {/* THE PIGMENT SLIDE */}
@@ -77,7 +78,7 @@ export const Verticals = () => {
               {/* The Interaction Slot */}
               <div className={cn(
                 "relative z-10 px-6 py-10 lg:px-16 transition-all duration-700",
-                activeIndex === i ? "text-white" : "text-black/40 hover:text-black"
+                activeIndex === i ? "text-white" : "text-ink/70 hover:text-ink"
               )}>
                 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -89,8 +90,8 @@ export const Verticals = () => {
                             activeIndex === i ? "stroke-[2px] scale-110" : "stroke-[1px] opacity-40 group-hover:opacity-100"
                         )} />
                         <div>
-                            <h4 className="text-2xl lg:text-4xl font-bold tracking-tighter uppercase leading-none mb-1">{item.vertical}</h4>
-                            <span className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest opacity-40">{item.location}</span>
+                            <h4 className="font-display text-2xl lg:text-4xl leading-none mb-1.5">{item.vertical}</h4>
+                            <span className="machine-label opacity-50">{item.location}</span>
                         </div>
                     </div>
 
@@ -115,8 +116,8 @@ export const Verticals = () => {
                     {/* Col 3: The Metric */}
                     <div className="lg:col-span-3 lg:text-right">
                         <motion.div 
-                            animate={{ 
-                                opacity: activeIndex === i ? 1 : 0.1,
+                            animate={{
+                                opacity: activeIndex === i ? 1 : 0.3,
                                 scale: activeIndex === i ? 1 : 0.95
                             }}
                             className="text-6xl lg:text-8xl font-mono font-bold tracking-tighter leading-none"
@@ -151,7 +152,7 @@ export const Verticals = () => {
         <div className="mt-16 flex justify-center pt-8 border-t border-black/5">
             <button 
                 onClick={() => window.open('https://calendly.com/adhiraj-n1labs/30min', '_blank')}
-                className="flex items-center gap-3 px-8 py-3 text-sm font-bold text-slate-900 hover:opacity-70 transition-all group"
+                className="flex items-center gap-3 px-8 py-3.5 rounded-[0.875rem] border border-ink/15 text-sm font-semibold text-ink hover:border-ink/40 hover:bg-ink/[0.03] transition-all group"
             >
                 Deploy for your industry 
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

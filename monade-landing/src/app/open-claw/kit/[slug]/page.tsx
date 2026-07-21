@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, CheckCircle2, Zap, Box, BarChart3, Plug } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { getKitBySlug, getRelatedKits } from "@/lib/business-kits";

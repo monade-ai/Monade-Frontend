@@ -3,10 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import { CodexCard } from "@/components/CodexCard";
 import { ModelIdentityCard } from "@/components/ModelIdentityCard";
-import { cn } from "@/lib/utils";
-import { Eye, EyeOff, Sun, Zap, ArrowRight, MousePointer2, Box } from "lucide-react";
 
 const shaderConfigs = [
   {

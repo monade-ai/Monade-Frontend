@@ -125,7 +125,7 @@ export default function CaseStudyPage() {
                                 prose-headings:font-bold prose-headings:text-[#1A1A1A] prose-headings:tracking-tight
                                 prose-p:leading-9 prose-p:mb-8
                                 prose-strong:text-[#1A1A1A] prose-strong:font-bold
-                                prose-blockquote:border-l-4 prose-blockquote:border-[#D94126] prose-blockquote:bg-[#D94126]/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl
+                                prose-blockquote:border-x-0 prose-blockquote:border-y prose-blockquote:border-[#D94126]/40 prose-blockquote:bg-transparent prose-blockquote:py-6 prose-blockquote:px-0 prose-blockquote:rounded-none
                                 prose-em:font-serif prose-em:italic
                                 prose-a:text-[#D94126] prose-a:no-underline hover:prose-a:underline"
                             >
@@ -136,7 +136,7 @@ export default function CaseStudyPage() {
                                         initial={{ opacity: 0, x: -20 }}
                                         whileInView={{ opacity: 1, x: 0 }}
                                         viewport={{ once: true }}
-                                        className="my-16 p-10 bg-[#020617] rounded-[40px] text-white -rotate-1 relative overflow-hidden group shadow-2xl"
+                                        className="relative my-16 overflow-hidden border-y border-white/20 bg-[#020617] p-10 text-white"
                                     >
                                         <Quote className="absolute -top-4 -left-4 w-24 h-24 text-white/5 -rotate-12 transition-transform group-hover:scale-110" />
                                         <blockquote className="border-0 p-0 m-0 bg-transparent">

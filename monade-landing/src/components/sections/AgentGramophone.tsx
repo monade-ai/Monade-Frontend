@@ -9,6 +9,7 @@ import {
   Car, Building, ShoppingBag, Utensils
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import VUMeter from "@/components/ui/VUMeter";
 
 type TranscriptLine = {
   speaker: "agent" | "customer";
@@ -282,6 +283,9 @@ export const AgentGramophone = () => {
   const transcriptScrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const audioGraphAttemptedRef = useRef(false);
+  const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
 
   const agent = AGENTS[currentAgentIndex];
 
@@ -367,6 +371,41 @@ export const AgentGramophone = () => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      audioCtxRef.current?.close().catch(() => {});
+    };
+  }, []);
+
+  const ensureAudioGraph = async () => {
+    const audioEl = audioRef.current;
+    if (!audioEl || audioGraphAttemptedRef.current) {
+      return;
+    }
+    audioGraphAttemptedRef.current = true;
+
+    try {
+      const ctx = new AudioContext();
+      if (ctx.state === "suspended") {
+        await ctx.resume();
+      }
+      if (ctx.state !== "running") {
+        await ctx.close();
+        return;
+      }
+      const source = ctx.createMediaElementSource(audioEl);
+      const analyserNode = ctx.createAnalyser();
+      analyserNode.fftSize = 512;
+      analyserNode.smoothingTimeConstant = 0.5;
+      source.connect(analyserNode);
+      analyserNode.connect(ctx.destination);
+      audioCtxRef.current = ctx;
+      setAnalyser(analyserNode);
+    } catch {
+      // Meter falls back to its synthetic mode; playback stays untouched.
+    }
+  };
+
   const toggleAudioPlayback = async () => {
     const audioEl = audioRef.current;
     if (!audioEl) {
@@ -374,6 +413,7 @@ export const AgentGramophone = () => {
     }
 
     setAudioError(null);
+    await ensureAudioGraph();
 
     if (audioEl.paused) {
       try {
@@ -464,7 +504,7 @@ export const AgentGramophone = () => {
   }, [activeLineIndex]);
 
   return (
-    <section className="pb-32 px-6 bg-white overflow-visible relative selection:bg-black/10 font-sans antialiased text-black border-t border-slate-100">
+    <section id="listening-room" className="scroll-mt-24 pb-32 px-6 bg-white overflow-visible relative selection:bg-black/10 font-sans antialiased text-black border-t border-slate-100">
       <div className="max-w-6xl mx-auto">
         
         {/* ─── Track Selector - Minimalist Pill Pushed Up ─── */}
@@ -586,7 +626,10 @@ export const AgentGramophone = () => {
 
             {/* Right Column: Record Player & Console */}
             <div className="lg:col-span-7 flex flex-col gap-4">
-                <div className="hidden lg:flex bg-white/5 rounded-[24px] border border-black/10 flex items-center justify-center p-12 flex-1 min-h-[450px] shadow-inner relative overflow-hidden">
+                <div className="flex bg-white/5 rounded-[24px] border border-black/10 items-center justify-center p-6 lg:p-12 flex-1 min-h-[320px] lg:min-h-[450px] shadow-inner relative overflow-hidden">
+                    <div className="absolute top-4 right-4 z-20">
+                        <VUMeter analyser={analyser} active={isPlaying} />
+                    </div>
                     <SchematicRecord isPlaying={isPlaying} image={agent.recordLabel} activeId={agent.id} />
                 </div>
 
@@ -607,12 +650,13 @@ export const AgentGramophone = () => {
                             onChange={(e) => setUserName(e.target.value)}
                             className="flex-1 bg-transparent px-6 outline-none text-[14px] font-medium text-slate-900 placeholder:text-slate-300"
                         />
-                        <button 
-                            onClick={openCallPopup} 
-                            className="h-[calc(100%-16px)] mr-2 px-6 bg-black text-white rounded-[12px] font-bold text-[10px] uppercase tracking-[0.1em] flex items-center justify-center gap-2 hover:bg-slate-900 active:scale-[0.98] transition-all"
+                        <button
+                            onClick={openCallPopup}
+                            className="h-[calc(100%-16px)] mr-2 px-4 sm:px-6 bg-black text-white rounded-[12px] font-bold text-[10px] uppercase tracking-[0.1em] flex items-center justify-center gap-2 hover:bg-slate-900 active:scale-[0.98] transition-all shrink-0"
                         >
                             <Phone className="w-3 h-3 fill-current" />
-                            <span>Initiate Call</span>
+                            <span className="hidden sm:inline">Initiate Call</span>
+                            <span className="sm:hidden">Call</span>
                         </button>
                     </div>
                 </div>

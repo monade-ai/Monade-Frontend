@@ -166,6 +166,7 @@ export default function LivingCall() {
   const sourceConnectedRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
   const lastSignalUpdateRef = useRef(0);
+  const transcriptScrollRef = useRef<HTMLDivElement>(null);
   const transcriptRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [activeSampleIndex, setActiveSampleIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -258,11 +259,24 @@ export default function LivingCall() {
 
   useEffect(() => {
     const line = transcriptRefs.current[activeLineIndex];
-    line?.scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth",
-      block: "nearest",
-    });
-  }, [activeLineIndex, reduceMotion]);
+    const scroller = transcriptScrollRef.current;
+    if (!line || !scroller || (!isPlaying && currentTime < 0.1)) return;
+
+    const lineTop =
+      line.getBoundingClientRect().top -
+      scroller.getBoundingClientRect().top +
+      scroller.scrollTop;
+    const lineBottom = lineTop + line.offsetHeight;
+    const visibleTop = scroller.scrollTop;
+    const visibleBottom = visibleTop + scroller.clientHeight;
+
+    if (lineTop < visibleTop || lineBottom > visibleBottom) {
+      scroller.scrollTo({
+        top: Math.max(0, lineTop - scroller.clientHeight * 0.35),
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    }
+  }, [activeLineIndex, currentTime, isPlaying, reduceMotion]);
 
   useEffect(
     () => () => {
@@ -419,7 +433,7 @@ export default function LivingCall() {
             <span>Transcript</span>
             <span>{sample.language}</span>
           </header>
-          <div className="living-call__transcript-scroll">
+          <div ref={transcriptScrollRef} className="living-call__transcript-scroll">
             {sample.transcript.map((line, index) => (
               <button
                 type="button"

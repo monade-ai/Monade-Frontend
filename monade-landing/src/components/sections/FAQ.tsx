@@ -48,14 +48,14 @@ export const FAQ = () => {
   ];
 
   return (
-    <section className="py-24 bg-[#FDFBF7] overflow-hidden text-[#1A1A1A] border-t border-black/5">
+    <section className="py-24 md:py-32 bg-background overflow-hidden text-ink hairline-t">
       <div className="max-w-4xl mx-auto px-6">
         
         {/* Header */}
         <div className="mb-12">
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-black leading-none uppercase">
-            Common <br />
-            <span className="font-serif italic text-slate-300 font-light lowercase text-[0.9em]">questions.</span>
+          <div className="machine-label text-ink/40 mb-5">07 — Questions</div>
+          <h2 className="font-display text-5xl md:text-7xl text-ink leading-[1.02]">
+            Asked, <span className="serif-accent text-clay">answered.</span>
           </h2>
         </div>
 
@@ -74,8 +74,8 @@ export const FAQ = () => {
                 className="w-full py-8 flex items-center justify-between text-left px-4 lg:px-8"
               >
                 <span className={cn(
-                    "font-bold text-xl md:text-2xl tracking-tight transition-all duration-500 max-w-2xl leading-snug",
-                    expandedFaq === faq.id ? "text-black" : "text-black/40"
+                    "font-semibold text-xl md:text-2xl tracking-tight transition-all duration-500 max-w-2xl leading-snug",
+                    expandedFaq === faq.id ? "text-ink" : "text-ink/70 group-hover:text-ink"
                 )}>
                     {faq.q}
                 </span>
@@ -92,7 +92,7 @@ export const FAQ = () => {
                   >
                     <div className="px-4 lg:px-8 pb-10">
                         <div className="h-px w-12 bg-[#D94126] mb-6" />
-                        <p className="text-lg md:text-xl text-slate-500 font-serif italic leading-relaxed max-w-3xl">
+                        <p className="text-base md:text-lg text-ink/60 leading-relaxed max-w-3xl">
                             {faq.a}
                         </p>
                     </div>

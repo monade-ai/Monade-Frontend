@@ -42,7 +42,7 @@ function ToggleRow({
   disabled?: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 p-4">
+    <div className="border-t border-ink/10 py-4">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-slate-900">{label}</p>
@@ -52,7 +52,7 @@ function ToggleRow({
           type="button"
           onClick={onToggle}
           disabled={disabled}
-          className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-slate-900' : 'bg-slate-300'} ${disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
+          className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-ink' : 'bg-ink/20'} ${disabled ? 'cursor-not-allowed opacity-60' : ''}`}
         >
           <span
             className={`absolute top-1 h-5 w-5 rounded-full bg-white transition ${checked ? 'left-6' : 'left-1'}`}
@@ -98,6 +98,15 @@ export function ConsentProvider({
     return () => window.removeEventListener(OPEN_COOKIE_SETTINGS_EVENT, openHandler);
   }, [preferences]);
 
+  useEffect(() => {
+    if (!showPreferences) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShowPreferences(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [showPreferences]);
+
   const applyPreferences = (next: { functional: boolean; analytics: boolean; marketing: boolean }) => {
     const saved = writeConsentCookie(next);
     setPreferences(saved);
@@ -128,34 +137,33 @@ export function ConsentProvider({
       {children}
 
       {showBanner && (
-        <div className="fixed inset-x-0 bottom-0 z-[3000] border-t border-slate-200 bg-white p-4 shadow-2xl">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-sm text-slate-700">
-              We use cookies for core site functionality and optional analytics. You can accept, reject, or customize your
-              preferences. Read our <Link href="/privacy" className="underline">Privacy Policy</Link> and{' '}
-              <Link href="/cookies" className="underline">Cookie Policy</Link>.
+        <div className="fixed inset-x-0 bottom-0 z-[3000] border-t border-ink/15 bg-background text-ink">
+          <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 md:flex-row md:items-center md:justify-between">
+            <p className="max-w-2xl text-sm leading-relaxed text-ink/70">
+              Essential cookies keep Monade working. Optional analytics help us improve it.{' '}
+              <Link href="/privacy" className="underline underline-offset-2 hover:text-ink">Privacy</Link>
             </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => setShowPreferences(true)}
-                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
-              >
-                Customize
-              </button>
+            <div className="flex flex-wrap items-center gap-2 md:justify-end">
               <button
                 type="button"
                 onClick={value.rejectOptional}
-                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
+                className="min-h-11 border border-ink/20 px-4 text-sm font-medium text-ink transition-colors hover:border-ink"
               >
-                Reject non-essential
+                Essentials only
               </button>
               <button
                 type="button"
                 onClick={value.acceptAll}
-                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white"
+                className="min-h-11 bg-ink px-4 text-sm font-semibold text-background transition-colors hover:bg-primary"
               >
                 Accept all
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowPreferences(true)}
+                className="px-2 py-1 text-xs text-ink/60 underline underline-offset-2 transition-colors hover:text-ink"
+              >
+                Customize preferences
               </button>
             </div>
           </div>
@@ -163,14 +171,24 @@ export function ConsentProvider({
       )}
 
       {showPreferences && (
-        <div className="fixed inset-0 z-[3100] flex items-center justify-center bg-slate-900/50 p-4">
-          <div className="w-full max-w-xl rounded-2xl bg-white p-6 shadow-2xl">
-            <h2 className="text-xl font-semibold text-slate-900">Cookie Preferences</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              You can change these anytime from the footer "Cookie settings" link.
+        <div
+          className="fixed inset-0 z-[3100] flex items-end justify-center bg-ink/55 p-0 sm:items-center sm:p-4"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowPreferences(false);
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cookie-preferences-title"
+            className="max-h-[90dvh] w-full overflow-y-auto border border-ink/15 bg-background p-5 sm:max-w-xl sm:p-7"
+          >
+            <h2 id="cookie-preferences-title" className="text-xl font-semibold text-ink">Cookie preferences</h2>
+            <p className="mt-2 text-sm text-ink/60">
+              Change these anytime from the footer.
             </p>
 
-            <div className="mt-5 space-y-3">
+            <div className="mt-5 border-b border-ink/10">
               <ToggleRow
                 label="Necessary"
                 description="Required for site security and core functionality. Always active."
@@ -202,21 +220,21 @@ export function ConsentProvider({
               <button
                 type="button"
                 onClick={() => setShowPreferences(false)}
-                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
+                className="min-h-11 border border-ink/20 px-4 text-sm font-medium text-ink"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={value.rejectOptional}
-                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
+                className="min-h-11 border border-ink/20 px-4 text-sm font-medium text-ink"
               >
                 Reject non-essential
               </button>
               <button
                 type="button"
                 onClick={() => value.saveCustom(draft)}
-                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white"
+                className="min-h-11 bg-ink px-4 text-sm font-semibold text-background"
               >
                 Save preferences
               </button>

@@ -22,7 +22,7 @@ export const OpenClawBanner = () => {
           <span className="text-white/70 text-[13px] tracking-wide">
             <span className="font-bold text-white">Open Claw + Monade</span>
             <span className="hidden sm:inline">
-              {" "}&mdash; Turn any agent into a revenue machine.
+              {" "}&mdash; Give your agent a business to run.
             </span>
             <span className="sm:hidden">
               {" "}&mdash; Build a business.

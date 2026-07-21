@@ -34,7 +34,7 @@ const faqs = [
   {
     question: "What counts as a billable minute?",
     answer:
-      "Production conversation runtime is billable. Your estimate is based on the total voice minutes used in a month.",
+      "You're billed for talk time in production — the total minutes your agents spend on live calls in a month.",
   },
   {
     question: "What happens at 10,000 monthly minutes?",
@@ -189,12 +189,14 @@ export default function PricingPage() {
             <p>Voice agents designed for real conversations.</p>
           </div>
           <nav aria-label="Footer navigation">
+            <strong className="home-footer__label">Explore</strong>
             <Link href="/trust">Trust</Link>
             <Link href="/pricing">Pricing</Link>
             <Link href="/case-studies">Case studies</Link>
             <Link href="/blog">Blog</Link>
           </nav>
           <nav aria-label="Legal navigation">
+            <strong className="home-footer__label">Legal</strong>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/cookies">Cookies</Link>

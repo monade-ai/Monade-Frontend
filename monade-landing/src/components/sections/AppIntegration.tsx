@@ -6,7 +6,7 @@ import PhoneMockup from "@/components/PhoneMockup";
 export const AppIntegration = () => {
   return (
     <section className="relative bg-[#020617] py-24 lg:py-32 overflow-hidden rounded-[64px] mx-6 my-8 min-h-[700px] flex items-center">
-      <div className="absolute top-1/2 right-[18%] -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-[18%] -translate-y-1/2 w-[500px] h-[500px] bg-clay/15 blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute top-1/2 right-[22%] -translate-y-1/2 w-[300px] h-[300px] bg-primary/15 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="absolute left-[-5%] top-1/2 -translate-y-1/2 w-full max-w-3xl aspect-video pointer-events-none opacity-[0.15]">
@@ -24,26 +24,26 @@ export const AppIntegration = () => {
               ].map((b, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold text-white/50 backdrop-blur-md"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/15 rounded-full machine-label text-white/60 backdrop-blur-md"
                 >
                   {b.icon} {b.label}
                 </div>
               ))}
             </div>
 
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-8 leading-[0.95]">
+            <h2 className="font-display text-5xl md:text-7xl text-white mb-8 leading-[0.98]">
               Intelligence for your<br />
-              <span className="text-white/40 italic font-serif">Open Claw agent</span>
+              <span className="serif-accent text-white/70">Open Claw agent</span>
             </h2>
 
-            <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-lg leading-relaxed font-medium">
+            <p className="text-white/60 text-lg md:text-xl mb-12 max-w-lg leading-relaxed">
               Connect Monade to your agent with a single plugin. Get an intelligence layer that handles the details,
               setting up scripts, analyzing responses, and adapting to your business needs automatically.
             </p>
 
             <Link
               href="/open-claw"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-sm shadow-2xl hover:bg-slate-100 transition-all"
+              className="key-physical inline-flex items-center gap-3 px-8 py-4 bg-manila text-ink font-semibold text-base tracking-tight"
             >
               Learn more about Open Claw
               <ArrowRight className="w-4 h-4" />

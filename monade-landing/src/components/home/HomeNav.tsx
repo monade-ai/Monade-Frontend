@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { href: "/#experience", label: "Experience" },
+  { href: "/products", label: "Products" },
   { href: "/trust", label: "Trust" },
   { href: "/pricing", label: "Pricing" },
   { href: "/open-claw", label: "Open Claw" },
@@ -13,6 +14,7 @@ const navLinks = [
 ];
 
 export default function HomeNav() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,7 +33,11 @@ export default function HomeNav() {
 
         <nav className="home-nav__links" aria-label="Primary navigation">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={pathname.startsWith(link.href) ? "page" : undefined}
+            >
               {link.label}
             </Link>
           ))}
@@ -68,7 +74,12 @@ export default function HomeNav() {
       >
         <nav className="home-shell" aria-label="Mobile navigation">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)}>
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={pathname.startsWith(link.href) ? "page" : undefined}
+              onClick={() => setIsOpen(false)}
+            >
               {link.label}
             </Link>
           ))}

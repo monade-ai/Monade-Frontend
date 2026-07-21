@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 const FALLBACK_SITE_URL = "https://monade.ai";
 
 export const SITE_NAME = "Monade";
-export const DEFAULT_SITE_TITLE = "Monade | Building Voice-Enabled Businesses";
+export const DEFAULT_SITE_TITLE = "Monade | Voice that earns the next sentence";
 export const DEFAULT_SITE_DESCRIPTION =
-  "Monade builds voice-enabled businesses with scalable, auditable AI voice workflows.";
+  "Monade runs phone agents that listen, adapt, and move real work forward across India.";
 
 function normalizeSiteUrl(value: string): string {
   return value.endsWith("/") ? value.slice(0, -1) : value;
