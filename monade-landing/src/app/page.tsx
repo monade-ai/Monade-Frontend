@@ -1,44 +1,21 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/sections/Hero";
-import AgentGramophone from "@/components/sections/AgentGramophone";
-import BentoGrid from "@/components/sections/BentoGrid";
-import AppIntegration from "@/components/sections/AppIntegration";
-import HowItWorks from "@/components/sections/HowItWorks";
-import LanguageSupport from "@/components/sections/LanguageSupport";
-import CRMIntegrations from "@/components/sections/CRMIntegrations";
-import Verticals from "@/components/sections/Verticals";
-import Testimonials from "@/components/sections/Testimonials";
-import FAQ from "@/components/sections/FAQ";
-import FooterCTA from "@/components/sections/FooterCTA";
+import HomeNav from "@/components/home/HomeNav";
+import HomeExperience from "@/components/home/HomeExperience";
 import { buildPageMetadata } from "@/lib/seo";
+import "./home.css";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Building Voice-Enabled Businesses",
+  title: "Voice That Earns the Next Sentence",
   description:
-    "Launch voice workflows that qualify leads, automate operations, and scale customer conversations with Monade.",
+    "Monade runs phone agents that listen, adapt, and move real work forward across India.",
   path: "/",
 });
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white selection:bg-primary/10 selection:text-primary font-sans antialiased text-slate-900">
-      <Navbar variant="transparent" />
-
-      <main>
-        <Hero />
-        <AgentGramophone />
-        <BentoGrid />
-        <AppIntegration />
-        <HowItWorks />
-        <LanguageSupport />
-        <CRMIntegrations />
-        <Verticals />
-        <Testimonials />
-        <FAQ />
-      </main>
-
-      <FooterCTA />
-    </div>
+    <>
+      <HomeNav />
+      <HomeExperience />
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, EB_Garamond } from "next/font/google";
+import { Archivo, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { ConsentProvider } from "@/components/consent/ConsentManager";
@@ -14,10 +14,11 @@ import {
   toAbsoluteUrl,
 } from "@/lib/seo";
 
-const inter = Inter({
+const archivo = Archivo({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  axes: ["wdth"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -26,9 +27,11 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const ebGaramond = EB_Garamond({
+const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -51,8 +54,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: toAbsoluteUrl("/monade-new-logo.png"),
-        alt: "Monade",
+        url: toAbsoluteUrl("/og.png"),
+        width: 1731,
+        height: 909,
+        alt: "Monade. Voice that earns the next sentence.",
       },
     ],
   },
@@ -60,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_SITE_TITLE,
     description: DEFAULT_SITE_DESCRIPTION,
-    images: [toAbsoluteUrl("/monade-new-logo.png")],
+    images: [toAbsoluteUrl("/og.png")],
   },
   robots: {
     index: true,
@@ -92,7 +97,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="light">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${ebGaramond.variable} antialiased font-sans bg-white text-foreground`}
+        className={`${archivo.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased font-sans bg-background text-foreground`}
       >
         <ConsentProvider initialConsentCookie={initialConsentCookie}>
           {children}
