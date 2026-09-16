@@ -1,104 +1,41 @@
-import React from "react";
-import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, EB_Garamond } from "next/font/google";
-import { cookies } from "next/headers";
+import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-import { ConsentProvider } from "@/components/consent/ConsentManager";
-import { GoogleAnalytics } from "@/components/consent/GoogleAnalytics";
-import { PostHogAnalytics } from "@/components/consent/PostHogAnalytics";
-import { CONSENT_COOKIE_NAME } from "@/lib/consent/constants";
-import {
-  DEFAULT_SITE_DESCRIPTION,
-  DEFAULT_SITE_TITLE,
-  getMetadataBase,
-  toAbsoluteUrl,
-} from "@/lib/seo";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const ebGaramond = EB_Garamond({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  display: "swap",
-});
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import RevealObserver from "@/components/RevealObserver";
+import site from "@/content/site.json";
 
 export const metadata: Metadata = {
-  metadataBase: getMetadataBase(),
-  title: {
-    default: DEFAULT_SITE_TITLE,
-    template: "%s | Monade",
-  },
-  description: DEFAULT_SITE_DESCRIPTION,
-  alternates: {
-    canonical: "/",
-  },
+  title: site.meta.title,
+  description: site.meta.description,
+  metadataBase: new URL(site.meta.url),
   openGraph: {
+    title: site.meta.title,
+    description: site.meta.description,
+    url: site.meta.url,
+    siteName: "Monade AI",
     type: "website",
-    url: "/",
-    title: DEFAULT_SITE_TITLE,
-    description: DEFAULT_SITE_DESCRIPTION,
-    siteName: "Monade",
-    locale: "en_US",
-    images: [
-      {
-        url: toAbsoluteUrl("/monade-new-logo.png"),
-        alt: "Monade",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: DEFAULT_SITE_TITLE,
-    description: DEFAULT_SITE_DESCRIPTION,
-    images: [toAbsoluteUrl("/monade-new-logo.png")],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
+    title: site.meta.title,
+    description: site.meta.description,
   },
 };
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#D94126",
-};
-
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const cookieStore = await cookies();
-  const initialConsentCookie = cookieStore.get(CONSENT_COOKIE_NAME)?.value ?? null;
-
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="light">
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${ebGaramond.variable} antialiased font-sans bg-white text-foreground`}
-      >
-        <ConsentProvider initialConsentCookie={initialConsentCookie}>
-          {children}
-          <GoogleAnalytics />
-          <PostHogAnalytics />
-        </ConsentProvider>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">
+        <Nav />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <RevealObserver />
       </body>
     </html>
   );

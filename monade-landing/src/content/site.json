@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "title": "Monade AI. Astonishingly human voice-to-voice AI models",
+    "description": "Frontier voice AI replacing STT+LLM+TTS pipelines with a single model trained purely for end-to-end conversation. Built for sales calls.",
+    "url": "https://monade.ai"
+  },
+  "nav": {
+    "links": [
+      {
+        "label": "Voice AI",
+        "href": "/#voice-ai"
+      },
+      {
+        "label": "How we prove ROI",
+        "href": "/#roi"
+      },
+      {
+        "label": "Features",
+        "href": "/#features"
+      },
+      {
+        "label": "AI Coworkers",
+        "href": "/#coworkers"
+      }
+    ],
+    "demo": "Book a demo",
+    "call": "Talk to our AI",
+    "login": "Log in",
+    "loginHref": "https://dashboard.monade.ai"
+  },
+  "hero": {
+    "eyebrow": "Voice-to-voice AI for sales calls",
+    "h1": [
+      "Astonishingly human",
+      "voice-to-voice AI models"
+    ],
+    "sub": [
+      "Frontier voice AI innovation replacing STT+LLM+TTS pipelines with a single voice-to-voice model.",
+      "In live sales calls, 0.6% of customers identify us as AI."
+    ],
+    "row1": {
+      "label": "Hear the difference yourself",
+      "placeholder": "98765 43210",
+      "button": "Talk to our AI",
+      "micro": "One call, from an Indian number.",
+      "inline_button": "Call me"
+    },
+    "row2": {
+      "label": "Book a personalised walkthrough",
+      "placeholder": "you@company.com",
+      "button": "Book a demo",
+      "micro": "Takes 30 seconds. We never share your details.",
+      "inline_button": "Book",
+      "href": "https://calendly.com/adhiraj-n1labs/30min"
+    }
+  },
+  "slider": {
+    "h2": "Why sales calls fail on text-to-speech and win on voice-to-voice",
+    "intro": "",
+    "left": {
+      "title": "Speech to text + LLM + text to speech",
+      "definition": "Transcribe the speech, send it to a text model, read out a reply."
+    },
+    "right": {
+      "title": "Voice-to-voice",
+      "definition": "One model that hears the audio directly and speaks back."
+    },
+    "pairs": [
+      {
+        "problem": "Robotic voice",
+        "fix": "0.6% identify Monade as AI on call"
+      },
+      {
+        "problem": "Trained for general answers",
+        "fix": "Trained purely for voice conversations"
+      },
+      {
+        "problem": "Mishears multilingual accents",
+        "fix": "Extremely high accuracy with accents"
+      },
+      {
+        "problem": "Cannot capture emotion and tone",
+        "fix": "Single model understands and uses emotions"
+      }
+    ],
+    "audio": {
+      "h3": "Same use case, two calls",
+      "left": {
+        "label": "Standard TTS models from others",
+        "sub": "Other vendors, speech to text + LLM + text to speech",
+        "src": "/audio/standard-tts-call.mp3"
+      },
+      "right": {
+        "label": "Monade voice-to-voice model",
+        "sub": "One model, listening and speaking",
+        "src": "/audio/monade-call.mp3"
+      }
+    }
+  },
+  "clients": {
+    "line": [
+      "We've replaced Top Voice AI companies",
+      "at 12+ brands in Edtech, Finance, and Retail."
+    ],
+    "stats": [
+      {
+        "value": "70%",
+        "label": "higher qualification rate than the voice AI we replaced"
+      },
+      {
+        "value": "0.6%",
+        "label": "of customers notice they're speaking with AI"
+      }
+    ]
+  },
+  "roi": {
+    "h2": "How we prove ROI in 6 months",
+    "intro": "Every engagement starts against the vendor you already use. Nothing to take on faith.",
+    "steps": [
+      {
+        "n": "01",
+        "title": "Hear the live agents on a demo call",
+        "body": "Give us a number, take the call, judge the voice yourself.",
+        "cta": "Talk to our AI",
+        "cta2": "Book a demo"
+      },
+      {
+        "n": "02",
+        "title": "Compare uplift in conversions with a pilot",
+        "body": "Same script, same lead pool, your current vendor on one side and Monade on the other. You listen to the calls with us every week."
+      },
+      {
+        "n": "03",
+        "title": "Measure and prove ROI with us in 3 to 6 months",
+        "body": "Full volume, every language, every campaign. At month six the numbers sit next to what you were paying before."
+      }
+    ],
+    "pilot": {
+      "metrics": [
+        {
+          "label": "Qualification rate",
+          "vendor": 41,
+          "monade": 70,
+          "unit": "%"
+        },
+        {
+          "label": "Conversation quality",
+          "vendor": 52,
+          "monade": 88,
+          "unit": "/100"
+        }
+      ]
+    },
+    "curve": {
+      "months": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "values": [
+        -100,
+        -62,
+        -20,
+        18,
+        58,
+        104,
+        156
+      ],
+      "breakEven": 2.5
+    }
+  },
+  "features": {
+    "h2": "97 languages, WhatsApp agent, fully integrated with your CRM",
+    "intro": "",
+    "items": [
+      {
+        "key": "languages",
+        "title": "97 languages, 14 Indian",
+        "line": "Hindi, Tamil, Bengali, Marathi, Telugu, Gujarati, Kannada, Malayalam and six more Indian languages, plus 83 others. Switches mid-call."
+      },
+      {
+        "key": "crm",
+        "title": "CRM integrations",
+        "line": "Recordings, updated fields, stage changes and summaries land in your pipeline after every call."
+      },
+      {
+        "key": "control",
+        "title": "Full control with your team",
+        "line": "Listen to any call, read the transcript, and approve every prompt change before it goes live."
+      },
+      {
+        "key": "whatsapp",
+        "title": "Native WhatsApp agent",
+        "line": "Sends the brochure, payment link or booking confirmation the moment the call ends, and keeps the conversation going there."
+      },
+      {
+        "key": "database",
+        "title": "Database integration",
+        "line": "Looks up inventory, balances and available slots while it's still talking to the customer."
+      },
+      {
+        "key": "tools",
+        "title": "Custom tool calls",
+        "line": "Triggers OTPs, checks eligibility and books calendar invites during the live conversation."
+      }
+    ]
+  },
+  "coworkers": {
+    "eyebrow": "New",
+    "h2": "AI Coworkers for sales and marketing teams",
+    "body": "It reads every call, ad and booking, works out what to change this week, and drafts the campaign, the follow-up and the fix. You approve, it ships.",
+    "pills": [
+      "Every decision backed by your own data",
+      "A week of work, done in an hour",
+      "What one person learns, everyone keeps"
+    ],
+    "cta": "See AI Coworkers"
+  },
+  "faq": [
+    {
+      "q": "How is voice-to-voice different from other voice bots?",
+      "a": "Traditional bots turn speech to text, run a text prompt, and convert text back to speech. Monade uses a single model that listens and speaks directly, so there's no lag and no robotic pauses."
+    },
+    {
+      "q": "Will our leads realise they're speaking to AI?",
+      "a": "Across hundreds of thousands of sales calls, only 0.6% of leads ask whether the agent is AI."
+    },
+    {
+      "q": "Can it handle Indian languages and accents?",
+      "a": "Yes. 97 languages including 14 Indian ones, and it switches between English and an Indian language in the same conversation."
+    },
+    {
+      "q": "How do we test Monade against our current vendor?",
+      "a": "We run a head-to-head proof of concept against your existing bot or call centre, and listen to the recordings with you every week until the qualification lift is clear."
+    },
+    {
+      "q": "Does it connect with our CRM and internal systems?",
+      "a": "Yes. CRM, databases and telephony, with lead records updated and follow-ups triggered during the call."
+    },
+    {
+      "q": "What happens if a buyer asks something off-script?",
+      "a": "It understands the question the way a person would, answers it, and if it can't, hands the call to your team with context."
+    }
+  ],
+  "cta": {
+    "h2": "Hear the difference yourself.",
+    "line": "Set up a head-to-head proof of concept and see the qualification lift within weeks."
+  },
+  "footer": {
+    "line": "Voice-to-voice AI agents for sales calls. Built in India.",
+    "links": [
+      {
+        "label": "Privacy",
+        "href": "/privacy"
+      },
+      {
+        "label": "Terms",
+        "href": "/terms"
+      }
+    ],
+    "email": "hello@monade.ai",
+    "linkedin": "https://www.linkedin.com/company/monade-ai",
+    "copyright": "© 2026 Monade Inc."
+  }
+}
