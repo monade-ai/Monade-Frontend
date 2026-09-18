@@ -146,6 +146,7 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).p
 export default function WavePlayer({ clip, accent, base, label, sub, labelClass = "", size = "md", prompt = false, className = "" }: ViewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const timeRef = useRef<HTMLSpanElement>(null);
+  const timeRefSm = useRef<HTMLSpanElement>(null); // phone layout shows the time under the label
   const [tick, setTick] = useState(0); // bumps a redraw after a seek while paused
   const { peaks, playing, dur, toggle, seek, progress } = clip;
 
@@ -202,7 +203,9 @@ export default function WavePlayer({ clip, accent, base, label, sub, labelClass 
       if (timeRef.current && dur) {
         const s = Math.floor(p * dur);
         if (s !== lastDrawn) {
-          timeRef.current.textContent = `${fmt(s)} / ${fmt(dur)}`;
+          const text = `${fmt(s)} / ${fmt(dur)}`;
+          timeRef.current.textContent = text;
+          if (timeRefSm.current) timeRefSm.current.textContent = text;
           lastDrawn = s;
         }
       }
@@ -230,48 +233,56 @@ export default function WavePlayer({ clip, accent, base, label, sub, labelClass 
   const icon = size === "lg" ? 18 : 12;
 
   return (
-    <div
-      className={`flex items-center gap-3 md:gap-4 ${className}`}
-      // don't let a click on the player start a slider drag
-      onPointerDown={(e) => e.stopPropagation()}
-    >
-      <div className="relative shrink-0">
-        {prompt && !playing && (
-          <>
-            <span className="ring-pulse absolute inset-0 rounded-full" style={{ borderColor: accent }} aria-hidden />
-            <span className="ring-pulse absolute inset-0 rounded-full" style={{ borderColor: accent, animationDelay: "0.9s" }} aria-hidden />
-          </>
-        )}
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label={playing ? `Pause ${label ?? "clip"}` : `Play ${label ?? "clip"}`}
-          className={`relative flex ${btn} items-center justify-center rounded-full border transition-transform hover:scale-105`}
-          style={{ borderColor: accent, color: playing ? "#000" : accent, background: playing ? accent : "transparent" }}
-        >
-          {playing ? (
-            <svg width={icon} height={icon} viewBox="0 0 12 12" aria-hidden><rect x="2" y="1.5" width="3" height="9" rx="0.8" fill="currentColor" /><rect x="7" y="1.5" width="3" height="9" rx="0.8" fill="currentColor" /></svg>
-          ) : (
-            <svg width={icon} height={icon} viewBox="0 0 12 12" aria-hidden><path d="M3.5 1.5v9l7-4.5z" fill="currentColor" /></svg>
-          )}
-        </button>
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-baseline justify-between gap-3">
-          <div className="min-w-0">
-            {label && <div className={`hidden truncate text-[13px] font-medium sm:block md:text-[14px] ${labelClass}`}>{label}</div>}
-            {sub && <div className="hidden truncate text-[11.5px] text-muted-2 sm:block">{sub}</div>}
-          </div>
-          <span ref={timeRef} className="tnum hidden shrink-0 text-[11px] text-muted-2 sm:inline">
+    <div className={className} onPointerDown={(e) => e.stopPropagation()}>
+      {/* Phone layout: heading and time above the player row */}
+      {label && (
+        <div className="mb-2.5 sm:hidden">
+          <div className={`min-h-[2.6em] text-[12.5px] leading-snug font-medium ${labelClass}`}>{label}</div>
+          <span ref={timeRefSm} className="tnum mt-1 block text-[10.5px] text-muted-2">
             0:00 / {fmt(dur)}
           </span>
         </div>
-        <canvas
-          ref={canvasRef}
-          onClick={onSeek}
-          className={`w-full cursor-pointer ${label || sub ? "sm:mt-2" : ""} ${size === "sm" ? "h-9" : "h-12"}`}
-          aria-hidden
-        />
+      )}
+      <div className="flex items-center gap-3 md:gap-4">
+        <div className="relative shrink-0">
+          {prompt && !playing && (
+            <>
+              <span className="ring-pulse absolute inset-0 rounded-full" style={{ borderColor: accent }} aria-hidden />
+              <span className="ring-pulse absolute inset-0 rounded-full" style={{ borderColor: accent, animationDelay: "0.9s" }} aria-hidden />
+            </>
+          )}
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={playing ? `Pause ${label ?? "clip"}` : `Play ${label ?? "clip"}`}
+            className={`relative flex ${btn} items-center justify-center rounded-full border transition-transform hover:scale-105`}
+            style={{ borderColor: accent, color: playing ? "#000" : accent, background: playing ? accent : "transparent" }}
+          >
+            {playing ? (
+              <svg width={icon} height={icon} viewBox="0 0 12 12" aria-hidden><rect x="2" y="1.5" width="3" height="9" rx="0.8" fill="currentColor" /><rect x="7" y="1.5" width="3" height="9" rx="0.8" fill="currentColor" /></svg>
+            ) : (
+              <svg width={icon} height={icon} viewBox="0 0 12 12" aria-hidden><path d="M3.5 1.5v9l7-4.5z" fill="currentColor" /></svg>
+            )}
+          </button>
+        </div>
+        <div className="min-w-0 flex-1">
+          {/* Tablet and up: heading and time on the row above the waveform */}
+          <div className="hidden items-baseline justify-between gap-3 sm:flex">
+            <div className="min-w-0">
+              {label && <div className={`truncate text-[13px] font-medium md:text-[14px] ${labelClass}`}>{label}</div>}
+              {sub && <div className="truncate text-[11.5px] text-muted-2">{sub}</div>}
+            </div>
+            <span ref={timeRef} className="tnum shrink-0 text-[11px] text-muted-2">
+              0:00 / {fmt(dur)}
+            </span>
+          </div>
+          <canvas
+            ref={canvasRef}
+            onClick={onSeek}
+            className={`w-full cursor-pointer ${label || sub ? "sm:mt-2" : ""} ${size === "sm" ? "h-9" : "h-12"}`}
+            aria-hidden
+          />
+        </div>
       </div>
     </div>
   );
